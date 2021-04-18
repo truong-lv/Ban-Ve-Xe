@@ -98,7 +98,6 @@ public class Login extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         pnDKY = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -126,7 +125,6 @@ public class Login extends javax.swing.JFrame {
         lbGioiTinh = new javax.swing.JLabel();
         btnDangKy = new javax.swing.JButton();
         pnLogin = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         lbErorrLogin = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         btnDangNhap = new javax.swing.JButton();
@@ -134,18 +132,10 @@ public class Login extends javax.swing.JFrame {
         psMatkhau = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         txtTK = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PHẦN MỀM BÁN VÉ XE");
-        setBackground(new java.awt.Color(4, 25, 45));
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setIconImages(null);
-        setLocation(new java.awt.Point(600, 200));
-        setResizable(false);
+        BackgroundLogin = new javax.swing.JLabel();
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         jLabel4.setText("Đăng Ký Thành Viên!");
@@ -346,17 +336,28 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(105, Short.MAX_VALUE))
         );
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("PHẦN MỀM BÁN VÉ XE");
+        setBackground(new java.awt.Color(4, 25, 45));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImages(null);
+        setLocation(new java.awt.Point(600, 200));
+        setResizable(false);
+
         pnLogin.setOpaque(false);
+        pnLogin.setLayout(null);
 
-        jLabel6.setText("Mật khẩu");
-
-        lbErorrLogin.setForeground(new java.awt.Color(255, 0, 0));
+        lbErorrLogin.setForeground(new java.awt.Color(255, 102, 102));
         lbErorrLogin.setText("Tài hoặc mật khẩu không hợp lệ !!Vui lòng nhập lại");
         lbErorrLogin.setVisible(false);
+        pnLogin.add(lbErorrLogin);
+        lbErorrLogin.setBounds(70, 470, 290, 33);
 
         jLabel13.setText("Nếu bạn chưa có tài khoản?");
+        pnLogin.add(jLabel13);
+        jLabel13.setBounds(140, 520, 158, 16);
 
-        btnDangNhap.setBackground(new java.awt.Color(102, 102, 255));
+        btnDangNhap.setBackground(new java.awt.Color(242, 227, 57));
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
         btnDangNhap.setText("Đăng Nhập");
@@ -370,135 +371,58 @@ public class Login extends javax.swing.JFrame {
                 btnDangNhapKeyPressed(evt);
             }
         });
+        pnLogin.add(btnDangNhap);
+        btnDangNhap.setBounds(40, 400, 350, 50);
 
         fLbDangKy.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        fLbDangKy.setForeground(new java.awt.Color(51, 51, 255));
+        fLbDangKy.setForeground(new java.awt.Color(102, 255, 255));
         fLbDangKy.setText("Đăng Ký");
         fLbDangKy.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 fLbDangKyMouseClicked(evt);
             }
         });
+        pnLogin.add(fLbDangKy);
+        fLbDangKy.setBounds(180, 550, 67, 20);
 
         psMatkhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 psMatkhauKeyPressed(evt);
             }
         });
+        pnLogin.add(psMatkhau);
+        psMatkhau.setBounds(80, 350, 310, 40);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         jLabel1.setText("Đăng Nhập Tài Khoản");
-
-        jLabel3.setText("Tài Khoản");
+        pnLogin.add(jLabel1);
+        jLabel1.setBounds(90, 60, 253, 32);
+        pnLogin.add(txtTK);
+        txtTK.setBounds(80, 290, 310, 42);
 
         jLabel2.setText("Đồng hành cùng bạn trên mọi hành trình");
+        pnLogin.add(jLabel2);
+        jLabel2.setBounds(100, 230, 232, 16);
+        pnLogin.add(jSeparator1);
+        jSeparator1.setBounds(130, 560, 50, 10);
+        pnLogin.add(jSeparator2);
+        jSeparator2.setBounds(250, 560, 50, 10);
 
-        javax.swing.GroupLayout pnLoginLayout = new javax.swing.GroupLayout(pnLogin);
-        pnLogin.setLayout(pnLoginLayout);
-        pnLoginLayout.setHorizontalGroup(
-            pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLoginLayout.createSequentialGroup()
-                .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnLoginLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnLoginLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtTK)
-                            .addComponent(btnDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                            .addGroup(pnLoginLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(527, 527, 527))
-                            .addComponent(psMatkhau)))
-                    .addGroup(pnLoginLayout.createSequentialGroup()
-                        .addGap(245, 245, 245)
-                        .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnLoginLayout.createSequentialGroup()
-                                .addGap(17, 17, 17)
-                                .addComponent(jLabel13))
-                            .addGroup(pnLoginLayout.createSequentialGroup()
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fLbDangKy)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(pnLoginLayout.createSequentialGroup()
-                .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnLoginLayout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(lbErorrLogin))
-                    .addGroup(pnLoginLayout.createSequentialGroup()
-                        .addGap(216, 216, 216)
-                        .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnLoginLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel2))
-                            .addComponent(jLabel1))))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        pnLoginLayout.setVerticalGroup(
-            pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLoginLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(84, 84, 84)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(psMatkhau, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(lbErorrLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnLoginLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(fLbDangKy)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(162, Short.MAX_VALUE))
-        );
+        BackgroundLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/Login.png"))); // NOI18N
+        pnLogin.add(BackgroundLogin);
+        BackgroundLogin.setBounds(0, 0, 420, 670);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 711, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pnDKY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addComponent(pnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pnDKY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -649,6 +573,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BackgroundLogin;
     private javax.swing.JButton btnDangKy;
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JLabel fLbDangKy;
@@ -659,10 +584,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

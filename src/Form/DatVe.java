@@ -178,7 +178,7 @@ public class DatVe extends javax.swing.JFrame {
                     txt.setBackground(Color.WHITE);
                     lbSoLuongVe.setText("4");
                 } else {
-                    JOptionPane.showConfirmDialog(null, "Không được đặt quá 5 ghế", "Be ok!", JOptionPane.DEFAULT_OPTION);
+                    JOptionPane.showConfirmDialog(null, "Không được đặt quá 5 ghế", "Thông Báo", JOptionPane.DEFAULT_OPTION);
                 }
             }
         }
@@ -1089,15 +1089,6 @@ public class DatVe extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
