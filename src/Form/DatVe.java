@@ -30,13 +30,14 @@ import javax.swing.JTextField;
  * @author n18dc
  */
 public class DatVe extends javax.swing.JFrame {
+    
+    private String dienThoai;
 
     //giữ sdt khách đặt vé
     ArrayList<JTextField> selected = new ArrayList<JTextField>();
     ArrayList<JTextField> chair = new ArrayList<JTextField>();
-
-    public DatVe() {
-
+    public DatVe(String phone) {
+        dienThoai=phone;
         initComponents();
         AddTime();
         addChair();
@@ -51,7 +52,8 @@ public class DatVe extends javax.swing.JFrame {
 
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
-            ps.setString(1, (time + ".0000000"));
+            //System.out.println(time+ ".0000000");
+            ps.setString(1, (time ));
             ps.setString(2, start);
 
             ResultSet rs = ps.executeQuery();
@@ -59,8 +61,8 @@ public class DatVe extends javax.swing.JFrame {
             while (rs.next()) {
                 maCX = rs.getString(1);
             }
-        } catch (Exception e) {
-            System.err.println("SAi ROI");
+        } catch (SQLException e) {
+            Logger.getLogger(DatVe.class.getName()).log(Level.SEVERE, null, e);
         }
 
         return maCX;
@@ -104,7 +106,8 @@ public class DatVe extends javax.swing.JFrame {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            Logger.getLogger(DatVe.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -224,6 +227,9 @@ public class DatVe extends javax.swing.JFrame {
             ps.setString(7, trangThai);
             ps.setString(8, maNV);
             ps.executeUpdate();
+            
+            ps.close();
+            connect.close();
         } catch (SQLException e) {
             Logger.getLogger(DatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -282,14 +288,13 @@ public class DatVe extends javax.swing.JFrame {
         lblGiaVe1 = new javax.swing.JLabel();
         lblGiaVe2 = new javax.swing.JLabel();
         jLabel_priceAll = new javax.swing.JLabel();
-        lblNoiDi3 = new javax.swing.JLabel();
         jLabel_diemDen = new javax.swing.JLabel();
 
         jLabel11.setText("jLabel11");
 
         jLabel10.setText("jLabel10");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocation(new java.awt.Point(600, 200));
         setResizable(false);
 
@@ -751,11 +756,6 @@ public class DatVe extends javax.swing.JFrame {
         jLabel_priceAll.setForeground(new java.awt.Color(255, 51, 0));
         jLabel_priceAll.setText("0 VND");
 
-        lblNoiDi3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblNoiDi3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNoiDi3.setText("Điểm Đến :");
-        lblNoiDi3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         jLabel_diemDen.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
 
         javax.swing.GroupLayout pnDatVeLayout = new javax.swing.GroupLayout(pnDatVe);
@@ -765,44 +765,53 @@ public class DatVe extends javax.swing.JFrame {
             .addGroup(pnDatVeLayout.createSequentialGroup()
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
-                                .addGap(141, 141, 141)
-                                .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
                                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblGiaVe1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblGiaVe2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblNoiDi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbSoLuongVe, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnDatVeLayout.createSequentialGroup()
-                                        .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel_month, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(lblGiaVe1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblGiaVe2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
+                                .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)))
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbSoLuongVe, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel_month, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5)))
-                    .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35)
+                .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
-                .addGap(0, 330, Short.MAX_VALUE)
+                .addContainerGap(330, Short.MAX_VALUE)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -814,52 +823,51 @@ public class DatVe extends javax.swing.JFrame {
         pnDatVeLayout.setVerticalGroup(
             pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnDatVeLayout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel5)
-                .addGap(18, 18, 18)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel4)
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_month, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGiaVe1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbSoLuongVe))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGiaVe2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(82, 82, 82)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addGap(92, 92, 92)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_month, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGiaVe1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbSoLuongVe))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblGiaVe2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -876,7 +884,7 @@ public class DatVe extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 692, Short.MAX_VALUE)
+            .addGap(0, 695, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -892,7 +900,6 @@ public class DatVe extends javax.swing.JFrame {
         int choose=JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát?", "Xác Nhận", 0);
         if(choose==JOptionPane.OK_OPTION){
             this.dispose();
-            new GDKhach().setVisible(true);
         }
     }//GEN-LAST:event_btnQuayLaiActionPerformed
 
@@ -980,8 +987,8 @@ public class DatVe extends javax.swing.JFrame {
                 String maVe = jComboBox_Day.getSelectedItem().toString() + jLabel_month.getText() + maCX + viTriGhe;
                 maVe = maVe.replace("/", "");
                 String ngayDi = jComboBox_Day.getSelectedItem().toString() + jLabel_month.getText();
-                String trangThai = "0";
-                String maNV = null;
+                String trangThai = BanVeXe.quyen==2?"0":"1";
+                String maNV = BanVeXe.quyen==2?null:BanVeXe.primaryKey;
                 String giaVe;
                 if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
                     giaVe = "300000";
@@ -989,13 +996,13 @@ public class DatVe extends javax.swing.JFrame {
                     giaVe = "150000";
                 }
 
-                datVe(maVe, BanVeXe.primaryKey, viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
-                JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
-                this.dispose();
-                new GDKhach().setVisible(true);
+                datVe(maVe, dienThoai , viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
             }
+            JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
+            this.dispose();
+            
         }
-        else JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại","Chưa Thể Đặt Vé",0);
+        else JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin","Chưa Thể Đặt Vé",0);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void txtGhe17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGhe17MouseClicked
@@ -1005,22 +1012,26 @@ public class DatVe extends javax.swing.JFrame {
 
     private void jComboBox_loaiXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_loaiXeItemStateChanged
         // TODO add your handling code here:
+            //reset select
+        lbSoLuongVe.setText("0");
+        jLabel_priceAll.setText("0 VND");
+        
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
         if (loaiXe.equals("Giường Nằm")) {
             jLabel_price.setText("300.000 đ");
         } else {
             jLabel_price.setText("150.000 đ");
         }
-        //setChair();
-        lbSoLuongVe.setText("0");
         loadChair();
     }//GEN-LAST:event_jComboBox_loaiXeItemStateChanged
 
     private void jComboBox_chuyenDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_chuyenDiItemStateChanged
-        //selected.clear();
-        //jLabel_diemDen.setText("TP.HCM");
+
+            //reset select
+        loadChair();
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
+        
         String chuyenDi = jComboBox_chuyenDi.getSelectedItem().toString();
         if (chuyenDi.equals("TP.HCM")) {
             jLabel_diemDen.setText("Đồng Nai");
@@ -1029,11 +1040,16 @@ public class DatVe extends javax.swing.JFrame {
             jLabel_diemDen.setText("TP.HCM");
         }
         
-        loadChair();
+        
     }//GEN-LAST:event_jComboBox_chuyenDiItemStateChanged
 
     private void jComboBox_DayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_DayItemStateChanged
 
+        //reset select
+        loadChair();
+        lbSoLuongVe.setText("0");
+        jLabel_priceAll.setText("0 VND");
+        
         // Bắt Điều Kiện Khi Ngày Đặt Tràn Qua Tháng Mới
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("/MM/uuuu");
         LocalDate localDate = LocalDate.now();
@@ -1044,7 +1060,7 @@ public class DatVe extends javax.swing.JFrame {
 
         if (day > localDate.getDayOfMonth()) {
             jComboBox_Time.removeAllItems();
-            for (int i = 2; i < 24; i++) {
+            for (int i = 3; i < 24; i++) {
                 if (i < 10) {
                     jComboBox_Time.addItem("0" + String.valueOf(i) + ":00:00");
                 } else {
@@ -1052,11 +1068,17 @@ public class DatVe extends javax.swing.JFrame {
                 }
             }
         }
+        
     }//GEN-LAST:event_jComboBox_DayItemStateChanged
 
     private void jComboBox_TimeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_TimeItemStateChanged
         // TODO add your handling code here:
+            //reset select
         loadChair();
+        lbSoLuongVe.setText("0");
+        jLabel_priceAll.setText("0 VND");
+        
+        
     }//GEN-LAST:event_jComboBox_TimeItemStateChanged
 
 //    int q = 1;
@@ -1090,11 +1112,11 @@ public class DatVe extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DatVe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DatVe().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new DatVe().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1129,7 +1151,6 @@ public class DatVe extends javax.swing.JFrame {
     private javax.swing.JLabel lblNoiDi;
     private javax.swing.JLabel lblNoiDi1;
     private javax.swing.JLabel lblNoiDi2;
-    private javax.swing.JLabel lblNoiDi3;
     private javax.swing.JPanel pnDatVe;
     private javax.swing.JTextField txtGhe1;
     private javax.swing.JTextField txtGhe10;

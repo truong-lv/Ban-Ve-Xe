@@ -22,42 +22,44 @@ import javax.swing.JOptionPane;
  */
 public class ChinhSuaKH extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ChinhSuaKH
-     */
-    public ChinhSuaKH() {
+    private String dienThoai;
+    private String taiKhoan;
+    public ChinhSuaKH(String phone) {
+        this.dienThoai=phone;
         initComponents();
         loadKH();
     }
     //======LẤY DỮ LIỆU KHÁCH HÀNG TỪ DATABASE XUỐNG==========
     public void loadKH(){
         Connection connect=KetNoiSQL.KetNoi.layKetNoi();
-        String sql="SELECT GioiTinh FROM HANH_KHACH KH WHERE KH.DienThoai='"+BanVeXe.primaryKey+"'";
+        String sql="SELECT HoTen,GioiTinh, TaiKhoan FROM HANH_KHACH KH WHERE KH.DienThoai='"+dienThoai+"'";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
             ResultSet rs=ps.executeQuery();
 
             // duyet ket qua
             while (rs.next()) {
-               txtSDT1.setText(BanVeXe.primaryKey);
-               txtHoTen1.setText(BanVeXe.hoTen);
-               if(rs.getString(1).trim().equalsIgnoreCase(rBtnNam1.getText()) ){
+               txtSDT1.setText(dienThoai);
+               txtHoTen1.setText(rs.getString(1));
+               if(rs.getString(2).trim().equalsIgnoreCase(rBtnNam1.getText()) ){
                   rBtnNam1.setSelected(true);
                }else {
                    rBtnNu1.setSelected(true);
                }
-               txtTK1.setText(BanVeXe.Account);
+               txtTK1.setText(rs.getString(3));
+               taiKhoan=txtTK1.getText();
             }
             // dong ket noi
             rs.close();
             ps.close();
             connect.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            Logger.getLogger(ChinhSuaKH.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     public void chinhSuaTT(String dt, String ten, String gt, String taiKhoan){
         Connection connect=KetNoiSQL.KetNoi.layKetNoi();
-        String sql="UPDATE HANH_KHACH SET DienThoai=?, HoTen=?, GioiTinh=?, TaiKhoan=? WHERE DienThoai='"+BanVeXe.primaryKey+"'";
+        String sql="UPDATE HANH_KHACH SET DienThoai=?, HoTen=?, GioiTinh=?, TaiKhoan=? WHERE DienThoai='"+dienThoai+"'";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
             ps.setString(1, dt);
@@ -74,11 +76,11 @@ public class ChinhSuaKH extends javax.swing.JFrame {
     }
     public void chinhSuaTK(String taiKhoan, String matKhau){
         Connection connect=KetNoiSQL.KetNoi.layKetNoi();
-        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+BanVeXe.Account+"'";
+        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+taiKhoan+"'";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
             ps.setString(1, taiKhoan);
-            BanVeXe.setAccount(taiKhoan);
+//            BanVeXe.setAccount(taiKhoan);
             ps.setString(2, matKhau);
             ps.executeUpdate();
             // dong ket noi
@@ -169,7 +171,7 @@ public class ChinhSuaKH extends javax.swing.JFrame {
         lbInvalidMK = new javax.swing.JLabel();
         lbInvalidComfirmMK = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Chỉnh sửa thông tin");
         setLocation(new java.awt.Point(600, 350));
 
@@ -391,21 +393,16 @@ public class ChinhSuaKH extends javax.swing.JFrame {
     private void btnOk1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOk1ActionPerformed
         // TODO add your handling code here:
         if(!ktLoiNhapLieu()){
-            String confirm=JOptionPane.showInputDialog(this, "Nhập lại mật khẩu cũ");
-            if(confirm.equals(BanVeXe.pass)){
-                if(!txtTK1.getText().equals(BanVeXe.Account) || !txtPass1.getText().isEmpty()){
+            int confirm=JOptionPane.showConfirmDialog(this, "Xác nhận cập nhập thông tin");
+            if(confirm==JOptionPane.OK_OPTION){
+                if(!txtTK1.getText().equals(taiKhoan) || !txtPass1.getText().isEmpty()){
                     chinhSuaTK(txtTK1.getText(), txtPass1.getText());
-                    BanVeXe.Account=txtTK1.getText();
-                    BanVeXe.pass=txtPass1.getText();
                 }
                 String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
                 chinhSuaTT(txtSDT1.getText(), txtHoTen1.getText(), gt, txtTK1.getText());
                 JOptionPane.showMessageDialog(this, "Cập nhập thành công");
                 this.dispose();
-                BanVeXe.primaryKey=txtSDT1.getText();
-                BanVeXe.hoTen=txtHoTen1.getText();
             }
-            else JOptionPane.showMessageDialog(this, "Mật khẩu ko đúng!!");
         }
         
     }//GEN-LAST:event_btnOk1ActionPerformed
@@ -445,7 +442,7 @@ public class ChinhSuaKH extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ChinhSuaKH().setVisible(true);
+              
             }
         });
     }

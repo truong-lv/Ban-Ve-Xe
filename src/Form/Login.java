@@ -59,7 +59,6 @@ public class Login extends javax.swing.JFrame {
                 BanVeXe.primaryKey=rs.getString(1);
                 BanVeXe.hoTen=rs.getString(2);
                 BanVeXe.quyen=rs.getInt(3);
-                System.out.println("ssssssssss");
                 checkLogin= true;
             }
             
@@ -101,7 +100,6 @@ public class Login extends javax.swing.JFrame {
 
         pnDKY = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
         txtCMT = new javax.swing.JTextField();
@@ -114,7 +112,6 @@ public class Login extends javax.swing.JFrame {
         lbEmail = new javax.swing.JLabel();
         lbMatKhau = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         lbDangKy = new javax.swing.JLabel();
         psMatkhau1 = new javax.swing.JPasswordField();
         jSeparator3 = new javax.swing.JSeparator();
@@ -124,6 +121,7 @@ public class Login extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         lbGioiTinh = new javax.swing.JLabel();
         btnDangKy = new javax.swing.JButton();
+        lbBackgroundDky = new javax.swing.JLabel();
         pnLogin = new javax.swing.JPanel();
         lbErorrLogin = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -136,57 +134,88 @@ public class Login extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         BackgroundLogin = new javax.swing.JLabel();
+        pndky = new javax.swing.JPanel();
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        jLabel4.setText("Đăng Ký Thành Viên!");
+        pnDKY.setOpaque(false);
+        pnDKY.setLayout(null);
 
-        jLabel5.setText("Đồng hành cùng bạn trên mọi hành trình");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 22)); // NOI18N
+        jLabel4.setText("Đăng Ký Khách Hàng");
+        pnDKY.add(jLabel4);
+        jLabel4.setBounds(130, 30, 210, 32);
 
-        jLabel7.setText("Họ Tên");
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Họ Tên:");
+        pnDKY.add(jLabel7);
+        jLabel7.setBounds(10, 180, 60, 16);
 
         txtTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTenActionPerformed(evt);
             }
         });
+        pnDKY.add(txtTen);
+        txtTen.setBounds(10, 210, 217, 42);
 
         txtCMT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCMTActionPerformed(evt);
             }
         });
+        pnDKY.add(txtCMT);
+        txtCMT.setBounds(10, 320, 217, 42);
 
-        jLabel8.setText("CMT/CCCD");
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Tài Khoản:");
+        pnDKY.add(jLabel8);
+        jLabel8.setBounds(10, 300, 62, 16);
 
         txtSDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtSDTActionPerformed(evt);
             }
         });
+        pnDKY.add(txtSDT);
+        txtSDT.setBounds(10, 90, 217, 42);
 
-        jLabel9.setText("SĐT");
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("SĐT:");
+        pnDKY.add(jLabel9);
+        jLabel9.setBounds(10, 70, 30, 16);
 
-        jLabel10.setText("Mật khẩu");
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Mật khẩu:");
+        pnDKY.add(jLabel10);
+        jLabel10.setBounds(10, 420, 70, 16);
 
-        lbHo.setForeground(new java.awt.Color(255, 0, 0));
+        lbHo.setForeground(new java.awt.Color(255, 153, 204));
         lbHo.setText("Vui lòng nhập CMT.");
         lbHo.setVisible(false);
+        pnDKY.add(lbHo);
+        lbHo.setBounds(20, 370, 112, 16);
 
-        lbTen.setForeground(new java.awt.Color(255, 0, 0));
+        lbTen.setForeground(new java.awt.Color(255, 153, 204));
         lbTen.setText("Vui lòng nhập Tên.");
         lbTen.setVisible(false);
+        pnDKY.add(lbTen);
+        lbTen.setBounds(10, 260, 108, 16);
 
-        lbEmail.setForeground(new java.awt.Color(255, 0, 0));
+        lbEmail.setForeground(new java.awt.Color(255, 153, 204));
         lbEmail.setText("Vui lòng nhập SĐT");
         lbEmail.setVisible(false);
+        pnDKY.add(lbEmail);
+        lbEmail.setBounds(10, 140, 107, 16);
 
-        lbMatKhau.setForeground(new java.awt.Color(255, 0, 0));
+        lbMatKhau.setForeground(new java.awt.Color(255, 153, 204));
         lbMatKhau.setText("Vui lòng nhập Mật khẩu.");
         lbMatKhau.setVisible(false);
+        pnDKY.add(lbMatKhau);
+        lbMatKhau.setBounds(12, 489, 138, 16);
 
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Từ 6 đến 50 ký tự");
-
-        jLabel14.setText("Bạn có muốn");
+        pnDKY.add(jLabel12);
+        jLabel12.setBounds(12, 508, 102, 16);
 
         lbDangKy.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbDangKy.setForeground(new java.awt.Color(51, 51, 255));
@@ -196,6 +225,14 @@ public class Login extends javax.swing.JFrame {
                 lbDangKyMouseClicked(evt);
             }
         });
+        pnDKY.add(lbDangKy);
+        lbDangKy.setBounds(150, 630, 87, 20);
+        pnDKY.add(psMatkhau1);
+        psMatkhau1.setBounds(12, 440, 217, 42);
+        pnDKY.add(jSeparator3);
+        jSeparator3.setBounds(100, 640, 50, 10);
+        pnDKY.add(jSeparator4);
+        jSeparator4.setBounds(240, 640, 50, 10);
 
         rBtnNam.setText("Nam");
         rBtnNam.addActionListener(new java.awt.event.ActionListener() {
@@ -203,16 +240,25 @@ public class Login extends javax.swing.JFrame {
                 rBtnNamActionPerformed(evt);
             }
         });
+        pnDKY.add(rBtnNam);
+        rBtnNam.setBounds(260, 210, 55, 25);
 
         rBtnNu.setText("Nữ");
+        pnDKY.add(rBtnNu);
+        rBtnNu.setBounds(330, 210, 45, 25);
 
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Giới Tính");
+        pnDKY.add(jLabel11);
+        jLabel11.setBounds(260, 190, 50, 16);
 
-        lbGioiTinh.setForeground(new java.awt.Color(255, 0, 0));
+        lbGioiTinh.setForeground(new java.awt.Color(255, 153, 204));
         lbGioiTinh.setText("Vui lòng chọn giới tính");
         lbGioiTinh.setVisible(false);
+        pnDKY.add(lbGioiTinh);
+        lbGioiTinh.setBounds(260, 240, 126, 16);
 
-        btnDangKy.setBackground(new java.awt.Color(102, 102, 255));
+        btnDangKy.setBackground(new java.awt.Color(0, 0, 255));
         btnDangKy.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         btnDangKy.setForeground(new java.awt.Color(255, 255, 255));
         btnDangKy.setText("Đăng Ký");
@@ -221,120 +267,12 @@ public class Login extends javax.swing.JFrame {
                 btnDangKyActionPerformed(evt);
             }
         });
+        pnDKY.add(btnDangKy);
+        btnDangKy.setBounds(90, 550, 220, 50);
 
-        javax.swing.GroupLayout pnDKYLayout = new javax.swing.GroupLayout(pnDKY);
-        pnDKY.setLayout(pnDKYLayout);
-        pnDKYLayout.setHorizontalGroup(
-            pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnDKYLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDKYLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDKYLayout.createSequentialGroup()
-                                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnDKYLayout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel5))
-                                    .addComponent(jLabel4))
-                                .addGap(195, 195, 195))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDKYLayout.createSequentialGroup()
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnDKYLayout.createSequentialGroup()
-                                        .addComponent(lbDangKy)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel14))
-                                .addGap(197, 197, 197))))
-                    .addGroup(pnDKYLayout.createSequentialGroup()
-                        .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnDKYLayout.createSequentialGroup()
-                                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnDKYLayout.createSequentialGroup()
-                                        .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7)
-                                            .addComponent(lbTen)
-                                            .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(94, 94, 94)
-                                        .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbGioiTinh)
-                                            .addComponent(jLabel11)
-                                            .addGroup(pnDKYLayout.createSequentialGroup()
-                                                .addComponent(rBtnNam)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(rBtnNu))))
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel9)
-                                    .addComponent(lbEmail))
-                                .addGap(0, 139, Short.MAX_VALUE))
-                            .addComponent(btnDangKy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(pnDKYLayout.createSequentialGroup()
-                        .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(psMatkhau1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                            .addComponent(txtSDT, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbHo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbMatKhau, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCMT, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 371, Short.MAX_VALUE))))
-        );
-        pnDKYLayout.setVerticalGroup(
-            pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnDKYLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rBtnNam)
-                    .addComponent(rBtnNu))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTen)
-                    .addComponent(lbGioiTinh))
-                .addGap(26, 26, 26)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCMT, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbHo)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(lbEmail)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(psMatkhau1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbMatKhau)
-                .addGap(3, 3, 3)
-                .addComponent(jLabel12)
-                .addGap(18, 18, 18)
-                .addComponent(btnDangKy, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnDKYLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDKYLayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lbDangKy))
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
+        lbBackgroundDky.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/backgroundDky.png"))); // NOI18N
+        pnDKY.add(lbBackgroundDky);
+        lbBackgroundDky.setBounds(0, 0, 420, 690);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PHẦN MỀM BÁN VÉ XE");
@@ -342,16 +280,16 @@ public class Login extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setIconImages(null);
         setLocation(new java.awt.Point(600, 200));
-        setResizable(false);
 
         pnLogin.setOpaque(false);
         pnLogin.setLayout(null);
 
-        lbErorrLogin.setForeground(new java.awt.Color(255, 102, 102));
+        lbErorrLogin.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        lbErorrLogin.setForeground(new java.awt.Color(255, 51, 204));
         lbErorrLogin.setText("Tài hoặc mật khẩu không hợp lệ !!Vui lòng nhập lại");
         lbErorrLogin.setVisible(false);
         pnLogin.add(lbErorrLogin);
-        lbErorrLogin.setBounds(70, 470, 290, 33);
+        lbErorrLogin.setBounds(50, 470, 330, 33);
 
         jLabel13.setText("Nếu bạn chưa có tài khoản?");
         pnLogin.add(jLabel13);
@@ -412,6 +350,20 @@ public class Login extends javax.swing.JFrame {
         pnLogin.add(BackgroundLogin);
         BackgroundLogin.setBounds(0, 0, 420, 670);
 
+        javax.swing.GroupLayout pndkyLayout = new javax.swing.GroupLayout(pndky);
+        pndky.setLayout(pndkyLayout);
+        pndkyLayout.setHorizontalGroup(
+            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 420, Short.MAX_VALUE)
+        );
+        pndkyLayout.setVerticalGroup(
+            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+
+        pnLogin.add(pndky);
+        pndky.setBounds(0, 0, 420, 670);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -420,25 +372,36 @@ public class Login extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 671, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
+    private void psMatkhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_psMatkhauKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenActionPerformed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            loadAccount();
+        }
+    }//GEN-LAST:event_psMatkhauKeyPressed
 
-    private void txtCMTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCMTActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCMTActionPerformed
+    private void fLbDangKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fLbDangKyMouseClicked
+        pnLogin.setVisible(false);
+        pnDKY.setVisible(true);
+    }//GEN-LAST:event_fLbDangKyMouseClicked
 
-    private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
+    private void btnDangNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDangNhapKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtSDTActionPerformed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            loadAccount();
+        }
+    }//GEN-LAST:event_btnDangNhapKeyPressed
+
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+        // TODO add your handling code here:
+        loadAccount();
+
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
         // TODO add your handling code here:
@@ -454,7 +417,7 @@ public class Login extends javax.swing.JFrame {
             txtTen.setBorder(BorderFactory.createLineBorder(null));
 
         }
-        
+
         //KT nhập Gioi Tinh
         if(!rBtnNam.isSelected() && !rBtnNu.isSelected()){
             ktGT=true;
@@ -463,7 +426,7 @@ public class Login extends javax.swing.JFrame {
         else {
             lbGioiTinh.setVisible(false);
         }
-        
+
         //KT nhập CMND
         if(txtCMT.getText().isEmpty()||txtCMT.getText().matches("[0-9]{9}")){
             ktCMT=true;
@@ -502,40 +465,30 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDangKyActionPerformed
 
-    private void lbDangKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDangKyMouseClicked
-        // TODO add your handling code here:
-        pnDKY.setVisible(false);
-        pnLogin.setVisible(true);
-    }//GEN-LAST:event_lbDangKyMouseClicked
-
     private void rBtnNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rBtnNamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rBtnNamActionPerformed
 
-    private void psMatkhauKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_psMatkhauKeyPressed
+    private void lbDangKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbDangKyMouseClicked
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            loadAccount();
-        }
-    }//GEN-LAST:event_psMatkhauKeyPressed
+        pnDKY.setVisible(false);
+        PnDangKy pn= new PnDangKy();
+        pndky.add(pn,"đăng ký");
+        //this.getContentPane().add(pndky);
+        pndky.setVisible(true);
+    }//GEN-LAST:event_lbDangKyMouseClicked
 
-    private void fLbDangKyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fLbDangKyMouseClicked
-        pnLogin.setVisible(false);
-        pnDKY.setVisible(true);
-    }//GEN-LAST:event_fLbDangKyMouseClicked
-
-    private void btnDangNhapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDangNhapKeyPressed
+    private void txtSDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSDTActionPerformed
         // TODO add your handling code here:
-        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
-            loadAccount();
-        }
-    }//GEN-LAST:event_btnDangNhapKeyPressed
+    }//GEN-LAST:event_txtSDTActionPerformed
 
-    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+    private void txtCMTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCMTActionPerformed
         // TODO add your handling code here:
-        loadAccount();
+    }//GEN-LAST:event_txtCMTActionPerformed
 
-    }//GEN-LAST:event_btnDangNhapActionPerformed
+    private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,10 +535,8 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -593,6 +544,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JLabel lbBackgroundDky;
     private javax.swing.JLabel lbDangKy;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbErorrLogin;
@@ -602,6 +554,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lbTen;
     private javax.swing.JPanel pnDKY;
     private javax.swing.JPanel pnLogin;
+    private javax.swing.JPanel pndky;
     private javax.swing.JPasswordField psMatkhau;
     private javax.swing.JPasswordField psMatkhau1;
     private javax.swing.JRadioButton rBtnNam;

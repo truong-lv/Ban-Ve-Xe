@@ -225,7 +225,6 @@ public class GDAdmin extends javax.swing.JFrame {
 
     private void lb_ChinhSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_ChinhSuaMouseClicked
         // TODO add your handling code here:
-        new ChinhSuaKH().setVisible(true);
 
     }//GEN-LAST:event_lb_ChinhSuaMouseClicked
 
