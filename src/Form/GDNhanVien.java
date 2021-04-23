@@ -158,9 +158,7 @@ public class GDNhanVien extends javax.swing.JFrame {
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 cbbNgayDi.addItem(rs.getString(1));
-                
             }
-
             rs.close();
             ps.close();
             connect.close();
@@ -388,17 +386,9 @@ public class GDNhanVien extends javax.swing.JFrame {
         });
         tbVeXe.setRowHeight(20);
         tbVeXe.setRowMargin(3);
-        tbVeXe.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tbVeXeFocusLost(evt);
-            }
-        });
         tbVeXe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbVeXeMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                tbVeXeMouseExited(evt);
             }
         });
         jScrollPane2.setViewportView(tbVeXe);
@@ -1084,6 +1074,9 @@ public class GDNhanVien extends javax.swing.JFrame {
             loadDuLieuVaoBang(tbVeXe,"{call SP_LOAD_VE_TO_JTABLE()}");
             loadComboNgayDi();
             loadComboGio();
+            locDuLieuJTable(tbVeXe,cbbTramDi.getSelectedItem().toString());
+            locDuLieuJTable(tbVeXe,cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"");
+            
         }
         else if(tbPnMenu.getSelectedIndex()==1){
             loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
@@ -1136,6 +1129,7 @@ public class GDNhanVien extends javax.swing.JFrame {
         String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(),tbVeXe.getColumnCount()-1);
         btnHuyVe.setEnabled(true);
         if(trangThai.equals("Chưa thanh toán")) btnDuyetVe.setEnabled(true);
+        else btnDuyetVe.setEnabled(false);
         
     }//GEN-LAST:event_tbVeXeMouseClicked
 
@@ -1156,7 +1150,8 @@ public class GDNhanVien extends javax.swing.JFrame {
 
     private void txtSearchVeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyPressed
         // TODO add your handling code here:
-        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
         locDuLieuJTable(tbVeXe,cbbTramDi.getSelectedItem().toString());
         locDuLieuJTable(tbVeXe,cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"");
         locDuLieuJTable(tbVeXe,cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"");
@@ -1173,15 +1168,16 @@ public class GDNhanVien extends javax.swing.JFrame {
     }//GEN-LAST:event_cbbTramDiItemStateChanged
 
     private void cbbNgayDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbNgayDiItemStateChanged
-        // TODO add your handling code here:
-        //String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
+        // TODO add your handling code here
         loadComboGio();
-        locDuLieuJTable(tbVeXe,cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"");
+        locDuLieuJTable(tbVeXe,cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"00/00/0000");
+        
     }//GEN-LAST:event_cbbNgayDiItemStateChanged
 
     private void cbbGioDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbGioDiItemStateChanged
-        //String gio=cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"";
-        locDuLieuJTable(tbVeXe,cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"");
+
+        locDuLieuJTable(tbVeXe,cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"00:00:00");
+        
     }//GEN-LAST:event_cbbGioDiItemStateChanged
 
     private void cbbTrangThaiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbTrangThaiItemStateChanged
@@ -1193,13 +1189,14 @@ public class GDNhanVien extends javax.swing.JFrame {
 
     private void btnSearchVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchVeActionPerformed
         // TODO add your handling code here:
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
         txtSearchVe.setText("");
+
     }//GEN-LAST:event_btnSearchVeActionPerformed
 
     private void txtSDTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSDTFocusLost
         // TODO add your handling code here:
-        
-        
         locDuLieuJTable(tbKhachHang, txtSDT.getText());//lấy sđt tìm kiếm trên bảng khách hàng
         
         //----kiểm tra có tìm đc ko. Nếu tìm đc thì load thông tin khách
@@ -1227,8 +1224,6 @@ public class GDNhanVien extends javax.swing.JFrame {
             txtMK_Khach.setText("");
             txtMK_Khach.setEditable(true);
         }
-        
-        
         locDuLieuJTable(tbKhachHang, "");
     }//GEN-LAST:event_txtSDTFocusLost
 
@@ -1257,18 +1252,6 @@ public class GDNhanVien extends javax.swing.JFrame {
         new ChinhSuaKH(txtSearchKhach.getText()).setVisible(true);
         loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
     }//GEN-LAST:event_btnSuaKhachActionPerformed
-
-    private void tbVeXeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeXeMouseExited
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_tbVeXeMouseExited
-
-    private void tbVeXeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbVeXeFocusLost
-        // TODO add your handling code here:
-        btnDuyetVe.setEnabled(false);
-        btnHuyVe.setEnabled(false);
-        txtSearchVe.setText("");
-    }//GEN-LAST:event_tbVeXeFocusLost
 
     /**
      * @param args the command line arguments
