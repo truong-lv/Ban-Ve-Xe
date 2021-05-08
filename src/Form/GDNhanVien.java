@@ -68,6 +68,7 @@ public class GDNhanVien extends javax.swing.JFrame {
                 }
                 dtm.addRow(vt);
             }
+            
             // Đổi trạng thái từ số về String cho bảng Vé xe
             if(dtm.equals(tbVeXe.getModel()))
             {
@@ -353,6 +354,11 @@ public class GDNhanVien extends javax.swing.JFrame {
         jLabel11.setText("Tìm kiếm:");
 
         txtSearchVe.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        txtSearchVe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSearchVeActionPerformed(evt);
+            }
+        });
         txtSearchVe.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtSearchVeKeyPressed(evt);
@@ -1252,6 +1258,10 @@ public class GDNhanVien extends javax.swing.JFrame {
         new ChinhSuaKH(txtSearchKhach.getText()).setVisible(true);
         loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
     }//GEN-LAST:event_btnSuaKhachActionPerformed
+
+    private void txtSearchVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchVeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSearchVeActionPerformed
 
     /**
      * @param args the command line arguments

@@ -185,6 +185,12 @@ public class ChinhSuaKH extends javax.swing.JFrame {
 
         jLabel17.setText("Họ Tên:");
 
+        txtHoTen1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoTen1ActionPerformed(evt);
+            }
+        });
+
         jLabel18.setText("SĐT:");
 
         buttonGroup1.add(rBtnNam1);
@@ -411,6 +417,10 @@ public class ChinhSuaKH extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCancel1ActionPerformed
+
+    private void txtHoTen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoTen1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoTen1ActionPerformed
 
     /**
      * @param args the command line arguments

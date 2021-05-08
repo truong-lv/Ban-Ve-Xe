@@ -28,6 +28,7 @@ public class GDKhach extends javax.swing.JFrame {
 
     public GDKhach() {
         initComponents();
+        System.out.println(BanVeXe.primaryKey);
         LbUserName.setText(BanVeXe.hoTen);
         lbLoaiTK.setText(BanVeXe.quyenToString());
     }
@@ -49,6 +50,7 @@ public class GDKhach extends javax.swing.JFrame {
         btnChinhSua = new javax.swing.JButton();
         btnDatVe = new javax.swing.JButton();
         btnDatVe1 = new javax.swing.JButton();
+        btnChinhSua1 = new javax.swing.JButton();
 
         jBtnBack.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -138,6 +140,16 @@ public class GDKhach extends javax.swing.JFrame {
             }
         });
 
+        btnChinhSua1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnChinhSua1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Pencil-icon.png"))); // NOI18N
+        btnChinhSua1.setText("Xem vé");
+        btnChinhSua1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnChinhSua1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChinhSua1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -145,6 +157,7 @@ public class GDKhach extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(468, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnChinhSua1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDatVe, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDatVe1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,11 +166,13 @@ public class GDKhach extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(178, 178, 178)
+                .addGap(122, 122, 122)
                 .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(32, 32, 32)
                 .addComponent(btnDatVe, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(45, 45, 45)
+                .addComponent(btnChinhSua1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(btnDatVe1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(280, Short.MAX_VALUE))
         );
@@ -207,6 +222,11 @@ public class GDKhach extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDatVe1ActionPerformed
 
+    private void btnChinhSua1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChinhSua1ActionPerformed
+        System.out.println("Form.GDKhach.btnChinhSua1ActionPerformed()");
+        new KhachXemVe().setVisible(true);
+    }//GEN-LAST:event_btnChinhSua1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +265,7 @@ public class GDKhach extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LbUserName;
     private javax.swing.JButton btnChinhSua;
+    private javax.swing.JButton btnChinhSua1;
     private javax.swing.JButton btnDatVe;
     private javax.swing.JButton btnDatVe1;
     private javax.swing.JButton jBtnBack;

@@ -105,7 +105,6 @@ public class GDAdmin extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lb_ChinhSua.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lb_ChinhSua.setIcon(new javax.swing.ImageIcon("D:\\MyCode\\Java\\ThucHanhJava\\BanVeXe\\src\\image\\Pencil-icon.png")); // NOI18N
         lb_ChinhSua.setText("Chỉnh sửa thông tin");
         Font font = lb_ChinhSua.getFont();
         Map attributes = font.getAttributes();
@@ -119,7 +118,6 @@ public class GDAdmin extends javax.swing.JFrame {
 
         jBtnBack.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jBtnBack.setIcon(new javax.swing.ImageIcon("D:\\MyCode\\Java\\ThucHanhJava\\BanVeXe\\src\\image\\Go-back-icon.png")); // NOI18N
         jBtnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBackActionPerformed(evt);
@@ -127,7 +125,6 @@ public class GDAdmin extends javax.swing.JFrame {
         });
 
         lb_ChinhSua1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lb_ChinhSua1.setIcon(new javax.swing.ImageIcon("D:\\MyCode\\Java\\ThucHanhJava\\BanVeXe\\src\\image\\Pencil-icon.png")); // NOI18N
         lb_ChinhSua1.setText("Quản lý nhân viên");
         lb_ChinhSua1.setFont(font.deriveFont(attributes));
         lb_ChinhSua1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -137,7 +134,6 @@ public class GDAdmin extends javax.swing.JFrame {
         });
 
         lb_ChinhSua2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lb_ChinhSua2.setIcon(new javax.swing.ImageIcon("D:\\MyCode\\Java\\ThucHanhJava\\BanVeXe\\src\\image\\Pencil-icon.png")); // NOI18N
         lb_ChinhSua2.setText("Quản lý chuyến xe");
         lb_ChinhSua2.setFont(font.deriveFont(attributes));
         lb_ChinhSua2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,7 +143,6 @@ public class GDAdmin extends javax.swing.JFrame {
         });
 
         lb_ChinhSua3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lb_ChinhSua3.setIcon(new javax.swing.ImageIcon("D:\\MyCode\\Java\\ThucHanhJava\\BanVeXe\\src\\image\\Pencil-icon.png")); // NOI18N
         lb_ChinhSua3.setText("Thống kê doanh thu");
         lb_ChinhSua3.setFont(font.deriveFont(attributes));
         lb_ChinhSua3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,18 +159,19 @@ public class GDAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(lb_ChinhSua1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
-                        .addComponent(lb_ChinhSua3)
-                        .addGap(115, 115, 115))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 278, Short.MAX_VALUE)
                         .addComponent(jBtnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(275, 275, 275))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(lb_ChinhSua)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lb_ChinhSua2)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lb_ChinhSua1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lb_ChinhSua3))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lb_ChinhSua)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lb_ChinhSua2)))
                         .addGap(80, 80, 80))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -184,14 +180,14 @@ public class GDAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
-                        .addComponent(lb_ChinhSua2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(lb_ChinhSua3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lb_ChinhSua2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addComponent(lb_ChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(53, 53, 53)
-                        .addComponent(lb_ChinhSua1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lb_ChinhSua1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_ChinhSua3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
                 .addComponent(jBtnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -236,6 +232,7 @@ public class GDAdmin extends javax.swing.JFrame {
 
     private void lb_ChinhSua1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_ChinhSua1MouseClicked
         // TODO add your handling code here:
+        new QLNhanVien().setVisible(true);
     }//GEN-LAST:event_lb_ChinhSua1MouseClicked
 
     private void lb_ChinhSua2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_ChinhSua2MouseClicked
@@ -244,6 +241,7 @@ public class GDAdmin extends javax.swing.JFrame {
 
     private void lb_ChinhSua3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lb_ChinhSua3MouseClicked
         // TODO add your handling code here:
+        new TKDoanhThu().setVisible(true);
     }//GEN-LAST:event_lb_ChinhSua3MouseClicked
 
     /**
