@@ -5,8 +5,7 @@
  */
 package Form;
 
-import Form.QLNhanVien;
-import KetNoiSQL.KetNoi;
+import Code.KetNoi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +25,10 @@ public class ThemNV extends javax.swing.JFrame {
      */
     public ThemNV() {
         initComponents();
-        jLabel_maNV.setText(maNV(jComboBox_ChucVu.getSelectedItem().toString()));
+        
+        String maChucVu=jComboBox_ChucVu.getSelectedItem().toString();
+        maChucVu=maChucVu.substring(0,maChucVu.indexOf(" -"));
+        jTextField_maNV.setText(maNV(maChucVu));
     }
 
     // Hàm Tự Tạo Mã Nhân Viên Mới
@@ -47,9 +49,9 @@ public class ThemNV extends javax.swing.JFrame {
             ps.close();
             ketNoi.close();
         } catch (SQLException e) {
-            Logger.getLogger(QLNhanVien.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ThemNV.class.getName()).log(Level.SEVERE, null, e);
         }
-        
+        System.out.println(maNVmoi);
         if(Integer.parseInt(maNVmoi.substring(2)) < 10){
             int maSo = Integer.parseInt(maNVmoi.substring(2)) + 1;
             String maChu = maNVmoi.substring(0,2);
@@ -95,6 +97,7 @@ public class ThemNV extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jLabel_maNV = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -109,41 +112,48 @@ public class ThemNV extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBox_ChucVu = new javax.swing.JComboBox<>();
-        jLabel_maNV = new javax.swing.JLabel();
+        jTextField_maNV = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel_maNV.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_maNV.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel_maNV.setText("Mã Nhân Viên");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 200));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Mã Nhân Viên :");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Tên Nhân Viên :");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("CMND : ");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Chức Vụ : ");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Điện Thoại : ");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setText("Giới Tính");
 
-        jTextField_tenNV.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jTextField_tenNV.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jTextField_SDT.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jTextField_SDT.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jTextField_CMND.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jTextField_CMND.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         buttonGroup1.add(jRadioButton_Nam);
+        jRadioButton_Nam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButton_Nam.setText("Nam");
 
         buttonGroup1.add(jRadioButton_Nu);
+        jRadioButton_Nu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButton_Nu.setText("Nữ");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Thêm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +161,7 @@ public class ThemNV extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("Quay lại");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,7 +169,8 @@ public class ThemNV extends javax.swing.JFrame {
             }
         });
 
-        jComboBox_ChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Quản Lý", "NV bán vé", "Tài Xế" }));
+        jComboBox_ChucVu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBox_ChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AD - Quản Lý", "NV - Nhân viên bán vé" }));
         jComboBox_ChucVu.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_ChucVuItemStateChanged(evt);
@@ -171,16 +182,16 @@ public class ThemNV extends javax.swing.JFrame {
             }
         });
 
-        jLabel_maNV.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel_maNV.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel_maNV.setText("Mã Nhân Viên");
+        jTextField_maNV.setEditable(false);
+        jTextField_maNV.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField_maNV.setForeground(new java.awt.Color(255, 51, 51));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(288, 288, 288)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -188,32 +199,35 @@ public class ThemNV extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2))
-                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField_SDT, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox_ChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_maNV)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField_CMND, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField_tenNV, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButton2)
-                            .addGap(46, 46, 46)
-                            .addComponent(jButton1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jRadioButton_Nam)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jRadioButton_Nu))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField_SDT)
+                                .addComponent(jTextField_CMND)
+                                .addComponent(jTextField_tenNV)
+                                .addComponent(jComboBox_ChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jRadioButton_Nam)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jRadioButton_Nu)))
+                            .addComponent(jTextField_maNV, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(458, 458, 458))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel_maNV))
-                .addGap(32, 32, 32)
+                    .addComponent(jTextField_maNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTextField_tenNV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -234,11 +248,11 @@ public class ThemNV extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(jComboBox_ChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
+                .addGap(91, 91, 91)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,7 +275,7 @@ public class ThemNV extends javax.swing.JFrame {
         } else if (!jTextField_SDT.getText().matches("0\\d{9,10}") || jTextField_SDT.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Xem Lại SDT");
         }else{
-            maNV = jLabel_maNV.getText();
+            maNV = jTextField_maNV.getText();
             hoTen = jTextField_tenNV.getText();
             CMND = jTextField_CMND.getText();
             if(jRadioButton_Nam.isSelected()){
@@ -272,6 +286,7 @@ public class ThemNV extends javax.swing.JFrame {
             }
             dienThoai = jTextField_SDT.getText();
             chucVu = jComboBox_ChucVu.getSelectedItem().toString();
+            chucVu=chucVu.substring(0,chucVu.indexOf(" -"));
             themNhanVien(maNV, hoTen, CMND, gioiTinh, dienThoai, chucVu);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -282,7 +297,9 @@ public class ThemNV extends javax.swing.JFrame {
 
     private void jComboBox_ChucVuItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_ChucVuItemStateChanged
         // TODO add your handling code here:
-        jLabel_maNV.setText(maNV(jComboBox_ChucVu.getSelectedItem().toString()));
+        String maChucVu=jComboBox_ChucVu.getSelectedItem().toString();
+        maChucVu=maChucVu.substring(0,maChucVu.indexOf(" -"));
+        jTextField_maNV.setText(maNV(maChucVu));
     }//GEN-LAST:event_jComboBox_ChucVuItemStateChanged
 
     /**
@@ -311,6 +328,7 @@ public class ThemNV extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(ThemNV.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -336,6 +354,7 @@ public class ThemNV extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton_Nu;
     private javax.swing.JTextField jTextField_CMND;
     private javax.swing.JTextField jTextField_SDT;
+    private javax.swing.JTextField jTextField_maNV;
     private javax.swing.JTextField jTextField_tenNV;
     // End of variables declaration//GEN-END:variables
 }
