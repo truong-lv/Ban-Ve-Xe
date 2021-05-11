@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -22,6 +24,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
         txtTK.setText(BanVeXe.Account);
+        
     }
     public  void loadAccount(){
         boolean checkLogin=false;
