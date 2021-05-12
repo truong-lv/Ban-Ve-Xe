@@ -19,7 +19,6 @@ public class KetNoi {
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             ketNoi=DriverManager.getConnection(uRL, userName, password);
-            System.out.println("Ket noi CSDL thanh cong");
         }catch(ClassNotFoundException | SQLException ex){
             System.out.println("Khong ket noi duoc voi CSDL");
         }

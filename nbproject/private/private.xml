@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Form/NhanVien/PnQlyKhach.java</file>
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Form/NhanVien/PnQlyVe.java</file>
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Form/PnDatVe.java</file>
@@ -11,6 +12,11 @@
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Code/XuLyNhap.java</file>
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Form/NhanVien/PnTTCaNhan.java</file>
             <file>file:/D:/MyCode/Java/DoAnCNPM/Ban-ve-xe/src/Code/BanVeXe.java</file>
+=======
+            <file>file:/D:/Ban-ve-xe/Ban-ve-xe/src/Form/QuanLy/PnDoanhThu.java</file>
+            <file>file:/D:/Ban-ve-xe/Ban-ve-xe/src/Form/PnDatVe.java</file>
+            <file>file:/D:/Ban-ve-xe/Ban-ve-xe/src/Form/Login.java</file>
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
         </group>
     </open-files>
 </project-private>

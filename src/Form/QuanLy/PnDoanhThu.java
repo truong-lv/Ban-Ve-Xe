@@ -27,16 +27,26 @@ public class PnDoanhThu extends javax.swing.JPanel {
     public PnDoanhThu() {
         initComponents();
     }
+
     public boolean kiemTraNgay(String ngaybd, String thangbd, String nambd, String ngaykt, String thangkt, String namkt, String ngayht, String thanght, String namht) {
-        boolean temp = false;
-        if (Integer.parseInt(namht) >= Integer.parseInt(nambd) && Integer.parseInt(namht) <= Integer.parseInt(namkt)) {
-            if (Integer.parseInt(thanght) >= Integer.parseInt(thangbd) && Integer.parseInt(thanght) <= Integer.parseInt(thangkt)) {
-                if (Integer.parseInt(ngayht) >= Integer.parseInt(ngaybd) && Integer.parseInt(ngayht) <= Integer.parseInt(ngaykt)) {
-                    temp = true;
+        if (Integer.parseInt(namht) > Integer.parseInt(nambd) && Integer.parseInt(namht) < Integer.parseInt(namkt)) {
+            return true;
+        } else if (Integer.parseInt(namht) == Integer.parseInt(nambd) && Integer.parseInt(namht) < Integer.parseInt(namkt)) {
+            if (Integer.parseInt(thanght) >= Integer.parseInt(thangbd)) {
+                if (Integer.parseInt(ngayht) >= Integer.parseInt(ngaybd)) {
+                    return true;
+                }
+            }
+        } else if ((Integer.parseInt(namht) > Integer.parseInt(nambd) && Integer.parseInt(namht) == Integer.parseInt(namkt)) || (Integer.parseInt(namht) == Integer.parseInt(nambd) && Integer.parseInt(namht) == Integer.parseInt(namkt))) {
+            if (Integer.parseInt(thanght) < Integer.parseInt(thangkt)) {
+                return true;
+            } else if (Integer.parseInt(thanght) == Integer.parseInt(thangkt)) {
+                if (Integer.parseInt(ngayht) <= Integer.parseInt(ngaykt)) {
+                    return true;
                 }
             }
         }
-        return temp;
+        return false;
     }
 
     public void doanhThu(String ngaybd, String thangbd, String nambd, String ngaykt, String thangkt, String namkt) {
@@ -65,6 +75,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
                         sum += Integer.parseInt(rs.getString(4));
                         dtm.addRow(vt);
                     }
+                    System.err.println("==================");
                 }
             }
             jLabel_DoanhThu.setText(String.valueOf(sum));
@@ -73,6 +84,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
             Logger.getLogger(PnDoanhThu.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,6 +133,11 @@ public class PnDoanhThu extends javax.swing.JPanel {
 
         jComboBox_ngayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_ngayKetThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        jComboBox_ngayKetThuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_ngayKetThucActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel9.setText("vnd");
@@ -137,6 +154,11 @@ public class PnDoanhThu extends javax.swing.JPanel {
 
         jComboBox_namKetThuc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_namKetThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021", "2022" }));
+        jComboBox_namKetThuc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_namKetThucActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Từ :");
@@ -267,6 +289,14 @@ public class PnDoanhThu extends javax.swing.JPanel {
 
         doanhThu(ngaybd, thangbd, nambd, ngaykt, thangkt, namkt);
     }//GEN-LAST:event_jButton_XemActionPerformed
+
+    private void jComboBox_ngayKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_ngayKetThucActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_ngayKetThucActionPerformed
+
+    private void jComboBox_namKetThucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_namKetThucActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_namKetThucActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

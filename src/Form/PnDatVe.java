@@ -30,12 +30,12 @@ import javax.swing.JTextField;
  */
 public class PnDatVe extends javax.swing.JPanel {
 
-    HamXuLyBang xLBang=new HamXuLyBang();
+    HamXuLyBang xLBang = new HamXuLyBang();
     JTable tbKhachHang;
-    
+
     ArrayList<JTextField> selected = new ArrayList<JTextField>();
     ArrayList<JTextField> chair = new ArrayList<JTextField>();
-    
+
     public PnDatVe() {
         initComponents();
         phanQuyenDatVe();
@@ -43,77 +43,88 @@ public class PnDatVe extends javax.swing.JPanel {
         addChair();
         loadChair();
     }
-    
-    private void phanQuyenDatVe(){
-        if(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))//nếu là khách đặt thì chỉ cần load thông tin vào txt
+
+    private void phanQuyenDatVe() {
+        if (BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))//nếu là khách đặt thì chỉ cần load thông tin vào txt
         {
             txtSDT.setText(BanVeXe.primaryKey);
             txtHoTen_Khach.setText(BanVeXe.hoTen);
-            if(BanVeXe.gioiTinh.equalsIgnoreCase("Nam")) rBtnNam1.setSelected(true);
-            else {rBtnNu1.setSelected(true);}
-        }
-        else{// nếu không phải khách thì mở edit txt cho nv hoặc admin nhập thông tin khách
+            if (BanVeXe.gioiTinh.equalsIgnoreCase("Nam")) {
+                rBtnNam1.setSelected(true);
+            } else {
+                rBtnNu1.setSelected(true);
+            }
+        } else {// nếu không phải khách thì mở edit txt cho nv hoặc admin nhập thông tin khách
             txtSDT.setEditable(true);
             txtHoTen_Khach.setEditable(true);
             rBtnNam1.setEnabled(true);
             rBtnNu1.setEnabled(true);
         }
     }
-    
+
     //chức năng được gọi khi nhân viên, admin đặt vé - khi nhập sđt khách thì sẽ kt từ bảng KH và load khách hàng có sẵn vào các txt
-    public void loadBangKhachHang(JTable tb){
-        tbKhachHang=tb;
+    public void loadBangKhachHang(JTable tb) {
+        tbKhachHang = tb;
     }
-    private void timKiemKhach(){
-        xLBang.locTatCa(tbKhachHang, txtSDT.getText(),-1);//lấy sđt tìm kiếm trên bảng khách hàng
+
+    private void timKiemKhach() {
+        xLBang.locTatCa(tbKhachHang, txtSDT.getText(), -1);//lấy sđt tìm kiếm trên bảng khách hàng
 
         //----kiểm tra có tìm đc ko. Nếu tìm đc thì load thông tin khách
-        if(tbKhachHang.getRowCount()>0 && txtSDT.getText().equals(tbKhachHang.getValueAt(0, 0).toString())){
-            
+        if (tbKhachHang.getRowCount() > 0 && txtSDT.getText().equals(tbKhachHang.getValueAt(0, 0).toString())) {
+
             txtHoTen_Khach.setText(tbKhachHang.getValueAt(0, 1).toString());
             txtHoTen_Khach.setEditable(false);
-            
-            String gt=tbKhachHang.getValueAt(0, 2).toString();
-//            if(gt.equalsIgnoreCase("Nam")){ rBtnNam1.setSelected(true);}
-            if(gt.equalsIgnoreCase("Nam")) rBtnNam1.setSelected(true);
-            else {rBtnNu1.setSelected(true);}
+
+            String gt = tbKhachHang.getValueAt(0, 2).toString();
+            //if(gt.equalsIgnoreCase("Nam")){ rBtnNam1.setSelected(true);}
+            if (gt.equalsIgnoreCase("Nam")) {
+                rBtnNam1.setSelected(true);
+            } else {
+                rBtnNu1.setSelected(true);
+            }
             rBtnNam1.setEnabled(false);
             rBtnNu1.setEnabled(false);
+<<<<<<< HEAD
             xLBang.locTatCa(tbKhachHang, "",-1);//lấy sđt tìm kiếm trên bảng khách hàng
             }
         else {// nếu ko thì reset lại textField
+=======
+        } else {// nếu ko thì reset lại textField
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
             txtHoTen_Khach.setText("");
             txtHoTen_Khach.setEditable(true);
             rBtnNam1.setEnabled(true);
             rBtnNu1.setEnabled(true);
         }
-         //xLBang.locTatCa(tbKhachHang, "",-1);
+        //xLBang.locTatCa(tbKhachHang, "",-1);
     }
-    private boolean  ktNhap(){
-        boolean kt=true;
-        if(txtSDT.getText().isEmpty()){
+
+    private boolean ktNhap() {
+        boolean kt = true;
+        if (txtSDT.getText().isEmpty()) {
             lbLoiSDT.setVisible(true);
-            kt= false;
+            kt = false;
         }
-        if(txtHoTen_Khach.getText().isEmpty()){
+        if (txtHoTen_Khach.getText().isEmpty()) {
             lbLoiTen.setVisible(true);
-            kt= false;
+            kt = false;
         }
-        if((!rBtnNam1.isSelected() && !rBtnNu1.isSelected())){
+        if ((!rBtnNam1.isSelected() && !rBtnNu1.isSelected())) {
             lbLoiGioiTinh.setVisible(true);
-            kt= false;
+            kt = false;
         }
-        
+
         return kt;
     }
-    public void resetTxt(){
+
+    public void resetTxt() {
         txtSDT.setText("");
         txtHoTen_Khach.setText("");
-        xLBang.locTatCa(tbKhachHang, "",-1);
+        xLBang.locTatCa(tbKhachHang, "", -1);
     }
     //================================================
-    
-   
+
     //Hàm Lấy Mã Những Chuyến Xe Có Gio Di Và TramXuatPhat cho khách chọn
     public String getMaCX(String time, String start) {
         String maCX = "";
@@ -123,7 +134,7 @@ public class PnDatVe extends javax.swing.JPanel {
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             //System.out.println(time+ ".0000000");
-            ps.setString(1, (time ));
+            ps.setString(1, (time));
             ps.setString(2, start);
 
             ResultSet rs = ps.executeQuery();
@@ -154,7 +165,7 @@ public class PnDatVe extends javax.swing.JPanel {
         } else {
             price = "150000";
         }
-        
+
         String day = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
         String maCX = "";
@@ -172,7 +183,11 @@ public class PnDatVe extends javax.swing.JPanel {
             while (rs.next()) {
                 for (int i = 0; i < chair.size(); i++) {
                     if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) &&/* price.equals(rs.getString(4)) &&*/ day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
+<<<<<<< HEAD
                         chair.get(Integer.parseInt(rs.getString(3))-2).setBackground(Color.RED);
+=======
+                        chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
                     }
                 }
             }
@@ -186,7 +201,6 @@ public class PnDatVe extends javax.swing.JPanel {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");// /MM/uuuu
         LocalDate localDate = LocalDate.now();
         jLabel_month.setText(dtf.format(localDate));
-        
 
 //        int toDay = Integer.parseInt(java.time.LocalDate.now().toString().substring(8, 10));
 //        System.out.println(toDay);
@@ -207,20 +221,11 @@ public class PnDatVe extends javax.swing.JPanel {
 //                temp++;
 //            }
 //        }
-        
         //Load thẳng ngày/tháng/năm vào cbb. Load từ ngày hiện tại trở đi 7 ngày
         for (int i = 0; i < 7; i++) {
-            
             jComboBox_Day.addItem(dtf.format(localDate.plusDays(i)));
         }
-        int time = Integer.parseInt(java.time.LocalTime.now().toString().substring(0, 2)) + 3;
-        for (int i = time; i < 24; i++) {
-            if (i < 10) {
-                jComboBox_Time.addItem("0" + String.valueOf(i) + ":00:00");
-            } else {
-                jComboBox_Time.addItem(String.valueOf(i) + ":00:00");
-            }
-        }
+
     }
 
     public boolean Add(JTextField txt, int z) {
@@ -229,11 +234,11 @@ public class PnDatVe extends javax.swing.JPanel {
         for (int i = 0; i < selected.size(); i++) {
             if (selected.get(i).getText().equals(txt.getText())) {
                 selected.remove(i);
-                
+
                 temp = true;
             }
         }
-        
+
         if (temp == false && z != 5) {
             selected.add(txt);
         }
@@ -306,7 +311,7 @@ public class PnDatVe extends javax.swing.JPanel {
             ps.setString(7, trangThai);
             ps.setString(8, maNV);
             ps.executeUpdate();
-            
+
             ps.close();
             connect.close();
         } catch (SQLException e) {
@@ -1073,7 +1078,6 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void txtGhe2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtGhe2MouseClicked
         // TODO add your handling code here:
-
         changeColor(txtGhe2);
     }//GEN-LAST:event_txtGhe2MouseClicked
 
@@ -1156,34 +1160,52 @@ public class PnDatVe extends javax.swing.JPanel {
         changeColor(txtGhe17);
     }//GEN-LAST:event_txtGhe17MouseClicked
 
-    private void jComboBox_DayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_DayItemStateChanged
+    public void thoigian(int day) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");// /MM/uuuu
+        LocalDate localDate = LocalDate.now();
+        int ngay = Integer.parseInt(dtf.format(localDate));
+        int gio = Integer.parseInt(java.time.LocalTime.now().toString().substring(0, 2)) + 2;
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "SELECT DISTINCT GioDi FROM CHUYEN_XE";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            jComboBox_Time.removeAllItems();
+            if (day == ngay) {
+                while (rs.next()) {
+                    if (Integer.parseInt(rs.getString(1).toString().substring(0, 2)) >= gio) {
+                        jComboBox_Time.addItem(rs.getString(1).substring(0, 8));
+                    }
+                }
+            } else {
+                while (rs.next()) {
+                    jComboBox_Time.addItem(rs.getString(1).substring(0, 8));
+                }
+            }
+            while (rs.next()) {
+                System.err.println("time : " + rs.getString(2));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
+        }
 
+    }
+
+    private void jComboBox_DayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_DayItemStateChanged
         //reset select
         loadChair();
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
-
         // Bắt Điều Kiện Khi Ngày Đặt Tràn Qua Tháng Mới
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("/MM/uuuu");
         LocalDate localDate = LocalDate.now();
-        int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0,2));
+        int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0, 2));
         // !!! lỗi khi ngày hiện tại <7 thì tự động nhảy qua tháng mới 
 //        if (day < 7 && Integer.parseInt(String.valueOf(localDate.getDayOfMonth())) <= 31) {
 //            jLabel_month.setText(dtf.format(localDate.plusMonths(1)));
 //        }
-
         // Nếu ngày đặt là ngày hiện tại thì chỉ được đặt những chuyến sau giờ hiện tại 3h
-        if (day > localDate.getDayOfMonth()) {
-            jComboBox_Time.removeAllItems();
-            for (int i = 3; i < 24; i++) {
-                if (i < 10) {
-                    jComboBox_Time.addItem("0" + String.valueOf(i) + ":00:00");
-                } else {
-                    jComboBox_Time.addItem(String.valueOf(i) + ":00:00");
-                }
-            }
-        }
-
+        thoigian(day);
     }//GEN-LAST:event_jComboBox_DayItemStateChanged
 
     private void jComboBox_TimeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_TimeItemStateChanged
@@ -1238,23 +1260,39 @@ public class PnDatVe extends javax.swing.JPanel {
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         if (ktNhap() && selected.size() > 0) {
             //nếu nhập khách hàng mới thì thêm khách hàng vào database trc
+<<<<<<< HEAD
             if(txtHoTen_Khach.isEditable()){
                 DangKyKhach dky =new DangKyKhach();
                 String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(),gt , null);
+=======
+            if (txtHoTen_Khach.isEditable()) {
+                DangKyKhach dky = new DangKyKhach();
+                String gt = (rBtnNam1.isSelected()) ? "Nam" : "Nữ";
+                dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(), gt, null);
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
             }
-            
+
             for (int i = 0; i < selected.size(); i++) {
                 String viTriGhe = selected.get(i).getText();
                 String maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
                 String maVe = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/ + maCX + viTriGhe;
                 maVe = maVe.replace("/", "");
                 String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
+<<<<<<< HEAD
                 
                 String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng")?"0":"1";
                 
                 
                 String maNV = null;//(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
+=======
+
+                String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
+
+                //nếu là khách hàng đặt thì maNV null
+                String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
+                System.out.println("ma: " + maNV);
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
                 String giaVe;
                 if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
                     giaVe = "300000";
@@ -1262,18 +1300,23 @@ public class PnDatVe extends javax.swing.JPanel {
                     giaVe = "150000";
                 }
 
-                datVe(maVe, txtSDT.getText() , viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
-               
+                datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
+
             }
             JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
+<<<<<<< HEAD
             loadChair();
+=======
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin", "Chưa Thể Đặt Vé", 0);
+>>>>>>> e127113326b9b2c23d3887944dac9447f719748d
         }
-        else JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin","Chưa Thể Đặt Vé",0);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void txtSDTFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSDTFocusLost
-       
-        
+
+
     }//GEN-LAST:event_txtSDTFocusLost
 
     private void txtSDTKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSDTKeyPressed
