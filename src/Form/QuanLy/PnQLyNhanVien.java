@@ -30,6 +30,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
     public PnQLyNhanVien() {
         initComponents();
         loadNhanVien();
+        jTable1.setDefaultEditor(Object.class, null);
     }
 
     // Hàm load nhân viên vào bảng

@@ -42,7 +42,6 @@ public class ThemNV extends javax.swing.JFrame {
                     break;
                 }
             }
-
             ps.close();
             ketNoi.close();
         } catch (SQLException e) {
@@ -115,7 +114,6 @@ public class ThemNV extends javax.swing.JFrame {
         } catch (SQLException e) {
             Logger.getLogger(ThemNV.class.getName()).log(Level.SEVERE, null, e);
         }
-
         return kt;
     }
 
