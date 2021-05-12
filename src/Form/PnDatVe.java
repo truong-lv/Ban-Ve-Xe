@@ -39,6 +39,8 @@ public class PnDatVe extends javax.swing.JPanel {
     public PnDatVe() {
         initComponents();
         phanQuyenDatVe();
+        taiLoaiXe();
+        taiNoiXuatPhat();
         AddTime();
         addChair();
         loadChair();
@@ -121,6 +123,27 @@ public class PnDatVe extends javax.swing.JPanel {
     }
     //================================================
 
+    //hàm Tính Giá Vé
+    public String giaVe(String loaiXe) {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "SELECT * FROM LOAI_XE";
+
+        String giaVe = "0";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getString(2).equals(loaiXe)) {
+                    giaVe = String.valueOf(150000 * (Integer.parseInt(rs.getString(3))));
+                }
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return giaVe;
+    }
+
     //Hàm Lấy Mã Những Chuyến Xe Có Gio Di Và TramXuatPhat cho khách chọn
     public String getMaCX(String time, String start) {
         String maCX = "";
@@ -130,7 +153,7 @@ public class PnDatVe extends javax.swing.JPanel {
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             //System.out.println(time+ ".0000000");
-            ps.setString(1, (time));
+            ps.setString(1, time);
             ps.setString(2, start);
 
             ResultSet rs = ps.executeQuery();
@@ -152,15 +175,38 @@ public class PnDatVe extends javax.swing.JPanel {
         }
     }
 
+    public void taiNoiXuatPhat() {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "select DISTINCT TramXuatPhat from CHUYEN_XE";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                jComboBox_chuyenDi.addItem(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void taiLoaiXe() {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "select * from LOAI_XE";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                jComboBox_loaiXe.addItem(rs.getString(2));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     public void loadChair() {
         setChair();
-        String price = "";
+        String price = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
-        if (loaiXe.equals("Giường Nằm")) {
-            price = "300000";
-        } else {
-            price = "150000";
-        }
 
         String day = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
@@ -178,8 +224,13 @@ public class PnDatVe extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 for (int i = 0; i < chair.size(); i++) {
+<<<<<<< HEAD
                     if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) &&/* price.equals(rs.getString(4)) &&*/ day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
                         chair.get(Integer.parseInt(rs.getString(3))-2).setBackground(Color.RED);
+=======
+                    if (chair.get(i).getText().equals(rs.getString(3)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6)) && price.equals(rs.getString(4))) {
+                        chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
+>>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
                     }
                 }
             }
@@ -207,11 +258,9 @@ public class PnDatVe extends javax.swing.JPanel {
         for (int i = 0; i < selected.size(); i++) {
             if (selected.get(i).getText().equals(txt.getText())) {
                 selected.remove(i);
-
                 temp = true;
             }
         }
-
         if (temp == false && z != 5) {
             selected.add(txt);
         }
@@ -222,31 +271,42 @@ public class PnDatVe extends javax.swing.JPanel {
     public void changeColor(JTextField txt) {
         int soLuong = Integer.parseInt(lbSoLuongVe.getText());
 
-        if (txt.getBackground() != Color.RED) {
-            if (soLuong < 5) {
-                if (txt.getBackground() == Color.WHITE) {
-                    txt.setBackground(Color.GREEN);
-                    soLuong++;
-                } else {
-                    txt.setBackground(Color.white);
-                    soLuong--;
+        if (jComboBox_loaiXe.getSelectedItem().equals("Chọn Loại Xe")) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Loại Xe");
+        }else if(jComboBox_chuyenDi.getSelectedItem().equals("Chọn Nơi Xuất Phát")){
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Nơi Xuất Phát");
+        }else {
+            if (txt.getBackground() != Color.RED) {
+                if (soLuong < 5) {
+                    if (txt.getBackground() == Color.WHITE) {
+                        txt.setBackground(Color.GREEN);
+                        soLuong++;
+                    } else {
+                        txt.setBackground(Color.white);
+                        soLuong--;
+                    }
+                    lbSoLuongVe.setText(String.valueOf(soLuong));
+                    Add(txt, soLuong - 1);
+                } else if (Integer.parseInt(lbSoLuongVe.getText()) == 5) {
+                    if (Add(txt, 5)) {
+                        txt.setBackground(Color.WHITE);
+                        lbSoLuongVe.setText("4");
+                    } else {
+                        JOptionPane.showConfirmDialog(null, "Không được đặt quá 5 ghế", "Thông Báo", JOptionPane.DEFAULT_OPTION);
+                    }
                 }
-                lbSoLuongVe.setText(String.valueOf(soLuong));
-                Add(txt, soLuong - 1);
-            } else if (Integer.parseInt(lbSoLuongVe.getText()) == 5) {
-                if (Add(txt, 5)) {
-                    txt.setBackground(Color.WHITE);
-                    lbSoLuongVe.setText("4");
-                } else {
-                    JOptionPane.showConfirmDialog(null, "Không được đặt quá 5 ghế", "Thông Báo", JOptionPane.DEFAULT_OPTION);
-                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ghế Này Đã Được Đặt");
             }
         }
 
         // Tính Tổng Tiền
-        Locale localeVN = new Locale("vi", "VN");
-        int price = Integer.parseInt(jLabel_price.getText().substring(0, 3) + jLabel_price.getText().substring(4, 7)) * Integer.parseInt(lbSoLuongVe.getText());
-        jLabel_priceAll.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)));
+        if (soLuong != 0) {
+            Locale localeVN = new Locale("vi", "VN");
+            int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString())) * Integer.parseInt(lbSoLuongVe.getText());
+            jLabel_priceAll.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length()-1) + " VND");
+        }
+
     }
 
     //Hàm Add Ghế vào ArrayList để đổi màu ghế đã đặt
@@ -341,7 +401,8 @@ public class PnDatVe extends javax.swing.JPanel {
         lblGiaVe1 = new javax.swing.JLabel();
         lblGiaVe2 = new javax.swing.JLabel();
         jLabel_priceAll = new javax.swing.JLabel();
-        jLabel_diemDen = new javax.swing.JLabel();
+        lblNoiDi3 = new javax.swing.JLabel();
+        lb_diemDen = new javax.swing.JLabel();
         btnXacNhan = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
@@ -761,7 +822,7 @@ public class PnDatVe extends javax.swing.JPanel {
         lblNoiDi1.setText("Loại xe :");
         lblNoiDi1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jComboBox_loaiXe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Giường Nằm", "Ghế Ngồi" }));
+        jComboBox_loaiXe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Loại Xe" }));
         jComboBox_loaiXe.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_loaiXeItemStateChanged(evt);
@@ -773,7 +834,7 @@ public class PnDatVe extends javax.swing.JPanel {
         lblNoiDi2.setText("Xuất Phát : ");
         lblNoiDi2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jComboBox_chuyenDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TP.HCM", "Đồng Nai" }));
+        jComboBox_chuyenDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn Nơi Xuất Phát" }));
         jComboBox_chuyenDi.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_chuyenDiItemStateChanged(evt);
@@ -786,7 +847,7 @@ public class PnDatVe extends javax.swing.JPanel {
         });
 
         jLabel_price.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jLabel_price.setText("300.000 đ");
+        jLabel_price.setText("0 VND");
 
         lblGiaVe1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblGiaVe1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -803,47 +864,60 @@ public class PnDatVe extends javax.swing.JPanel {
         jLabel_priceAll.setForeground(new java.awt.Color(255, 51, 0));
         jLabel_priceAll.setText("0 VND");
 
-        jLabel_diemDen.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        lblNoiDi3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblNoiDi3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNoiDi3.setText("Điểm Đến  :");
+        lblNoiDi3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        lb_diemDen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lb_diemDen.setForeground(new java.awt.Color(255, 0, 0));
+        lb_diemDen.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lb_diemDen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout pnDatVeLayout = new javax.swing.GroupLayout(pnDatVe);
         pnDatVe.setLayout(pnDatVeLayout);
         pnDatVeLayout.setHorizontalGroup(
             pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
-                .addGap(3, 3, 3)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
+                            .addGroup(pnDatVeLayout.createSequentialGroup()
                                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblGiaVe1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblGiaVe2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
-                                .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)))
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbSoLuongVe, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
+                                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblGiaVe1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(lblGiaVe2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnDatVeLayout.createSequentialGroup()
+                                        .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)))
+                                .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbSoLuongVe, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel_priceAll, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnDatVeLayout.createSequentialGroup()
+                                .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnDatVeLayout.createSequentialGroup()
+                                .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnDatVeLayout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnDatVeLayout.createSequentialGroup()
+                                .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnDatVeLayout.createSequentialGroup()
-                        .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnDatVeLayout.createSequentialGroup()
-                        .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnDatVeLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnDatVeLayout.createSequentialGroup()
-                        .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lb_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(41, 41, 41)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
@@ -869,13 +943,15 @@ public class PnDatVe extends javax.swing.JPanel {
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_diemDen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(24, 24, 24)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1199,18 +1275,16 @@ public class PnDatVe extends javax.swing.JPanel {
         //reset select
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
-
+        
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
-        if (loaiXe.equals("Giường Nằm")) {
-            jLabel_price.setText("300.000 đ");
-        } else {
-            jLabel_price.setText("150.000 đ");
-        }
+        Locale localeVN = new Locale("vi", "VN");
+        int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString()));
+        
+        jLabel_price.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length()-1) + " VND");
         loadChair();
     }//GEN-LAST:event_jComboBox_loaiXeItemStateChanged
 
     private void jComboBox_chuyenDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_chuyenDiItemStateChanged
-
         //reset select
         loadChair();
         lbSoLuongVe.setText("0");
@@ -1218,12 +1292,10 @@ public class PnDatVe extends javax.swing.JPanel {
 
         String chuyenDi = jComboBox_chuyenDi.getSelectedItem().toString();
         if (chuyenDi.equals("TP.HCM")) {
-            jLabel_diemDen.setText("Đồng Nai");
-
+            lb_diemDen.setText("Đồng Nai");
         } else {
-            jLabel_diemDen.setText("TP.HCM");
+            lb_diemDen.setText("TP.HCM");
         }
-
     }//GEN-LAST:event_jComboBox_chuyenDiItemStateChanged
 
     private void jComboBox_chuyenDiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_chuyenDiActionPerformed
@@ -1251,6 +1323,7 @@ public class PnDatVe extends javax.swing.JPanel {
                 
                 String maNV = null;//(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
 
+<<<<<<< HEAD
                 String giaVe;
                 if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
                     giaVe = "300000";
@@ -1258,12 +1331,25 @@ public class PnDatVe extends javax.swing.JPanel {
                     giaVe = "150000";
                 }
 
-                datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
+=======
+                String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
 
+                //nếu là khách hàng đặt thì maNV null
+                String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
+                System.out.println("ma: " + maNV);
+                String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
+>>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
+                datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
             }
             JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
+<<<<<<< HEAD
             loadChair();
 
+=======
+            lbSoLuongVe.setText("0");
+            jLabel_priceAll.setText("0 VND");
+            selected.clear();
+>>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin", "Chưa Thể Đặt Vé", 0);
         }
@@ -1308,7 +1394,6 @@ public class PnDatVe extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabel_diemDen;
     private javax.swing.JLabel jLabel_month;
     private javax.swing.JLabel jLabel_price;
     private javax.swing.JLabel jLabel_priceAll;
@@ -1322,6 +1407,7 @@ public class PnDatVe extends javax.swing.JPanel {
     private javax.swing.JLabel lbLoiSDT;
     private javax.swing.JLabel lbLoiTen;
     private javax.swing.JLabel lbSoLuongVe;
+    private javax.swing.JLabel lb_diemDen;
     private javax.swing.JLabel lblGiaVe;
     private javax.swing.JLabel lblGiaVe1;
     private javax.swing.JLabel lblGiaVe2;
@@ -1329,6 +1415,7 @@ public class PnDatVe extends javax.swing.JPanel {
     private javax.swing.JLabel lblNoiDi;
     private javax.swing.JLabel lblNoiDi1;
     private javax.swing.JLabel lblNoiDi2;
+    private javax.swing.JLabel lblNoiDi3;
     private javax.swing.JPanel pnDatVe;
     private javax.swing.JRadioButton rBtnNam1;
     private javax.swing.JRadioButton rBtnNu1;
