@@ -79,6 +79,7 @@ public class PnDatVe extends javax.swing.JPanel {
             else {rBtnNu1.setSelected(true);}
             rBtnNam1.setEnabled(false);
             rBtnNu1.setEnabled(false);
+            xLBang.locTatCa(tbKhachHang, "",-1);//lấy sđt tìm kiếm trên bảng khách hàng
             }
         else {// nếu ko thì reset lại textField
             txtHoTen_Khach.setText("");
@@ -172,7 +173,6 @@ public class PnDatVe extends javax.swing.JPanel {
                 for (int i = 0; i < chair.size(); i++) {
                     if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) &&/* price.equals(rs.getString(4)) &&*/ day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
                         chair.get(Integer.parseInt(rs.getString(3))-2).setBackground(Color.RED);
-                        System.out.println("22222222222222222");
                     }
                 }
             }
@@ -1241,7 +1241,7 @@ public class PnDatVe extends javax.swing.JPanel {
             if(txtHoTen_Khach.isEditable()){
                 DangKyKhach dky =new DangKyKhach();
                 String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
-                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(),gt , null);
+                dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(),gt , null);
             }
             
             for (int i = 0; i < selected.size(); i++) {
@@ -1253,9 +1253,8 @@ public class PnDatVe extends javax.swing.JPanel {
                 
                 String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng")?"0":"1";
                 
-                //nếu là khách hàng đặt thì maNV null
-                String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
-                System.out.println("ma: "+maNV);
+                
+                String maNV = null;//(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
                 String giaVe;
                 if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
                     giaVe = "300000";
@@ -1266,9 +1265,8 @@ public class PnDatVe extends javax.swing.JPanel {
                 datVe(maVe, txtSDT.getText() , viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                
             }
-            loadChair();
             JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
-
+            loadChair();
         }
         else JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin","Chưa Thể Đặt Vé",0);
     }//GEN-LAST:event_btnXacNhanActionPerformed

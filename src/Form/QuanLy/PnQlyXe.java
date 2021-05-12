@@ -529,6 +529,7 @@ public class PnQlyXe extends javax.swing.JPanel {
         cbbLoaiXe.setMaximumRowCount(6);
         cbbLoaiXe.setEnabled(false);
 
+        cbbHeSoGia.setEditable(true);
         cbbHeSoGia.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         cbbHeSoGia.setMaximumRowCount(6);
         cbbHeSoGia.setEnabled(false);

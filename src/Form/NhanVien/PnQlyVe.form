@@ -157,9 +157,9 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="441" max="-2" attributes="0"/>
                       <Component id="btnDuyetVe" min="-2" pref="93" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                       <Component id="btnHuyVe" min="-2" pref="93" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="398" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="420" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane2" alignment="1" pref="1127" max="32767" attributes="0"/>
               </Group>
@@ -223,7 +223,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchVeKeyReleased"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSearchVeKeyPressed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnClearText">

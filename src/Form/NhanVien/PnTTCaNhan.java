@@ -27,17 +27,17 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         initComponents();
         loadThongTinNV();
         
-        quyenChinhSua();
+        //quyenChinhSua();
     }
 
-    private void quyenChinhSua(){// chỉ có admin đc hiệu chỉnh thông tin cá nhân
-        if(BanVeXe.quyen.equals("Quản lý")){
-            
-            btnChinhSua.setVisible(true);
-        }else{
-            lbThongBao.setVisible(true);
-        }
-    }
+//    private void quyenChinhSua(){// chỉ có admin đc hiệu chỉnh thông tin cá nhân
+//        if(BanVeXe.quyen.equals("Quản lý")){
+//            
+//            btnChinhSua.setVisible(true);
+//        }else{
+//            lbThongBao.setVisible(true);
+//        }
+//    }
     private void setEdit(boolean trangThai){
         txtMaNV.setEditable(trangThai);
         txtTen.setEditable(trangThai);
@@ -186,7 +186,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
 
         lbThongBao.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbThongBao.setForeground(new java.awt.Color(255, 51, 51));
-        lbThongBao.setText("(Nhân viên không có quyền hiệu chỉnh)");
+        lbThongBao.setText("Nhân viên chỉ có quyền đổi mật khẩu");
         lbThongBao.setVisible(false);
 
         btnSeePass.setForeground(new java.awt.Color(255, 255, 255));
@@ -225,7 +225,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
 
         btnChinhSua.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnChinhSua.setText("Chỉnh sửa");
-        btnChinhSua.setVisible(false);
         btnChinhSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnChinhSuaActionPerformed(evt);
@@ -252,14 +251,9 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(392, 392, 392)
-                        .addComponent(lbThongBao))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(466, 466, 466)
-                        .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(466, 466, 466)
+                .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(546, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -316,7 +310,8 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel21)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbThongBao))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSeePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(130, 130, 130))))
@@ -375,12 +370,12 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel24))))
+                            .addComponent(jLabel24))
+                        .addGap(27, 27, 27)
+                        .addComponent(lbThongBao)))
                 .addGap(43, 43, 43)
                 .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbThongBao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(40, 40, 40)
                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
@@ -398,13 +393,19 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         if(btnChinhSua.getText().equalsIgnoreCase("Chỉnh sửa")){//chuyển qua chức năng chỉnh sửa
             btnChinhSua.setText("Lưu");
             btnHuy.setVisible(true);
-            setEdit(true);
             txtMK.setText(BanVeXe.pass);
-            loadCbbChucVu();
+            
+            if(BanVeXe.quyen.equals("Nhân viên")){
+                txtMK.setEditable(true);
+                lbThongBao.setVisible(true);
+            }else
+            {
+                setEdit(true);
+                loadCbbChucVu();
+            }
+            
         }else{// chuyển qua chức năng xem
-            btnChinhSua.setText("Chỉnh sửa");
-            btnHuy.setVisible(false);
-            setEdit(false);
+            
             String maNV=txtMaNV.getText();
             String ten=txtTen.getText();
             String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
@@ -416,6 +417,12 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             chucVu=chucVu.substring(0, chucVu.indexOf("-"));
             loadHieuChinhTT(maNV, ten, cmnd, gt, chucVu, sdt, tk, mk);
             JOptionPane.showMessageDialog(this, "Hiệu chỉnh thông tin thành công");
+            
+            btnChinhSua.setText("Chỉnh sửa");
+            btnHuy.setVisible(false);
+            setEdit(false);
+            lbThongBao.setVisible(false);
+            txtMK.setText("**********");
         }
     }//GEN-LAST:event_btnChinhSuaActionPerformed
 

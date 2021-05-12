@@ -5,14 +5,16 @@
  */
 package Form.NhanVien;
 
+import Code.BanVeXe;
 import Code.HamXuLyBang;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -24,6 +26,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     HamXuLyBang xLBang=new HamXuLyBang();
     public PnQlyVe() {
         initComponents();
+        //LOAD DỮ LIỆU VÉ VÀO BẢNG TẠM
         xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
         loadComboNgayDi();
         loadComboGio();
@@ -31,6 +34,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         locDuLieuVeXe();
     }
     
+    //lấy dữ liệu từ combobox 
     private String stringCbb(JComboBox cbb){
         return cbb.getSelectedIndex()!=-1?cbb.getSelectedItem().toString():"";
     }
@@ -38,7 +42,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         return cbb.getSelectedIndex()!=-1?Integer.parseInt(cbb.getSelectedItem().toString()):-1;
     }
     
-    
+    //LOAD CÁC COMBOBOX TỪ BẢNG TẠM
     public void loadComboNgayDi(){
         cbbNgayDi.removeAllItems();
         String tram=cbbTramDi.getSelectedItem().toString();
@@ -118,7 +122,8 @@ public class PnQlyVe extends javax.swing.JPanel {
 
     }
     
-    //Hàm lọc dữ liệu từ Bảng Tạm(bảng lưu trữ) vào Bảng VéXe( bảng hiển thị) theo các combobox
+    
+    //Hàm lọc dữ liệu từ Bảng Tạm(-bảng lưu trữ) vào Bảng VéXe(-bảng hiển thị), LỌC theo các combobox
     public void locDuLieuVeXe(){
         DefaultTableModel dtm=(DefaultTableModel)tbVeXe.getModel();
         dtm.setNumRows(0);
@@ -147,31 +152,26 @@ public class PnQlyVe extends javax.swing.JPanel {
         xLBang.sapXepBang(tbVeXe ,0,0);
     }
     //--------------Duyệt Vé-------------------------
-    public void duyetVe(String maVe){
+    public void duyetVe(String maVe, String maNV){
         String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), tbVeXe.getColumnCount()-1);
         Connection connect=Code.KetNoi.layKetNoi();
-        String sql="UPDATE VE_XE SET TrangThai=0 WHERE MaVe=?";
+        String sql="UPDATE VE_XE SET TrangThai=1, MaNV=? WHERE MaVe=?";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
-            ps.setString(1, maVe);
+            ps.setString(1, maNV);
+            ps.setString(2, maVe);
             ps.executeUpdate();
-            int choose = JOptionPane.showConfirmDialog(this, "Xác nhận duyệt vé: "+maVe, "Duyệt vé", 0);
-            if(choose==JOptionPane.OK_OPTION){
-                String sql2="{call SP_LOAD_VE_TO_JTABLE()}";
-                xLBang.loadDuLieuVaoBang(tbVeXe,sql2);
-                JOptionPane.showMessageDialog(this, "Duyệt vé: "+maVe+" thành công");
-            }
+            
             ps.close();
             connect.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyVe.class.getName()).log(Level.SEVERE, null, e);
         }
         btnDuyetVe.setEnabled(false);
     }
     
     //----------------Hủy Vé------------------------
     public void huyVe(String maVe){
-        String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(),tbVeXe.getColumnCount()-1);
         Connection connect=Code.KetNoi.layKetNoi();
         String sql="DELETE FROM VE_XE WHERE MaVe=?";
         
@@ -181,8 +181,8 @@ public class PnQlyVe extends javax.swing.JPanel {
             ps.executeUpdate();
             ps.close();
             connect.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyVe.class.getName()).log(Level.SEVERE, null, e);
         }
         btnHuyVe.setEnabled(false);
     }
@@ -244,8 +244,8 @@ public class PnQlyVe extends javax.swing.JPanel {
 
         txtSearchVe.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         txtSearchVe.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchVeKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchVeKeyPressed(evt);
             }
         });
 
@@ -418,9 +418,9 @@ public class PnQlyVe extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(441, 441, 441)
                         .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
+                        .addGap(68, 68, 68)
                         .addComponent(btnHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(398, 398, 398))
+                        .addGap(420, 420, 420))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1127, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -463,6 +463,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         btnDuyetVe.setEnabled(false);
         btnHuyVe.setEnabled(false);
         txtSearchVe.setText("");
+        locDuLieuVeXe();
     }//GEN-LAST:event_btnClearTextActionPerformed
 
     private void tbVeXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeXeMouseClicked
@@ -479,8 +480,8 @@ public class PnQlyVe extends javax.swing.JPanel {
             btnHuyVe.setEnabled(true);
         }
         else{
+            btnHuyVe.setEnabled(true);
             btnDuyetVe.setEnabled(false);
-            btnHuyVe.setEnabled(false);
         }
 
     }//GEN-LAST:event_tbVeXeMouseClicked
@@ -488,19 +489,29 @@ public class PnQlyVe extends javax.swing.JPanel {
     private void btnDuyetVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDuyetVeActionPerformed
         // TODO add your handling code here:
         if(!tbVeXe.getSelectionModel().isSelectionEmpty()){
-            duyetVe(xLBang.selectRow(tbVeXe, 1));
+            String maVe=xLBang.selectRow(tbVeXe, 1);// đưa dữ liệu đc chọn vào biến
+            int choose = JOptionPane.showConfirmDialog(this, "Xác nhận duyệt vé: "+maVe, "Duyệt vé", 0);
+            if(choose==JOptionPane.OK_OPTION){
+                duyetVe(maVe,BanVeXe.primaryKey);
+                JOptionPane.showMessageDialog(this, "Duyệt vé: "+maVe+" thành công");
+                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+                locDuLieuVeXe();
+            }
+            
         }
     }//GEN-LAST:event_btnDuyetVeActionPerformed
 
     private void btnHuyVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyVeActionPerformed
         // TODO add your handling code here:
         if(!tbVeXe.getSelectionModel().isSelectionEmpty()){
-            String maVe=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), 1);// đưa dữ liệu đc chọn vào biến
+            String maVe=xLBang.selectRow(tbVeXe, 1);// đưa dữ liệu đc chọn vào biến
             int choose = JOptionPane.showConfirmDialog(this, "Xác nhận hủy vé: "+maVe, "Hủy vé", 0);
             if(choose==JOptionPane.OK_OPTION){
                 xLBang.loadDuLieuVaoBang(tbVeXe,"{call SP_LOAD_VE_TO_JTABLE()}");
                 huyVe(maVe);
                 JOptionPane.showMessageDialog(this, "Hủy vé: "+maVe+" thành công");
+                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+            locDuLieuVeXe();
             }
         }else JOptionPane.showMessageDialog(this, "Hãy chọn vé cần hủy");
         
@@ -534,19 +545,15 @@ public class PnQlyVe extends javax.swing.JPanel {
         loadComboChuyenXe();
     }//GEN-LAST:event_cbbGioDiItemStateChanged
 
-    private void txtSearchVeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyReleased
-        // TODO add your handling code here:
-        btnDuyetVe.setEnabled(false);
-        btnHuyVe.setEnabled(false);
-        if(!txtSearchVe.getText().isEmpty()){
-            xLBang.locTatCa(tbVeXe,txtSearchVe.getText(),-1);
-        }
-    }//GEN-LAST:event_txtSearchVeKeyReleased
-
     private void cbbChuyenXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbChuyenXeItemStateChanged
         // TODO add your handling code here:
-        locDuLieuVeXe();
+        //locDuLieuVeXe();
     }//GEN-LAST:event_cbbChuyenXeItemStateChanged
+
+    private void txtSearchVeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyPressed
+        // TODO add your handling code here:
+        locDuLieuVeXe();
+    }//GEN-LAST:event_txtSearchVeKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

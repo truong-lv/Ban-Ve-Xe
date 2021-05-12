@@ -352,7 +352,7 @@ public class DangKyKhach extends javax.swing.JFrame {
            
             if(!ktTaiKhoan("SELECT * FROM HANH_KHACH WHERE DienThoai = '",sđt)) {
                 themKhachHang(sđt, hoten, gt, tk);
-            JOptionPane.showMessageDialog(this, "Đăng ký thành công");
+                JOptionPane.showMessageDialog(this, "Đăng ký thành công");
             }
             else JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại. Vui lòng nhập lại!");
            

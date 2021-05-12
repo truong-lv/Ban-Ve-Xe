@@ -327,8 +327,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
         txtTimKiem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtTimKiemKeyReleased(evt);
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyPressed(evt);
             }
         });
 
@@ -506,8 +506,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
         String gt=xLBang.selectRow(tbKhachHang, 2);
         setField(xLBang.selectRow(tbKhachHang, 0), xLBang.selectRow(tbKhachHang, 1), xLBang.selectRow(tbKhachHang, 3), gt.equals("Nam"), gt.equals("Nữ"), false);
-        if(txtTK.getText().isEmpty()) btnThemTKKhach.setVisible(true);
-        else btnThemTKKhach.setVisible(false);
+//        if(txtTK.getText().isEmpty()) btnThemTKKhach.setVisible(true);
+//        else btnThemTKKhach.setVisible(false);
     }//GEN-LAST:event_tbKhachHangMouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -656,7 +656,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
         btnXoa.setText("Xóa");
         btnThemTKKhach.setText("Thêm tài khoản");
         btnThemTKKhach.setVisible(false);
-        setField("", "", "", false, false, false);
+        String gt=xLBang.selectRow(tbKhachHang, 2);
+        setField(xLBang.selectRow(tbKhachHang, 0), xLBang.selectRow(tbKhachHang, 1), xLBang.selectRow(tbKhachHang, 3), gt.equals("Nam"), gt.equals("Nữ"), false);
         setEditableTxt(false, null);
         setEnableBtn(true, true, true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
@@ -676,14 +677,6 @@ public class PnQlyKhach extends javax.swing.JPanel {
     private void jRadioButton_NuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_NuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton_NuActionPerformed
-
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        // TODO add your handling code here:
-        if(!txtTimKiem.getText().isEmpty()){
-            xLBang.locTatCa(tbKhachHang,txtTimKiem.getText(),-1);
-        }
-        else xLBang.locTatCa(tbKhachHang,"",-1);
-    }//GEN-LAST:event_txtTimKiemKeyReleased
 
     private void btnThemTKKhachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemTKKhachActionPerformed
         // TODO add your handling code here:
@@ -712,6 +705,14 @@ public class PnQlyKhach extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btnThemTKKhachActionPerformed
+
+    private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
+        // TODO add your handling code here:
+        if(!txtTimKiem.getText().isEmpty()){
+            xLBang.locTatCa(tbKhachHang,txtTimKiem.getText(),-1);
+        }
+        else xLBang.locTatCa(tbKhachHang,"",-1);
+    }//GEN-LAST:event_txtTimKiemKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
