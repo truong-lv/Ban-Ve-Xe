@@ -181,7 +181,15 @@ public class PnDoanhThu extends javax.swing.JPanel {
             new String [] {
                 "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Ngày Đi", "Mã Chuyến", "Trạng Thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable2.setRowHeight(23);
         jTable2.setRowMargin(3);
         jScrollPane2.setViewportView(jTable2);

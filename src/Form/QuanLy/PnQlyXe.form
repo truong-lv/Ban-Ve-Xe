@@ -400,7 +400,7 @@
                   <Table columnCount="5" rowCount="0">
                     <Column editable="false" title="M&#xe3; TX" type="java.lang.Object"/>
                     <Column editable="false" title="H&#x1ecd; t&#xea;n" type="java.lang.Object"/>
-                    <Column editable="true" title="CMND" type="java.lang.Object"/>
+                    <Column editable="false" title="CMND" type="java.lang.Object"/>
                     <Column editable="false" title="Gi&#x1edb;i t&#xed;nh" type="java.lang.Object"/>
                     <Column editable="false" title="S&#x110;T" type="java.lang.Object"/>
                   </Table>
@@ -641,7 +641,7 @@
                 <Column editable="false" title="Lo&#x1ea1;i xe" type="java.lang.Object"/>
                 <Column editable="false" title="S&#x1ed1; ch&#x1ed7;" type="java.lang.Object"/>
                 <Column editable="false" title="H&#x1ec7; s&#x1ed1; gi&#xe1;" type="java.lang.Object"/>
-                <Column editable="true" title="M&#xe3; TX" type="java.lang.Object"/>
+                <Column editable="false" title="M&#xe3; TX" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -166,7 +166,15 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
             new String [] {
                 "Mã Chuyến", "Giờ đi", "Số xe", "Trạm ", "Trạng Thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbChuyenXe.setRowHeight(23);
         tbChuyenXe.setRowMargin(3);
         tbChuyenXe.addMouseListener(new java.awt.event.MouseAdapter() {

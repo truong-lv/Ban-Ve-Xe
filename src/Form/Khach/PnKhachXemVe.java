@@ -111,7 +111,15 @@ public class PnKhachXemVe extends javax.swing.JPanel {
             new String [] {
                 "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Ngày Đi", "Mã Chuyến", "Trạng Thái"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tbVe.setRowHeight(23);
         tbVe.setRowMargin(3);
         tbVe.addMouseListener(new java.awt.event.MouseAdapter() {

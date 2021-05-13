@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Form;
+package Form.QuanLy;
 
 import Code.KetNoi;
 import java.sql.Connection;

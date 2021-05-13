@@ -5,7 +5,6 @@
  */
 package Form.QuanLy;
 
-import Form.ThemNV;
 import Code.KetNoi;
 import java.awt.Color;
 import java.sql.Connection;
@@ -139,7 +138,15 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             new String [] {
                 "Mã NV", "Họ Tên", "CMND", "Giới Tính", "Điện Thoại", "Chức Vụ", "Tài Khoản"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setRowHeight(23);
         jTable1.setRowMargin(3);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {

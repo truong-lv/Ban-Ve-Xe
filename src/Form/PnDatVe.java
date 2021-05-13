@@ -218,19 +218,13 @@ public class PnDatVe extends javax.swing.JPanel {
         }
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "select * from VE_XE";
-        //"select * from VE_XE where GiaVe=? AND NgayDi=? AND MaChuyenXe=?"
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 for (int i = 0; i < chair.size(); i++) {
-//<<<<<<< HEAD
-                    if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) &&/* price.equals(rs.getString(4)) &&*/ day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
+                    if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) && price.equals(rs.getString(4)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
                         chair.get(Integer.parseInt(rs.getString(3))-2).setBackground(Color.RED);
-//=======
-//                    if (chair.get(i).getText().equals(rs.getString(3)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6)) && price.equals(rs.getString(4))) {
-//                        chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
-//>>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
                     }
                 }
             }
@@ -1250,10 +1244,7 @@ public class PnDatVe extends javax.swing.JPanel {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("/MM/uuuu");
         LocalDate localDate = LocalDate.now();
         int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0, 2));
-        // !!! lỗi khi ngày hiện tại <7 thì tự động nhảy qua tháng mới 
-//        if (day < 7 && Integer.parseInt(String.valueOf(localDate.getDayOfMonth())) <= 31) {
-//            jLabel_month.setText(dtf.format(localDate.plusMonths(1)));
-//        }
+
         // Nếu ngày đặt là ngày hiện tại thì chỉ được đặt những chuyến sau giờ hiện tại 3h
         thoigian(day);
     }//GEN-LAST:event_jComboBox_DayItemStateChanged
@@ -1323,12 +1314,6 @@ public class PnDatVe extends javax.swing.JPanel {
                 
                 
                 String maNV = null;//(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
-//                String giaVe;
-//                if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
-//                    giaVe = "300000";
-//                } else {
-//                    giaVe = "150000";
-//                }
 
 
                 System.out.println("ma: " + maNV);

@@ -44,10 +44,10 @@ public class GDChinh extends javax.swing.JFrame {
         // CHỨC NĂNG CHO CẢ NHÂN VIÊN VÀ QUẢN LÝ
         else {
             PnQlyVe qlyVe =new PnQlyVe();
-            addPanel(qlyVe, "QLY VÉ XE", "/image/database.png");
+            addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
             
             PnQlyKhach qlykhach =new PnQlyKhach();
-            addPanel(qlykhach, "QLY KHÁCH", "/image/edit-user-icon.png");
+            addPanel(qlykhach, "QLÝ KHÁCH", "/image/edit-user-icon.png");
             
             // lấy bảng ds khách hàng đưa vào PnDatVe để tìm kiếm khách hổ trợ cho việc đặt vé
             datVe.loadBangKhachHang(qlykhach.getTable());
@@ -61,10 +61,10 @@ public class GDChinh extends javax.swing.JFrame {
             addPanel(qlyNV, "QLÝ NHÂN VIÊN", "/image/user-icon11.png");
             
             PnQlyXe qlyXe =new PnQlyXe();
-            addPanel(qlyXe, "QLY XE", "/image/twitter-bus-icon.png");
+            addPanel(qlyXe, "QLÝ XE", "/image/twitter-bus-icon.png");
             
             PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
-            addPanel(qlyChuyenXe, "QLY CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
+            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
             
             PnDoanhThu doanhThu =new PnDoanhThu();
             addPanel(doanhThu, "DOANH THU", "/image/Money-icon.png");
@@ -175,9 +175,11 @@ public class GDChinh extends javax.swing.JFrame {
 
     private void tbPnMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbPnMenuStateChanged
 //        BẮT SỰ KIỆN THAY ĐỔI MENU CỦA TABBED
-//        if(tbPnMenu.getSelectedComponent().getName().equals("QLY KHÁCH")){
-//            
-//        }
+        if(tbPnMenu.getSelectedComponent().getName().equals("ĐẶT VÉ")){
+            
+        }else if(tbPnMenu.getSelectedComponent().getName().equals("")){
+            
+        }
         
     }//GEN-LAST:event_tbPnMenuStateChanged
 
