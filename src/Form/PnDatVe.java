@@ -224,13 +224,13 @@ public class PnDatVe extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 for (int i = 0; i < chair.size(); i++) {
-<<<<<<< HEAD
+//<<<<<<< HEAD
                     if (chair.get(i).getText().equals(rs.getString("ViTriGhe")) &&/* price.equals(rs.getString(4)) &&*/ day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
                         chair.get(Integer.parseInt(rs.getString(3))-2).setBackground(Color.RED);
-=======
-                    if (chair.get(i).getText().equals(rs.getString(3)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6)) && price.equals(rs.getString(4))) {
-                        chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
->>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
+//=======
+//                    if (chair.get(i).getText().equals(rs.getString(3)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6)) && price.equals(rs.getString(4))) {
+//                        chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
+//>>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
                     }
                 }
             }
@@ -900,25 +900,26 @@ public class PnDatVe extends javax.swing.JPanel {
                             .addGroup(pnDatVeLayout.createSequentialGroup()
                                 .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
-                                .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnDatVeLayout.createSequentialGroup()
-                                .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41)
+                        .addComponent(lb_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnDatVeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(44, 44, 44)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -947,11 +948,7 @@ public class PnDatVe extends javax.swing.JPanel {
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lb_diemDen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -960,6 +957,10 @@ public class PnDatVe extends javax.swing.JPanel {
                             .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(26, 26, 26)
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel_price, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1322,34 +1323,27 @@ public class PnDatVe extends javax.swing.JPanel {
                 
                 
                 String maNV = null;//(BanVeXe.quyen.equalsIgnoreCase("Khách hàng"))?null:BanVeXe.primaryKey;
+//                String giaVe;
+//                if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
+//                    giaVe = "300000";
+//                } else {
+//                    giaVe = "150000";
+//                }
 
-<<<<<<< HEAD
-                String giaVe;
-                if (jComboBox_loaiXe.getSelectedItem().toString().equals("Giường Nằm")) {
-                    giaVe = "300000";
-                } else {
-                    giaVe = "150000";
-                }
 
-=======
-                String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
-
-                //nếu là khách hàng đặt thì maNV null
-                String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
                 System.out.println("ma: " + maNV);
                 String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
->>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
                 datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
             }
             JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
-<<<<<<< HEAD
+
             loadChair();
 
-=======
+
             lbSoLuongVe.setText("0");
             jLabel_priceAll.setText("0 VND");
             selected.clear();
->>>>>>> 7f7ceff092e3742be16b37e8e899c064ee87e0e0
+
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin", "Chưa Thể Đặt Vé", 0);
         }

@@ -27,11 +27,11 @@
                   <Component id="jPanel2" max="32767" attributes="0"/>
                   <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="btnThem" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="btnThemXe" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                      <Component id="btnSua" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="btnSuaXe" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="btnXoa" min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="btnXoaXe" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       <Component id="btnHuy" min="-2" pref="130" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="153" max="-2" attributes="0"/>
@@ -42,15 +42,6 @@
                               <Component id="jScrollPane1" min="-2" pref="633" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbChoNgoi" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cbbChoNgoi" min="-2" pref="164" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lbHSG" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="cbbHeSoGia" min="-2" pref="80" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lbSoXe" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -65,10 +56,25 @@
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="lbMaTX2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtMaTX2" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lbChoNgoi" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="cbbChoNgoi" min="-2" pref="164" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="lbHSG" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="cbbHeSoGia" min="-2" pref="80" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="lbMaTX2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="cbbMaTX" max="32767" attributes="0"/>
+                                              <EmptySpace min="-2" pref="258" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -115,18 +121,18 @@
                           <Component id="lbHSG" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbbHeSoGia" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lbMaTX2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtMaTX2" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                          <Component id="cbbMaTX" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnThem" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnXoa" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="btnSua" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="btnThemXe" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="btnXoaXe" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                  <Component id="btnSuaXe" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="btnHuy" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="27" max="32767" attributes="0"/>
@@ -135,7 +141,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnThem">
+    <Component class="javax.swing.JButton" name="btnThemXe">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e9" green="c7" red="83" type="rgb"/>
@@ -146,10 +152,10 @@
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemXeActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnXoa">
+    <Component class="javax.swing.JButton" name="btnXoaXe">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e9" green="c7" red="83" type="rgb"/>
@@ -160,10 +166,10 @@
         <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnXoaXeActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnSua">
+    <Component class="javax.swing.JButton" name="btnSuaXe">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="e9" green="c7" red="83" type="rgb"/>
@@ -174,7 +180,7 @@
         <Property name="text" type="java.lang.String" value="S&#x1eed;a"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSuaXeActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnHuy">
@@ -562,7 +568,6 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="cbbHeSoGia">
       <Properties>
-        <Property name="editable" type="boolean" value="true"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="15" style="1"/>
         </Property>
@@ -690,11 +695,6 @@
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtMaTX2">
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="lbMaTX2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -702,6 +702,16 @@
         </Property>
         <Property name="text" type="java.lang.String" value="M&#xe3; TX:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbbMaTX">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

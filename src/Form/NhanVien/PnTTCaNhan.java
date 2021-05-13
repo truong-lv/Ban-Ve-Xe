@@ -30,14 +30,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         //quyenChinhSua();
     }
 
-//    private void quyenChinhSua(){// chỉ có admin đc hiệu chỉnh thông tin cá nhân
-//        if(BanVeXe.quyen.equals("Quản lý")){
-//            
-//            btnChinhSua.setVisible(true);
-//        }else{
-//            lbThongBao.setVisible(true);
-//        }
-//    }
+
     private void setEdit(boolean trangThai){
         txtMaNV.setEditable(trangThai);
         txtTen.setEditable(trangThai);
@@ -417,12 +410,12 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             chucVu=chucVu.substring(0, chucVu.indexOf("-"));
             loadHieuChinhTT(maNV, ten, cmnd, gt, chucVu, sdt, tk, mk);
             JOptionPane.showMessageDialog(this, "Hiệu chỉnh thông tin thành công");
-            
+            txtMK.setText("**********");
             btnChinhSua.setText("Chỉnh sửa");
             btnHuy.setVisible(false);
             setEdit(false);
             lbThongBao.setVisible(false);
-            txtMK.setText("**********");
+            
         }
     }//GEN-LAST:event_btnChinhSuaActionPerformed
 
@@ -430,6 +423,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         // TODO add your handling code here:
         btnChinhSua.setText("Chỉnh sửa");
         btnHuy.setVisible(false);
+        txtMK.setText("**********");
         setEdit(false);
         loadThongTinNV();
     }//GEN-LAST:event_btnHuyActionPerformed
