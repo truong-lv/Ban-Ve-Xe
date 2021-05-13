@@ -38,12 +38,12 @@ public class PnDatVe extends javax.swing.JPanel {
 
     public PnDatVe() {
         initComponents();
+        AddTime();
         phanQuyenDatVe();
         taiLoaiXe();
         taiNoiXuatPhat();
-        AddTime();
         addChair();
-        loadChair();
+        taiGheDaDat();
     }
 
     private void phanQuyenDatVe() {
@@ -173,6 +173,7 @@ public class PnDatVe extends javax.swing.JPanel {
         }
     }
 
+    //Hàm Tải Nơi Xuất Phát
     public void taiNoiXuatPhat() {
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "select DISTINCT TramXuatPhat from CHUYEN_XE";
@@ -185,8 +186,11 @@ public class PnDatVe extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
+        jComboBox_chuyenDi.setSelectedIndex(1);
+        jComboBox_chuyenDi.removeItemAt(0);
     }
 
+    // Hàm Tải Loại Xe
     public void taiLoaiXe() {
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "select * from LOAI_XE";
@@ -201,7 +205,24 @@ public class PnDatVe extends javax.swing.JPanel {
         }
     }
 
-    public void loadChair() {
+    // hàm load nơi đến
+    public void taiNoiDen(String noiXuatPhat) {
+        jComboBox_diemDen.removeAllItems();
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "SELECT DISTINCT TramDen FROM CHUYEN_XE WHERE  TramXuatPhat = N'" + noiXuatPhat + "'";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                jComboBox_diemDen.addItem(rs.getString(1));
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    // Hàm load vé đã được đặt
+    public void taiGheDaDat() {
         setChair();
         String price = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
@@ -238,30 +259,12 @@ public class PnDatVe extends javax.swing.JPanel {
         LocalDate localDate = LocalDate.now();
         jLabel_month.setText(dtf.format(localDate));
 
-//        int toDay = Integer.parseInt(java.time.LocalDate.now().toString().substring(8, 10));
-//        System.out.println(toDay);
-//        int temp = 0;
-//        for (int i = toDay; temp < 7; i++) {
-//            
-//            jComboBox_Day.addItem(String.valueOf(i));
-//            temp++;
-//            //ngày ko quá 31
-//            if (i == 31) {
-//                break;
-//            }
-//        }
-//        //biến temp để xem thử coi có đủ 7 ngày chưa nếu chưa thì add thêm
-//        if (temp < 7) {
-//            for (int z = 1; temp < 7; z++) {
-//                jComboBox_Day.addItem(String.valueOf(z));
-//                temp++;
-//            }
-//        }
         //Load thẳng ngày/tháng/năm vào cbb. Load từ ngày hiện tại trở đi 7 ngày
         for (int i = 0; i < 7; i++) {
             jComboBox_Day.addItem(dtf.format(localDate.plusDays(i)));
         }
-
+        jComboBox_Day.setSelectedIndex(1);
+        jComboBox_Day.removeItemAt(0);
     }
 
     public boolean Add(JTextField txt, int z) {
@@ -285,9 +288,9 @@ public class PnDatVe extends javax.swing.JPanel {
 
         if (jComboBox_loaiXe.getSelectedItem().equals("Chọn Loại Xe")) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Loại Xe");
-        }else if(jComboBox_chuyenDi.getSelectedItem().equals("Chọn Nơi Xuất Phát")){
+        } else if (jComboBox_chuyenDi.getSelectedItem().equals("Chọn Nơi Xuất Phát")) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Nơi Xuất Phát");
-        }else {
+        } else {
             if (txt.getBackground() != Color.RED) {
                 if (soLuong < 5) {
                     if (txt.getBackground() == Color.WHITE) {
@@ -316,7 +319,7 @@ public class PnDatVe extends javax.swing.JPanel {
         if (soLuong != 0) {
             Locale localeVN = new Locale("vi", "VN");
             int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString())) * Integer.parseInt(lbSoLuongVe.getText());
-            jLabel_priceAll.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length()-1) + " VND");
+            jLabel_priceAll.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length() - 1) + " VND");
         }
 
     }
@@ -362,7 +365,6 @@ public class PnDatVe extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -414,7 +416,7 @@ public class PnDatVe extends javax.swing.JPanel {
         lblGiaVe2 = new javax.swing.JLabel();
         jLabel_priceAll = new javax.swing.JLabel();
         lblNoiDi3 = new javax.swing.JLabel();
-        lb_diemDen = new javax.swing.JLabel();
+        jComboBox_diemDen = new javax.swing.JComboBox<>();
         btnXacNhan = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
@@ -811,6 +813,7 @@ public class PnDatVe extends javax.swing.JPanel {
         lbSoLuongVe.setText("0");
 
         jComboBox_Day.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jComboBox_Day.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ngày Khởi Hành" }));
         jComboBox_Day.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox_DayItemStateChanged(evt);
@@ -881,10 +884,17 @@ public class PnDatVe extends javax.swing.JPanel {
         lblNoiDi3.setText("Điểm Đến  :");
         lblNoiDi3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        lb_diemDen.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lb_diemDen.setForeground(new java.awt.Color(255, 0, 0));
-        lb_diemDen.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lb_diemDen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jComboBox_diemDen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Điểm Đến" }));
+        jComboBox_diemDen.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_diemDenItemStateChanged(evt);
+            }
+        });
+        jComboBox_diemDen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_diemDenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnDatVeLayout = new javax.swing.GroupLayout(pnDatVe);
         pnDatVe.setLayout(pnDatVeLayout);
@@ -924,13 +934,13 @@ public class PnDatVe extends javax.swing.JPanel {
                                 .addComponent(jComboBox_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnDatVeLayout.createSequentialGroup()
                                 .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lb_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(41, 41, 41)
+                        .addGap(8, 8, 8)
+                        .addComponent(jComboBox_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
                 .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnDatVeLayout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -956,17 +966,17 @@ public class PnDatVe extends javax.swing.JPanel {
                             .addComponent(lblNoiDi2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_chuyenDi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_diemDen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDi3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_diemDen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNoiDi1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox_loaiXe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24)
-                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNoiDi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox_Day, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(27, 27, 27)
                         .addGroup(pnDatVeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNoiDen, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1122,7 +1132,7 @@ public class PnDatVe extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(472, 472, 472))
+                .addGap(478, 478, 478))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1131,9 +1141,9 @@ public class PnDatVe extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnDatVe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnXacNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1221,13 +1231,17 @@ public class PnDatVe extends javax.swing.JPanel {
         changeColor(txtGhe17);
     }//GEN-LAST:event_txtGhe17MouseClicked
 
-    public void thoigian(int day) {
+    public void thoigian() {
+        int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0, 2));
+        String tramXuatPhat = jComboBox_chuyenDi.getSelectedItem().toString();
+        String tramDen = jComboBox_diemDen.getSelectedItem().toString();
+        
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");// /MM/uuuu
         LocalDate localDate = LocalDate.now();
         int ngay = Integer.parseInt(dtf.format(localDate));
         int gio = Integer.parseInt(java.time.LocalTime.now().toString().substring(0, 2)) + 2;
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT DISTINCT GioDi FROM CHUYEN_XE";
+        String sql = "SELECT DISTINCT GioDi FROM CHUYEN_XE where TramXuatPhat=N'" + tramXuatPhat + "' AND TramDen=N'" + tramDen + "'";
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -1243,9 +1257,6 @@ public class PnDatVe extends javax.swing.JPanel {
                     jComboBox_Time.addItem(rs.getString(1).substring(0, 8));
                 }
             }
-            while (rs.next()) {
-                System.err.println("time : " + rs.getString(2));
-            }
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -1254,25 +1265,17 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void jComboBox_DayItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_DayItemStateChanged
         //reset select
-        loadChair();
+        taiGheDaDat();
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
-        // Bắt Điều Kiện Khi Ngày Đặt Tràn Qua Tháng Mới
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("/MM/uuuu");
-        LocalDate localDate = LocalDate.now();
-        int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0, 2));
-        // !!! lỗi khi ngày hiện tại <7 thì tự động nhảy qua tháng mới 
-//        if (day < 7 && Integer.parseInt(String.valueOf(localDate.getDayOfMonth())) <= 31) {
-//            jLabel_month.setText(dtf.format(localDate.plusMonths(1)));
-//        }
-        // Nếu ngày đặt là ngày hiện tại thì chỉ được đặt những chuyến sau giờ hiện tại 3h
-        thoigian(day);
+        // Cập Nhập lại Giờ
+        thoigian();
     }//GEN-LAST:event_jComboBox_DayItemStateChanged
 
     private void jComboBox_TimeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_TimeItemStateChanged
         // TODO add your handling code here:
         //reset select
-        loadChair();
+        taiGheDaDat();
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
 
@@ -1287,27 +1290,26 @@ public class PnDatVe extends javax.swing.JPanel {
         //reset select
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
-        
+
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
         Locale localeVN = new Locale("vi", "VN");
         int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString()));
-        
-        jLabel_price.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length()-1) + " VND");
-        loadChair();
+
+        jLabel_price.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length() - 1) + " VND");
+        taiGheDaDat();
     }//GEN-LAST:event_jComboBox_loaiXeItemStateChanged
 
     private void jComboBox_chuyenDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_chuyenDiItemStateChanged
         //reset select
-        loadChair();
+        taiGheDaDat();
         lbSoLuongVe.setText("0");
         jLabel_priceAll.setText("0 VND");
 
         String chuyenDi = jComboBox_chuyenDi.getSelectedItem().toString();
-        if (chuyenDi.equals("TP.HCM")) {
-            lb_diemDen.setText("Đồng Nai");
-        } else {
-            lb_diemDen.setText("TP.HCM");
-        }
+        taiNoiDen(chuyenDi);
+        
+        jComboBox_Day.setSelectedIndex(0);
+        thoigian();
     }//GEN-LAST:event_jComboBox_chuyenDiItemStateChanged
 
     private void jComboBox_chuyenDiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_chuyenDiActionPerformed
@@ -1338,7 +1340,7 @@ public class PnDatVe extends javax.swing.JPanel {
                 String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
                 datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
             }
-            loadChair();
+            taiGheDaDat();
             JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
             lbSoLuongVe.setText("0");
             jLabel_priceAll.setText("0 VND");
@@ -1371,6 +1373,14 @@ public class PnDatVe extends javax.swing.JPanel {
 
     }//GEN-LAST:event_formFocusLost
 
+    private void jComboBox_diemDenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_diemDenItemStateChanged
+        jComboBox_Day.setSelectedIndex(0);
+    }//GEN-LAST:event_jComboBox_diemDenItemStateChanged
+
+    private void jComboBox_diemDenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_diemDenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_diemDenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXacNhan;
@@ -1378,6 +1388,7 @@ public class PnDatVe extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> jComboBox_Day;
     private javax.swing.JComboBox<String> jComboBox_Time;
     private javax.swing.JComboBox<String> jComboBox_chuyenDi;
+    private javax.swing.JComboBox<String> jComboBox_diemDen;
     private javax.swing.JComboBox<String> jComboBox_loaiXe;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel27;
@@ -1400,7 +1411,6 @@ public class PnDatVe extends javax.swing.JPanel {
     private javax.swing.JLabel lbLoiSDT;
     private javax.swing.JLabel lbLoiTen;
     private javax.swing.JLabel lbSoLuongVe;
-    private javax.swing.JLabel lb_diemDen;
     private javax.swing.JLabel lblGiaVe;
     private javax.swing.JLabel lblGiaVe1;
     private javax.swing.JLabel lblGiaVe2;
