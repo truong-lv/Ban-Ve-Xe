@@ -9,6 +9,7 @@ import Code.KetNoi;
 import Code.BanVeXe;
 import Code.HamXuLyBang;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -207,7 +208,10 @@ public class PnDatVe extends javax.swing.JPanel {
 
     // hàm load nơi đến
     public void taiNoiDen(String noiXuatPhat) {
-        jComboBox_diemDen.removeAllItems();
+        jComboBox_diemDen.setSelectedIndex(0);
+        for (int i = 1; i < jComboBox_diemDen.getItemCount(); i++) {
+            jComboBox_diemDen.removeItemAt(i);
+        }
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "SELECT DISTINCT TramDen FROM CHUYEN_XE WHERE  TramXuatPhat = N'" + noiXuatPhat + "'";
         try {
@@ -819,6 +823,14 @@ public class PnDatVe extends javax.swing.JPanel {
                 jComboBox_DayItemStateChanged(evt);
             }
         });
+        jComboBox_Day.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox_DayMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jComboBox_DayMouseEntered(evt);
+            }
+        });
 
         jComboBox_Time.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jComboBox_Time.addItemListener(new java.awt.event.ItemListener() {
@@ -827,6 +839,12 @@ public class PnDatVe extends javax.swing.JPanel {
             }
         });
         jComboBox_Time.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jComboBox_TimeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jComboBox_TimeMouseEntered(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jComboBox_TimeMouseExited(evt);
             }
@@ -1234,8 +1252,11 @@ public class PnDatVe extends javax.swing.JPanel {
     public void thoigian() {
         int day = Integer.parseInt(jComboBox_Day.getSelectedItem().toString().substring(0, 2));
         String tramXuatPhat = jComboBox_chuyenDi.getSelectedItem().toString();
-        String tramDen = jComboBox_diemDen.getSelectedIndex()!=-1? jComboBox_diemDen.getSelectedItem().toString():"";
-        
+
+        //String tramDen = jComboBox_diemDen.getSelectedIndex()!=-1? jComboBox_diemDen.getSelectedItem().toString():"";
+  
+        String tramDen = jComboBox_diemDen.getSelectedItem().toString();
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");// /MM/uuuu
         LocalDate localDate = LocalDate.now();
         int ngay = Integer.parseInt(dtf.format(localDate));
@@ -1307,8 +1328,7 @@ public class PnDatVe extends javax.swing.JPanel {
 
         String chuyenDi = jComboBox_chuyenDi.getSelectedItem().toString();
         taiNoiDen(chuyenDi);
-        
-        jComboBox_Day.setSelectedIndex(0);
+
         thoigian();
     }//GEN-LAST:event_jComboBox_chuyenDiItemStateChanged
 
@@ -1325,26 +1345,28 @@ public class PnDatVe extends javax.swing.JPanel {
                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(), gt, null);
             }
 
-            for (int i = 0; i < selected.size(); i++) {
-                String viTriGhe = selected.get(i).getText();
-                String maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
-                String maVe = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/ + maCX + viTriGhe;
-                maVe = maVe.replace("/", "");
-                String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
+            if (JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Muốn Đặt Vé? \nHãy Kiểm Tra Kỹ Thông Tin !!!", "Xác Nhận", JOptionPane.YES_NO_OPTION) == 0) {
+                for (int i = 0; i < selected.size(); i++) {
+                    String viTriGhe = selected.get(i).getText();
+                    String maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
+                    String maVe = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/ + maCX + viTriGhe;
+                    maVe = maVe.replace("/", "");
+                    String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
-                String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
+                    String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
 
-                //nếu là khách hàng đặt thì maNV null
-                String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
-                System.out.println("ma: " + maNV);
-                String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
-                datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
+                    //nếu là khách hàng đặt thì maNV null
+                    String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
+                    System.out.println("ma: " + maNV);
+                    String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
+                    datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
+                }
+                taiGheDaDat();
+                JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
+                lbSoLuongVe.setText("0");
+                jLabel_priceAll.setText("0 VND");
+                selected.clear();
             }
-            taiGheDaDat();
-            JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
-            lbSoLuongVe.setText("0");
-            jLabel_priceAll.setText("0 VND");
-            selected.clear();
         } else {
             JOptionPane.showMessageDialog(this, "Vui lòng Kiểm Tra lại thông tin", "Chưa Thể Đặt Vé", 0);
         }
@@ -1380,6 +1402,34 @@ public class PnDatVe extends javax.swing.JPanel {
     private void jComboBox_diemDenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_diemDenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_diemDenActionPerformed
+
+    private void jComboBox_DayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_DayMouseClicked
+        // TODO add your handling code here:
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
+        }
+    }//GEN-LAST:event_jComboBox_DayMouseClicked
+
+    private void jComboBox_DayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_DayMouseEntered
+        // TODO add your handling code here:
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
+        }
+    }//GEN-LAST:event_jComboBox_DayMouseEntered
+
+    private void jComboBox_TimeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_TimeMouseEntered
+        // TODO add your handling code here:
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
+        }
+    }//GEN-LAST:event_jComboBox_TimeMouseEntered
+
+    private void jComboBox_TimeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_TimeMouseClicked
+        // TODO add your handling code here:
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
+        }
+    }//GEN-LAST:event_jComboBox_TimeMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
