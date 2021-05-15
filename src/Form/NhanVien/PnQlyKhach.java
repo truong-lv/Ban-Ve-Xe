@@ -46,6 +46,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
         jLabel1_GioiTinh.setForeground(col);
         txtTK.setEditable(bool);
         jLabel_TK.setForeground(col);
+        jLabel1_MK.setForeground(col);
         
     }
     private void setEnableBtn(boolean them, boolean sua, boolean xoa, boolean huy){
@@ -506,8 +507,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
         String gt=xLBang.selectRow(tbKhachHang, 2);
         setField(xLBang.selectRow(tbKhachHang, 0), xLBang.selectRow(tbKhachHang, 1), xLBang.selectRow(tbKhachHang, 3), gt.equals("Nam"), gt.equals("Nữ"), false);
-//        if(txtTK.getText().isEmpty()) btnThemTKKhach.setVisible(true);
-//        else btnThemTKKhach.setVisible(false);
+        if(txtTK.getText().isEmpty()) btnThemTKKhach.setVisible(true);
+        else btnThemTKKhach.setVisible(false);
     }//GEN-LAST:event_tbKhachHangMouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -576,7 +577,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
             setEnableBtn(true, false, false, true);
             setField("", "", "", false, false, true);
             psMK.setVisible(true);
-                jLabel1_MK.setVisible(true);
+            jLabel1_MK.setVisible(true);
             btnThem.setText("Lưu");
             btnHuy.setEnabled(true);
         }else {
@@ -683,8 +684,10 @@ public class PnQlyKhach extends javax.swing.JPanel {
         if(btnThemTKKhach.getText().equals("Thêm tài khoản")){
             btnThemTKKhach.setText("Lưu");
             txtTK.setEditable(true);
+            jLabel_TK.setForeground(Color.GREEN);
             psMK.setVisible(true);
             jLabel1_MK.setVisible(true);
+            jLabel1_MK.setForeground(Color.GREEN);
         }else
         {
             if(txtTK.getText().isEmpty()){
@@ -699,8 +702,10 @@ public class PnQlyKhach extends javax.swing.JPanel {
             themTaiKhoanKhach(txtTK.getText(), psMK.getText(), txtSDT.getText());
             xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
             txtTK.setEditable(false);
+            jLabel_TK.setForeground(null);
             psMK.setVisible(false);
             jLabel1_MK.setVisible(false);
+            jLabel1_MK.setForeground(null);
             btnThemTKKhach.setText("Thêm tài khoản");
         }
         

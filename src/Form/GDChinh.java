@@ -175,11 +175,11 @@ public class GDChinh extends javax.swing.JFrame {
 
     private void tbPnMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbPnMenuStateChanged
 //        BẮT SỰ KIỆN THAY ĐỔI MENU CỦA TABBED
-        if(tbPnMenu.getSelectedComponent().getName().equals("ĐẶT VÉ")){
-            
-        }else if(tbPnMenu.getSelectedComponent().getName().equals("")){
-            
-        }
+//        if(tbPnMenu.getSelectedComponent().getName().equals("ĐẶT VÉ")){
+//            
+//        }else if(tbPnMenu.getSelectedComponent().getName().equals("")){
+//            
+//        }
         
     }//GEN-LAST:event_tbPnMenuStateChanged
 

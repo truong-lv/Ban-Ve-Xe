@@ -70,7 +70,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     public void loadComboGio(){
         cbbGioDi.removeAllItems();
         String tram=cbbTramDi.getSelectedItem().toString();
-        String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
+        String ngay=cbbNgayDi.getSelectedItem().toString();
         for(int i=0;i<tbTam.getRowCount();i++)
         {
             if(tram.equals(tbTam.getValueAt(i, 8).toString()) && ngay.equals(tbTam.getValueAt(i, 6).toString()) )//Trạm nằm ở cột thứ 7
@@ -78,8 +78,6 @@ public class PnQlyVe extends javax.swing.JPanel {
                 if(cbbGioDi.getItemCount()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
-                        //System.out.println(i+" "+cbbGioDi.getItemAt(j)+" "+j);
-                        
                         if(tbTam.getValueAt(i, 7).toString().equals(cbbGioDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
                         {
                             ktTrung=true;
