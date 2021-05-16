@@ -1394,6 +1394,7 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void jComboBox_diemDenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_diemDenItemStateChanged
         jComboBox_Day.setSelectedIndex(0);
+        thoigian();
     }//GEN-LAST:event_jComboBox_diemDenItemStateChanged
 
     private void jComboBox_diemDenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_diemDenActionPerformed
