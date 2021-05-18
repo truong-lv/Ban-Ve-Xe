@@ -70,7 +70,8 @@ public class PnQlyVe extends javax.swing.JPanel {
     public void loadComboGio(){
         cbbGioDi.removeAllItems();
         String tram=cbbTramDi.getSelectedItem().toString();
-        String ngay=cbbNgayDi.getSelectedItem().toString();
+        //String ngay=cbbNgayDi.getSelectedItem().toString();
+        String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
         for(int i=0;i<tbTam.getRowCount();i++)
         {
             if(tram.equals(tbTam.getValueAt(i, 8).toString()) && ngay.equals(tbTam.getValueAt(i, 6).toString()) )//Trạm nằm ở cột thứ 7
