@@ -269,6 +269,13 @@ public class PnDatVe extends javax.swing.JPanel {
         }
         jComboBox_Day.setSelectedIndex(1);
         jComboBox_Day.removeItemAt(0);
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            jComboBox_Time.setEnabled(false);
+            jComboBox_Day.setEnabled(false);
+        } else {
+            jComboBox_Time.setEnabled(true);
+            jComboBox_Day.setEnabled(true);
+        }
     }
 
     public boolean Add(JTextField txt, int z) {
@@ -1397,6 +1404,14 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void jComboBox_diemDenItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_diemDenItemStateChanged
         jComboBox_Day.setSelectedIndex(0);
+        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
+            jComboBox_Time.setEnabled(false);
+            jComboBox_Day.setEnabled(false);
+        } else {
+            jComboBox_Time.setEnabled(true);
+            jComboBox_Day.setEnabled(true);
+        }
+        thoigian();
     }//GEN-LAST:event_jComboBox_diemDenItemStateChanged
 
     private void jComboBox_diemDenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_diemDenActionPerformed
@@ -1412,16 +1427,12 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void jComboBox_DayMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_DayMouseEntered
         // TODO add your handling code here:
-        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
-        }
+
     }//GEN-LAST:event_jComboBox_DayMouseEntered
 
     private void jComboBox_TimeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_TimeMouseEntered
         // TODO add your handling code here:
-        if (jComboBox_diemDen.getSelectedItem().toString().equals("Điểm Đến")) {
-            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
-        }
+
     }//GEN-LAST:event_jComboBox_TimeMouseEntered
 
     private void jComboBox_TimeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox_TimeMouseClicked
