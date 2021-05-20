@@ -9,8 +9,9 @@ package Code;
  *
  * @author n18dc
  */
+
 public class XuLyNhap {
-    public void chuanHoa(String str){
+    public String chuanHoa(String str){
         str=str.trim();
         str=str.replaceAll("\\s+", " ");
         str = str.toLowerCase();
@@ -20,6 +21,6 @@ public class XuLyNhap {
             if(str.charAt(i-1)==' ') tam+=String.valueOf(str.charAt(i)).toUpperCase();
             else tam+=str.charAt(i);
         }
-        str=tam;
+        return tam;
     }
 }

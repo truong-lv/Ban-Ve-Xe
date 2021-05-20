@@ -57,8 +57,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         
         String thoiGian =tbChuyenXe.getValueAt(chon, 1).toString();// lấy thời gian từ dòng được chọn
         String gio=thoiGian.substring(0,thoiGian.indexOf(":"));// cắt lấy phần giờ để đưa vào combobox
-        String phut=thoiGian.substring(thoiGian.indexOf(":"),2);// cắt lấy phần phút
-        
+        String phut=thoiGian.substring(thoiGian.indexOf(":")+1,5);// cắt lấy phần phút
         txtMaCx.setText(tbChuyenXe.getValueAt(chon, 0).toString());
         cbbGio.setSelectedItem(gio);
         cbbPhut.setSelectedItem(phut);
@@ -154,6 +153,11 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         lbLoiSoXe = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel6.setText("Quản Lý Chuyến Xe");
@@ -196,6 +200,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         cbbGio.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         cbbGio.setMaximumRowCount(6);
         cbbGio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" }));
+        cbbGio.setEnabled(false);
 
         cbbTram.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         cbbTram.setMaximumRowCount(6);
@@ -226,6 +231,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         cbbPhut.setMaximumRowCount(6);
         cbbPhut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59" }));
         cbbPhut.setToolTipText("");
+        cbbPhut.setEnabled(false);
 
         btnThem.setBackground(new java.awt.Color(131, 199, 233));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -519,6 +525,13 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         setEnableCbb(false, null);
         setEnableBtn(true, true, true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
+        tbChuyenXe.setRowSelectionInterval(0, 0);
+        loadCbb(0);
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
