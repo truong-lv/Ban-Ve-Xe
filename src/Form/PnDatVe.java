@@ -8,6 +8,7 @@ package Form;
 import Code.KetNoi;
 import Code.BanVeXe;
 import Code.HamXuLyBang;
+import Form.Khach.PnKhachXemVe;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -255,6 +256,9 @@ public class PnDatVe extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
+        
+        PnKhachXemVe loadVe = new PnKhachXemVe();
+        loadVe.loadVe();
     }
 
     // Hàm load thời gian để khách hàng đặt vé

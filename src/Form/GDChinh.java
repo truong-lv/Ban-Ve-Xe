@@ -35,7 +35,7 @@ public class GDChinh extends javax.swing.JFrame {
         // CHỨC NĂNG CHO KHÁCH
         if(BanVeXe.quyen.equals("Khách hàng"))
         {
-            PnKhachXemVe xemVe=new PnKhachXemVe();
+            PnKhachXemVe xemVe = new PnKhachXemVe();
             addPanel(xemVe, "XEM LỊCH SỬ ĐẶT", "/image/History-icon.png");
             
             PnTTKhach ttKhach=new PnTTKhach(BanVeXe.primaryKey);

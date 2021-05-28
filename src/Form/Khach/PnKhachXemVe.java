@@ -68,11 +68,11 @@ public class PnKhachXemVe extends javax.swing.JPanel {
             ps.setString(1, maVe);
             if (JOptionPane.showConfirmDialog(this, "Confirm", "Bạn Có Chắc Muốn Hủy Vé ?", 0) == JOptionPane.YES_OPTION) {
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Xoa Thanh Cong");
+                JOptionPane.showMessageDialog(this, "Xoa Ve Thanh Cong");
             }
 
         } catch (Exception e) {
-            System.out.println("Xoa That Bai");
+            System.out.println("Xoa Ve That Bai");
         }
     }
     /**
@@ -122,9 +122,22 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         });
         tbVe.setRowHeight(23);
         tbVe.setRowMargin(3);
+        tbVe.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                tbVeHierarchyChanged(evt);
+            }
+        });
         tbVe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbVeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tbVeMouseEntered(evt);
+            }
+        });
+        tbVe.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tbVePropertyChange(evt);
             }
         });
         jScrollPane1.setViewportView(tbVe);
@@ -279,7 +292,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
             xoaVe(maVe);
             loadVe();
         } else {
-            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán. Không Thể Xóa !!!");
+            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán Hoặc Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
             loadVe();
         }
     }//GEN-LAST:event_jButton_XoaVeActionPerformed
@@ -317,6 +330,19 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtMaChuyenXe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
         txtTrangThaiVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 5).toString());
     }//GEN-LAST:event_tbVeMouseClicked
+
+    private void tbVeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbVeMouseEntered
+
+    private void tbVePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbVePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbVePropertyChange
+
+    private void tbVeHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_tbVeHierarchyChanged
+        // TODO add your handling code here:
+        loadVe();
+    }//GEN-LAST:event_tbVeHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
