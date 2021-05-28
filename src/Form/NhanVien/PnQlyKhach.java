@@ -8,6 +8,7 @@ package Form.NhanVien;
 import Form.DangKyKhach;
 import Form.Khach.PnTTKhach;
 import Code.HamXuLyBang;
+import Code.XuLyNhap;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -155,6 +156,11 @@ public class PnQlyKhach extends javax.swing.JPanel {
         btnThemTKKhach = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(0, 204, 0));
@@ -330,6 +336,9 @@ public class PnQlyKhach extends javax.swing.JPanel {
         txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtTimKiemKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
             }
         });
 
@@ -528,6 +537,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
             // Tiến hành kt vs lưu dữ liệu đã được sửa
             String sdt=txtSDT.getText();
             String hoTen=txtHoTen.getText();
+            XuLyNhap chuanHoa=new XuLyNhap();
+            hoTen=chuanHoa.chuanHoa(hoTen);
             String gt=jRadioButton_Nam.isSelected()?"Nam":"Nữ";
             String tk=txtTK.getText();
             String mk=psMK.getText();
@@ -540,8 +551,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
             //Xác nhận thêm
             int chon=JOptionPane.showConfirmDialog(this, "Xác nhận Sửa TT khách hàng: "+hoTen, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
-                ttKhach.chinhSuaTK(txtTK.getText(), psMK.getText());
-                ttKhach.chinhSuaTT(sdt, txtHoTen.getText(), gt, txtTK.getText());
+                ttKhach.chinhSuaTK(txtTK.getText(), mk);
+                ttKhach.chinhSuaTT(sdt, hoTen, gt, tk);
                 xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
                 btnSua.setText("Sửa");
                 
@@ -583,6 +594,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
         }else {
             String sdt=txtSDT.getText();
             String hoTen=txtHoTen.getText();
+            XuLyNhap chuanHoa=new XuLyNhap();
+            hoTen=chuanHoa.chuanHoa(hoTen);
             String gt=jRadioButton_Nam.isSelected()?"Nam":"Nữ";
             String tk=txtTK.getText();
             String mk=psMK.getText();
@@ -713,11 +726,21 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
     private void txtTimKiemKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyPressed
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtTimKiemKeyPressed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
         if(!txtTimKiem.getText().isEmpty()){
             xLBang.locTatCa(tbKhachHang,txtTimKiem.getText(),-1);
         }
         else xLBang.locTatCa(tbKhachHang,"",-1);
-    }//GEN-LAST:event_txtTimKiemKeyPressed
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        xLBang.loadDuLieuVaoBang(tbKhachHang,"SELECT * FROM HANH_KHACH");
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -5,6 +5,7 @@
  */
 package Form;
 
+import Code.XuLyNhap;
 import Form.Login;
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -343,6 +344,8 @@ public class DangKyKhach extends javax.swing.JFrame {
         if( ktLoi(txtTen, txtSDT, txtTK, psMK, rBtnNam, rBtnNu, lbTen, lbGioiTinh, lbSDT, lbTK,lbMK)){
            String sđt= txtSDT.getText();
            String hoten=txtTen.getText();
+           XuLyNhap xlyNhap=new XuLyNhap();
+           hoten=xlyNhap.chuanHoa(hoten);
            String tk= txtTK.getText();
            String mk= psMK.getText();
            String gt=(rBtnNam.isSelected())?"Nam":"Nữ";

@@ -293,6 +293,11 @@ public class PnQlyXe extends javax.swing.JPanel {
         cbbMaTX = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
 
         btnThemXe.setBackground(new java.awt.Color(131, 199, 233));
         btnThemXe.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -949,6 +954,13 @@ public class PnQlyXe extends javax.swing.JPanel {
        
         }else JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần Chỉnh sửa trong bảng");
     }//GEN-LAST:event_btnXoaTXActionPerformed
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        xuLyBang.loadDuLieuVaoBang(tbTaiXe, "SELECT * FROM TAI_XE");
+        xuLyBang.loadDuLieuVaoBang(tbXe, "{call SP_LOAD_XE ()}");
+        loadCbbXe();
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -127,6 +127,12 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jLabel_MaNV.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel_MaNV.setForeground(new java.awt.Color(255, 0, 0));
 
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
+
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -304,6 +310,12 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
     private void jButton_ThemNV2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ThemNV2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_ThemNV2ActionPerformed
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        loadNhanVien();
+        jTable1.setDefaultEditor(Object.class, null);
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

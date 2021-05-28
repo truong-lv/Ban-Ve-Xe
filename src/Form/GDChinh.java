@@ -13,21 +13,27 @@ import Code.BanVeXe;
 import javax.swing.JPanel;
 import Form.NhanVien.PnQlyVe;
 import Code.HamXuLyBang;
+import java.awt.Panel;
+import javax.swing.JTable;
 
 
 public class GDChinh extends javax.swing.JFrame {
 
     HamXuLyBang xLBang=new HamXuLyBang();
-    
+    JTable tbLoad;
+    private boolean khoiTao=false;
     public GDChinh() {
         initComponents();
         LbUserName.setText(BanVeXe.Account);
         //lbLoaiTK.setText(BanVeXe.quyen);
         loadGiaoDien();
+        this.khoiTao=true;
     }
     
     // LOAD TỪNG PANEL CHỨC NĂNG  VÀO GIAO DIỆN CHÍNH DỰA THEO QUYỀN TRUY CẬP CỦA TỪNG ĐỐI TƯỢNG
     private void loadGiaoDien(){
+        //if(!this.khoiTao){this.khoiTao=true;}
+        this.khoiTao=false;
         //LOAD CHỨC NĂNG ĐẶT VÉ 
         PnDatVe datVe =new PnDatVe();
         addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
@@ -45,7 +51,6 @@ public class GDChinh extends javax.swing.JFrame {
         else {
             PnQlyVe qlyVe =new PnQlyVe();
             addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
-            
             PnQlyKhach qlykhach =new PnQlyKhach();
             addPanel(qlykhach, "QLÝ KHÁCH", "/image/edit-user-icon.png");
             
@@ -180,7 +185,10 @@ public class GDChinh extends javax.swing.JFrame {
 //        }else if(tbPnMenu.getSelectedComponent().getName().equals("")){
 //            
 //        }
-        
+//        if(this.khoiTao){
+//           tbPnMenu.removeAll();
+//           loadGiaoDien();
+//        }
     }//GEN-LAST:event_tbPnMenuStateChanged
 
     /**

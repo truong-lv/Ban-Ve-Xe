@@ -62,10 +62,10 @@ public class HamXuLyBang {
             // Nếu là bảng Chuyến xe thì đổi trạng thái Vé xe từ số về String
             if(tb.getColumnName(0).equalsIgnoreCase("Mã chuyến")){
                 for(int i=0;i<dtm.getRowCount();i++){
-                    if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
+                    if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("1")){
                         dtm.setValueAt("Đang hoạt động", i, dtm.getColumnCount()-1);
                     }
-                    else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("1")){
+                    else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
                         dtm.setValueAt("Đã dừng", i, dtm.getColumnCount()-1);
                     }
                 }
