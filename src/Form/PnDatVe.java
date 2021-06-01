@@ -1360,11 +1360,12 @@ public class PnDatVe extends javax.swing.JPanel {
                     maVe = maVe.replace("/", "");
                     String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
-                    String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
+                    //mặc định để "0": chưa được thanh toán
+                    String trangThai ="0";
 
-                    //nếu là khách hàng đặt thì maNV null
-                    String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
-                    System.out.println("ma: " + maNV);
+                    //mặc định để null chưa có nhân viên duyệt
+                    String maNV = null;
+                    
                     String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }

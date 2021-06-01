@@ -131,7 +131,6 @@ public class PnTTKhach extends javax.swing.JPanel {
             txtHoTen1.setBorder(BorderFactory.createLineBorder(null));
 
         }
-        
         //KT nhập Gioi Tinh
         if(!rBtnNam1.isSelected() && !rBtnNu1.isSelected()){
             ktGT=true;
@@ -430,7 +429,8 @@ public class PnTTKhach extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPassComfrim1ActionPerformed
 
     private void btnChinhSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChinhSuaActionPerformed
-        // TODO add your handling code here:
+
+        // Nếu btn đang ở trạng thái "Chỉnh sửa" thì mở khóa các txt và chuyển qua trạng thái "Lưu"
         if(btnChinhSua.getText().equals("Chỉnh sửa")){
             setEditableTxt(true, Color.GREEN);
             lbMkMoi.setVisible(true);
@@ -439,18 +439,26 @@ public class PnTTKhach extends javax.swing.JPanel {
             txtPassComfrim1.setVisible(true);
             btnChinhSua.setText("Lưu");
             btnCancel1.setEnabled(true);
-        }else{
-            if(!ktLoiNhapLieu()){
-                if(ktTrungTaiKhoan(txtTK1.getText())){return;}
+        }else{// Nếu btn đang ở trạng thái "Lưu" thì tiến hành lưu thông tin đã chỉnh sửa và khóa các txt lại
+            if(!ktLoiNhapLieu()){// kiểm tra các lỗi nhập 
+                
+                if(ktTrungTaiKhoan(txtTK1.getText())){return;}// kt tài khoản mà khách chỉnh sửa cá trùng với tk khác ko
+                // hiện dialog cho người dùng xác nhận lại
                 int confirm=JOptionPane.showConfirmDialog(this, "Xác nhận cập nhập thông tin");
-                if(confirm==JOptionPane.OK_OPTION){
+                if(confirm==JOptionPane.OK_OPTION)// xác nhận == OK
+                {
+                    // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
                     if(!txtTK1.getText().equals(taiKhoan) || !txtPass1.getText().isEmpty()){
                         chinhSuaTK(txtTK1.getText(), txtPass1.getText());
                     }
-                    String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
+                    String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";// chuyển giới tính sang String
+                    
+                    //Thực hiện câu truy vấn chỉnh sửa thông tin cá nhân khách
                     chinhSuaTT(txtSDT1.getText(), txtHoTen1.getText(), gt, txtTK1.getText());
 
                     JOptionPane.showMessageDialog(this, "Cập nhập thành công");
+                    
+                    //Khóa các txt lại
                     setEditableTxt(false, Color.BLACK);
                     lbMkMoi.setVisible(false);
                     lbNhapLaiMK.setVisible(false);
@@ -459,7 +467,7 @@ public class PnTTKhach extends javax.swing.JPanel {
                     btnChinhSua.setText("Chỉnh sửa");
                     btnCancel1.setEnabled(false);
                 }
-        }
+            }
         }
 
     }//GEN-LAST:event_btnChinhSuaActionPerformed
