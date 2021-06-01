@@ -30,7 +30,50 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         initComponents();
         loadVe();
     }
-    
+
+    public int ktGioVe(String maChuyen) {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "SELECT * FROM CHUYEN_XE";
+        int temp = 0;
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString(1).equals(maChuyen)) {
+                    temp = Integer.valueOf(rs.getString(2).substring(0, 2));
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnKhachXemVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return temp;
+    }
+
+    public boolean ktVe(String ngayVe, String thangVe, String namVe, String maChuyen) {
+        String namht = String.valueOf(java.time.LocalDate.now()).substring(0, 4);
+        String thanght = String.valueOf(java.time.LocalDate.now()).substring(5, 7);
+        String ngayht = String.valueOf(java.time.LocalDate.now()).substring(8, 10);
+        String gioht = String.valueOf(java.time.LocalTime.now()).substring(0, 2);
+        if (Integer.parseInt(namht) > Integer.parseInt(namVe)) {
+            return false;
+        } else if (Integer.parseInt(namht) == Integer.parseInt(namVe)) {
+            if (Integer.parseInt(thanght) > Integer.parseInt(thangVe)) {
+                return false;
+            } else if (Integer.parseInt(thanght) == Integer.parseInt(thangVe)) {
+                if (Integer.parseInt(ngayht) > Integer.parseInt(ngayVe)) {
+                    return false;
+                } else if (Integer.parseInt(ngayht) == Integer.parseInt(ngayVe)) {
+                    if (Integer.parseInt(gioht) - ktGioVe(maChuyen) < 0) {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public void loadVe() {
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "SELECT * FROM VE_XE";
@@ -49,7 +92,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     value.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                     value.add(rs.getString(5)); // lấy dữ liệu ở cột 5
                     value.add(rs.getString(6)); // lấy dữ liệu ở cột 6
-                    String trangThai=rs.getString(7).equals("0")?"Đã thanh toán":"Chưa thanh toán";
+                    String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
                     value.add(trangThai); // lấy dữ liệu ở cột 7
                     dtm.addRow(value);
                 }
@@ -66,15 +109,16 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ps.setString(1, maVe);
-            if (JOptionPane.showConfirmDialog(this, "Confirm", "Bạn Có Chắc Muốn Hủy Vé ?", 0) == JOptionPane.YES_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, "Bạn Có Chắc Muốn Hủy Vé ?", "Confirm", 0) == JOptionPane.YES_OPTION) {
                 ps.executeUpdate();
-                JOptionPane.showMessageDialog(this, "Xoa Thanh Cong");
+                JOptionPane.showMessageDialog(this, "Xoa Ve Thanh Cong");
             }
 
         } catch (Exception e) {
-            System.out.println("Xoa That Bai");
+            System.out.println("Xoa Ve That Bai");
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,9 +166,22 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         });
         tbVe.setRowHeight(23);
         tbVe.setRowMargin(3);
+        tbVe.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                tbVeHierarchyChanged(evt);
+            }
+        });
         tbVe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbVeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tbVeMouseEntered(evt);
+            }
+        });
+        tbVe.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tbVePropertyChange(evt);
             }
         });
         jScrollPane1.setViewportView(tbVe);
@@ -275,11 +332,22 @@ public class PnKhachXemVe extends javax.swing.JPanel {
     private void jButton_XoaVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_XoaVeActionPerformed
         String maVe = (String) tbVe.getValueAt(tbVe.getSelectedRow(), 0);
         String trangThai = (String) tbVe.getValueAt(tbVe.getSelectedRow(), 5);
-        if (trangThai.equals("0")) {
+        if (trangThai.equals("Chưa thanh toán")) {
+            trangThai = "0";
+        } else {
+            trangThai = "1";
+        }
+
+        // 01/34/6789
+        String ngayVe = txtNgayDi.getText().substring(0, 2);
+        String thangVe = txtNgayDi.getText().substring(3, 5);
+        String namVe = txtNgayDi.getText().substring(6, 10);
+
+        if (trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true) {
             xoaVe(maVe);
             loadVe();
         } else {
-            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán. Không Thể Xóa !!!");
+            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán Hoặc Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
             loadVe();
         }
     }//GEN-LAST:event_jButton_XoaVeActionPerformed
@@ -317,6 +385,19 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtMaChuyenXe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
         txtTrangThaiVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 5).toString());
     }//GEN-LAST:event_tbVeMouseClicked
+
+    private void tbVeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbVeMouseEntered
+
+    private void tbVePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbVePropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbVePropertyChange
+
+    private void tbVeHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_tbVeHierarchyChanged
+        // TODO add your handling code here:
+        loadVe();
+    }//GEN-LAST:event_tbVeHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

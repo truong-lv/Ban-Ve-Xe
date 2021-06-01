@@ -8,6 +8,7 @@ package Form;
 import Code.KetNoi;
 import Code.BanVeXe;
 import Code.HamXuLyBang;
+import Form.Khach.PnKhachXemVe;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.sql.Connection;
@@ -255,6 +256,9 @@ public class PnDatVe extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
+
+        PnKhachXemVe loadVe = new PnKhachXemVe();
+        loadVe.loadVe();
     }
 
     // Hàm load thời gian để khách hàng đặt vé
@@ -1261,7 +1265,6 @@ public class PnDatVe extends javax.swing.JPanel {
         String tramXuatPhat = jComboBox_chuyenDi.getSelectedItem().toString();
 
         //String tramDen = jComboBox_diemDen.getSelectedIndex()!=-1? jComboBox_diemDen.getSelectedItem().toString():"";
-  
         String tramDen = jComboBox_diemDen.getSelectedItem().toString();
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");// /MM/uuuu
@@ -1351,8 +1354,11 @@ public class PnDatVe extends javax.swing.JPanel {
                 String gt = (rBtnNam1.isSelected()) ? "Nam" : "Nữ";
                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(), gt, null);
             }
-
+            String trangThai = "1";
             if (JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Muốn Đặt Vé? \nHãy Kiểm Tra Kỹ Thông Tin !!!", "Xác Nhận", JOptionPane.YES_NO_OPTION) == 0) {
+                if (JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Thanh Toán Online ?", "Thanh Toán Online", JOptionPane.YES_NO_OPTION) == 0) {
+                    trangThai = "0";
+                }
                 for (int i = 0; i < selected.size(); i++) {
                     String viTriGhe = selected.get(i).getText();
                     String maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
@@ -1361,11 +1367,16 @@ public class PnDatVe extends javax.swing.JPanel {
                     String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
                     //mặc định để "0": chưa được thanh toán
-                    String trangThai ="0";
+                   // String trangThai ="0";
 
                     //mặc định để null chưa có nhân viên duyệt
                     String maNV = null;
                     
+//=======
+//                    //nếu là khách hàng đặt thì maNV null
+//                    String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
+//                    System.out.println("ma: " + maNV);
+//>>>>>>> fdb8fe87cd2cf4e04defd45e4ad5fcb4db52d119
                     String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }
