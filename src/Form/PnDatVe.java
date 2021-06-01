@@ -256,7 +256,7 @@ public class PnDatVe extends javax.swing.JPanel {
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
-        
+
         PnKhachXemVe loadVe = new PnKhachXemVe();
         loadVe.loadVe();
     }
@@ -1265,7 +1265,6 @@ public class PnDatVe extends javax.swing.JPanel {
         String tramXuatPhat = jComboBox_chuyenDi.getSelectedItem().toString();
 
         //String tramDen = jComboBox_diemDen.getSelectedIndex()!=-1? jComboBox_diemDen.getSelectedItem().toString():"";
-  
         String tramDen = jComboBox_diemDen.getSelectedItem().toString();
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");// /MM/uuuu
@@ -1355,17 +1354,17 @@ public class PnDatVe extends javax.swing.JPanel {
                 String gt = (rBtnNam1.isSelected()) ? "Nam" : "Nữ";
                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(), gt, null);
             }
-
+            String trangThai = "1";
             if (JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Muốn Đặt Vé? \nHãy Kiểm Tra Kỹ Thông Tin !!!", "Xác Nhận", JOptionPane.YES_NO_OPTION) == 0) {
+                if (JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Thanh Toán Online ?", "Thanh Toán Online", JOptionPane.YES_NO_OPTION) == 0) {
+                    trangThai = "0";
+                }
                 for (int i = 0; i < selected.size(); i++) {
                     String viTriGhe = selected.get(i).getText();
                     String maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
                     String maVe = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/ + maCX + viTriGhe;
                     maVe = maVe.replace("/", "");
                     String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
-
-                    String trangThai = BanVeXe.quyen.equalsIgnoreCase("Khách hàng") ? "0" : "1";
-
                     //nếu là khách hàng đặt thì maNV null
                     String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
                     System.out.println("ma: " + maNV);
