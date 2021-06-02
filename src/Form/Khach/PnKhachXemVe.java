@@ -342,12 +342,14 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         String ngayVe = txtNgayDi.getText().substring(0, 2);
         String thangVe = txtNgayDi.getText().substring(3, 5);
         String namVe = txtNgayDi.getText().substring(6, 10);
-
-        if (trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true) {
-            xoaVe(maVe);
+        
+        if(!trangThai.equals("0")){
+            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán. Không Thể Xóa !!!");
             loadVe();
-        } else {
-            JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán Hoặc Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
+        }else if(ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == false){
+            JOptionPane.showMessageDialog(this, "Vé Này Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
+        }else if(trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true){
+            xoaVe(maVe);
             loadVe();
         }
     }//GEN-LAST:event_jButton_XoaVeActionPerformed
