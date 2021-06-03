@@ -33,6 +33,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         initComponents();
         //LOAD DỮ LIỆU VÉ VÀO BẢNG TẠM
         xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+        
         loadComboNgayDi();
         loadComboGio();
         loadComboChuyenXe();
@@ -64,6 +65,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         cbbNgayDi.removeAllItems();
         String tram=cbbTramDi.getSelectedItem().toString();
         String cheDo=cbbCheDoXem.getSelectedItem().toString();
+        
         // load vé đặt trước vào combobox
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");// /MM/uuuu
         LocalDate localDate = LocalDate.now();
@@ -159,8 +161,8 @@ public class PnQlyVe extends javax.swing.JPanel {
     }
     
     
-    //Hàm lọc dữ liệu từ Bảng Tạm(-bảng lưu trữ) vào Bảng VéXe(-bảng hiển thị), LỌC theo các combobox
-    public void locDuLieuVeXe(boolean dk){
+    //Hàm lọc dữ liệu từ Bảng Tạm(-bảng lưu trữ) vào Bảng VéXe(-bảng hiển thị)
+    public void locDuLieuVeXe(boolean dk){// biến bool = true: lọc theo đk, bool=false: lọc tất cả
         DefaultTableModel dtm=(DefaultTableModel)tbVeXe.getModel();
         dtm.setNumRows(0);
         Vector vt;

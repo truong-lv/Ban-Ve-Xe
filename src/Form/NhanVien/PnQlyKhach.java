@@ -740,6 +740,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
         xLBang.loadDuLieuVaoBang(tbKhachHang,"SELECT * FROM HANH_KHACH");
+        xLBang.locTatCa(tbKhachHang,"",-1);
     }//GEN-LAST:event_formHierarchyChanged
 
 

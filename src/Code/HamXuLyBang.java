@@ -51,10 +51,10 @@ public class HamXuLyBang {
             // Nếu là bảng Vé Xe thì đổi trạng thái Vé xe từ số về String
             if(tb.getColumnName(0).equalsIgnoreCase("Ghế ngồi")){
                 for(int i=0;i<dtm.getRowCount();i++){
-                    if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("1")){
+                    if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
                         dtm.setValueAt("Đã thanh toán", i, dtm.getColumnCount()-1);
                     }
-                    else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
+                    else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("1")){
                         dtm.setValueAt("Chưa thanh toán", i, dtm.getColumnCount()-1);
                     }
                 }
@@ -104,35 +104,35 @@ public class HamXuLyBang {
         sorter.setSortKeys(sortKeys); 
     }  
     
-    //-----------------Hàm lọc dữ liệu trong bảng----------------------
-    public void locDuLieuVeXe(JTable tbGoc,JTable tbLoc, String tram, String ngay, String gio, int chuyenXe){
-
-        DefaultTableModel dtm=(DefaultTableModel)tbLoc.getModel();
-        dtm.setNumRows(0);
-        Vector vt;
-        for(int i=0;i<tbGoc.getRowCount();i++)//Duyệt từng cột của bảng tạm
-        {
-            // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
-            if(tbGoc.getValueAt(i, 8).toString().equals(tram) && tbGoc.getValueAt(i, 6).toString().equals(ngay) 
-                    && tbGoc.getValueAt(i, 7).toString().equals(gio) && Integer.parseInt(tbGoc.getValueAt(i, 2).toString())==chuyenXe)
-            {
-                vt=new Vector();
-                vt.add(Integer.parseInt(tbGoc.getValueAt(i, 0).toString()));
-                for(int j=1;j<tbGoc.getColumnCount();j++){
-                    vt.add(tbGoc.getValueAt(i, j));
-                }
-                dtm.addRow(vt);
-                
-            }
-        }
-        
-        tbLoc.setModel(dtm);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        tbLoc.setDefaultRenderer(Integer.class, centerRenderer);
-        // sắp xếp bảng tăng dần theo ghế
-        sapXepBang(tbLoc ,0,0);
-    }
+//    //-----------------Hàm lọc dữ liệu trong bảng----------------------
+//    public void locDuLieuVeXe(JTable tbGoc,JTable tbLoc, String tram, String ngay, String gio, int chuyenXe){
+//
+//        DefaultTableModel dtm=(DefaultTableModel)tbLoc.getModel();
+//        dtm.setNumRows(0);
+//        Vector vt;
+//        for(int i=0;i<tbGoc.getRowCount();i++)//Duyệt từng cột của bảng tạm
+//        {
+//            // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
+//            if(tbGoc.getValueAt(i, 8).toString().equals(tram) && tbGoc.getValueAt(i, 6).toString().equals(ngay) 
+//                    && tbGoc.getValueAt(i, 7).toString().equals(gio) && Integer.parseInt(tbGoc.getValueAt(i, 2).toString())==chuyenXe)
+//            {
+//                vt=new Vector();
+//                vt.add(Integer.parseInt(tbGoc.getValueAt(i, 0).toString()));
+//                for(int j=1;j<tbGoc.getColumnCount();j++){
+//                    vt.add(tbGoc.getValueAt(i, j));
+//                }
+//                dtm.addRow(vt);
+//                
+//            }
+////        }
+//        
+//        tbLoc.setModel(dtm);
+//        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//        tbLoc.setDefaultRenderer(Integer.class, centerRenderer);
+//        // sắp xếp bảng tăng dần theo ghế
+//        sapXepBang(tbLoc ,0,0);
+//    }
     
     // Lọc tất cả các hàng có dữ liệu ở cột cotLoc là str
     public void locTatCa(JTable tb, String str, int cotLoc){
