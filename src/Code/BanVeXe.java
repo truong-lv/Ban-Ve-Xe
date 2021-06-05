@@ -33,5 +33,11 @@ public class BanVeXe {
         BanVeXe.quyen = quyen;
     }
     
-   
+   public static void setBanVeXe(String Account, String pass, String hoTen, String gioiTinh, String quyen) {
+       BanVeXe.Account = Account; 
+       BanVeXe.pass = pass;
+       BanVeXe.hoTen = hoTen;
+       BanVeXe.gioiTinh = gioiTinh;
+       BanVeXe.quyen = quyen;
+    }
 }

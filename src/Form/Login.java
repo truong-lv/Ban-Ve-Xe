@@ -55,7 +55,6 @@ public class Login extends javax.swing.JFrame {
             connect.close();
         } catch (Exception e) {
         }
-
         //====================KT NẾU LOAD ĐƯỢC TÀI KHOẢN THÌ CHUYỂN GIAO DIỆN=========================
         if(checkLogin){
                 new GDChinh().setVisible(true);

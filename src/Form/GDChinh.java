@@ -20,20 +20,14 @@ import javax.swing.JTable;
 public class GDChinh extends javax.swing.JFrame {
 
     HamXuLyBang xLBang=new HamXuLyBang();
-    JTable tbLoad;
-    private boolean khoiTao=false;
     public GDChinh() {
         initComponents();
         LbUserName.setText(BanVeXe.Account);
-        //lbLoaiTK.setText(BanVeXe.quyen);
         loadGiaoDien();
-        this.khoiTao=true;
     }
     
     // LOAD TỪNG PANEL CHỨC NĂNG  VÀO GIAO DIỆN CHÍNH DỰA THEO QUYỀN TRUY CẬP CỦA TỪNG ĐỐI TƯỢNG
     private void loadGiaoDien(){
-        //if(!this.khoiTao){this.khoiTao=true;}
-        this.khoiTao=false;
         //LOAD CHỨC NĂNG ĐẶT VÉ 
         PnDatVe datVe =new PnDatVe();
         addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
@@ -41,10 +35,11 @@ public class GDChinh extends javax.swing.JFrame {
         // CHỨC NĂNG CHO KHÁCH
         if(BanVeXe.quyen.equals("Khách hàng"))
         {
+            
             PnKhachXemVe xemVe = new PnKhachXemVe();
             addPanel(xemVe, "XEM LỊCH SỬ ĐẶT", "/image/History-icon.png");
             
-            PnTTKhach ttKhach=new PnTTKhach(BanVeXe.primaryKey);
+            PnTTKhach ttKhach=new PnTTKhach(BanVeXe.primaryKey,LbUserName);
             addPanel(ttKhach, "THÔNG TIN CÁ NHÂN", "/image/edit-user-icon.png");
         }
         // CHỨC NĂNG CHO CẢ NHÂN VIÊN VÀ QUẢN LÝ
@@ -57,7 +52,7 @@ public class GDChinh extends javax.swing.JFrame {
             // lấy bảng ds khách hàng đưa vào PnDatVe để tìm kiếm khách hổ trợ cho việc đặt vé
             datVe.loadBangKhachHang(qlykhach.getTable());
             
-            PnTTCaNhan ttCaNhan=new PnTTCaNhan();
+            PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserName);
             addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
         }
         // CHỨC NĂNG CỦA QUẢN LÝ
