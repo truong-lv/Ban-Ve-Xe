@@ -6,7 +6,9 @@
 package Form.NhanVien;
 
 import Code.BanVeXe;
+import Code.GhiFileExcel;
 import Code.HamXuLyBang;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -18,6 +20,7 @@ import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -261,6 +264,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         cbbChuyenXe = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         cbbCheDoXem = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         tbTam.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tbTam.setModel(new javax.swing.table.DefaultTableModel(
@@ -339,6 +343,11 @@ public class PnQlyVe extends javax.swing.JPanel {
         });
         tbVeXe.setRowHeight(23);
         tbVeXe.setRowMargin(3);
+        tbVeXe.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tbVeXeFocusLost(evt);
+            }
+        });
         tbVeXe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbVeXeMouseClicked(evt);
@@ -445,6 +454,13 @@ public class PnQlyVe extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("Xuất file excel ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -472,7 +488,8 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addGap(29, 29, 29)
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -482,8 +499,9 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton1))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(441, 441, 441)
                                 .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -510,7 +528,8 @@ public class PnQlyVe extends javax.swing.JPanel {
                     .addComponent(txtSearchVe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClearText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
+                    .addComponent(jLabel13)
+                    .addComponent(jButton1))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -548,8 +567,9 @@ public class PnQlyVe extends javax.swing.JPanel {
     }//GEN-LAST:event_btnClearTextActionPerformed
 
     private void tbVeXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeXeMouseClicked
-        // TODO add your handling code here:
-        String tbSelect=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), 1);// đưa dữ liệu đc chọn lên txt search
+
+        // đưa dữ liệu đc chọn lên txt search
+        String tbSelect=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), 1);
         txtSearchVe.setText(tbSelect);
         
         //lấy trạng thái của dữ liệu được chọn
@@ -570,7 +590,8 @@ public class PnQlyVe extends javax.swing.JPanel {
     private void btnDuyetVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDuyetVeActionPerformed
         // TODO add your handling code here:
         if(!tbVeXe.getSelectionModel().isSelectionEmpty()){
-            String maVe=xLBang.selectRow(tbVeXe, 1);// đưa dữ liệu đc chọn vào biến
+            // Lưu dữ liệu đc chọn vào biến
+            String maVe=xLBang.selectRow(tbVeXe, 1);
             int choose = JOptionPane.showConfirmDialog(this, "Xác nhận duyệt vé: "+maVe, "Duyệt vé", 0);
             if(choose==JOptionPane.OK_OPTION){
                 duyetVe(maVe,BanVeXe.primaryKey);
@@ -625,8 +646,8 @@ public class PnQlyVe extends javax.swing.JPanel {
     }//GEN-LAST:event_cbbNgayDiItemStateChanged
 
     private void cbbGioDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbGioDiItemStateChanged
-        locDuLieuVeXe(true);
         loadComboChuyenXe();
+        locDuLieuVeXe(true);
     }//GEN-LAST:event_cbbGioDiItemStateChanged
 
     private void cbbChuyenXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbChuyenXeItemStateChanged
@@ -657,6 +678,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             xLBang.locTatCa(tbVeXe,"",-1);
             
         }
+        
     }//GEN-LAST:event_txtSearchVeKeyReleased
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
@@ -667,6 +689,46 @@ public class PnQlyVe extends javax.swing.JPanel {
         loadComboChuyenXe();
         locDuLieuVeXe(true);
     }//GEN-LAST:event_formHierarchyChanged
+
+    private void tbVeXeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbVeXeFocusLost
+        // TODO add your handling code here:
+        if(btnDuyetVe.isEnabled() || btnHuyVe.isEnabled()) {return;}
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
+    }//GEN-LAST:event_tbVeXeFocusLost
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");   
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+        {
+            File fileToSave = fileChooser.getSelectedFile();
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+            GhiFileExcel ghiFile= new GhiFileExcel(tbVeXe,"THÔNG TIN VÉ CỦA CHUYẾN XE");
+            ghiFile.setFileName(fileToSave.getAbsolutePath());
+            String tram=cbbTramDi.getSelectedItem().toString();
+            String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
+            String gio=cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"";
+            String chuyen=cbbChuyenXe.getSelectedIndex()!=-1?cbbChuyenXe.getSelectedItem().toString():"";
+            Vector vt1=new Vector();
+            vt1.add("Trạm Đi: "+tram);
+            vt1.add("Ngày: "+ngay);
+            vt1.add("Giờ: "+gio);
+            vt1.add("Chuyến xe số: "+chuyen);
+            ghiFile.setChiTiet1(vt1);
+            Vector vt2=new Vector();
+            vt2.add("Nhân viên: "+BanVeXe.hoTen);
+            vt2.add("Mã NV: "+BanVeXe.primaryKey);
+            ghiFile.setChiTiet2(vt2);
+            ghiFile.writeFileExcel();
+        }
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -679,6 +741,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbbNgayDi;
     private javax.swing.JComboBox<String> cbbTramDi;
     private javax.swing.JComboBox<String> cbbTrangThai;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

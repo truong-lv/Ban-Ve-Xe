@@ -5,6 +5,8 @@
  */
 package Form.Khach;
 
+import Code.BanVeXe;
+import Form.Login;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,12 +25,12 @@ import javax.swing.JOptionPane;
 public class PnTTKhach extends javax.swing.JPanel {
 
     private String dienThoai;
-    private String taiKhoan;
-    public PnTTKhach(String phone) {
+    private JLabel lbAc;
+    public PnTTKhach(String phone, JLabel lb) {
         this.dienThoai=phone;
+        this.lbAc=lb;
         initComponents();
         loadKH();
-        this.taiKhoan=txtTK1.getText();
     }
     
     private void setEditableTxt(boolean bool, Color col){
@@ -41,7 +44,7 @@ public class PnTTKhach extends javax.swing.JPanel {
     }
     public boolean ktTrungTaiKhoan(String tk){
         java.sql.Connection conn = Code.KetNoi.layKetNoi();
-        String sql="SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '"+tk+"' AND TaiKhoan !='"+taiKhoan+"'";
+        String sql="SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '"+tk+"' AND TaiKhoan !='"+BanVeXe.Account+"'";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs =ps.executeQuery();
@@ -75,14 +78,13 @@ public class PnTTKhach extends javax.swing.JPanel {
                    rBtnNu1.setSelected(true);
                }
                txtTK1.setText(rs.getString(3));
-               taiKhoan=txtTK1.getText();
             }
             // dong ket noi
             rs.close();
             ps.close();
             connect.close();
         } catch (SQLException e) {
-            Logger.getLogger(ChinhSuaKH.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PnTTKhach.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     public void chinhSuaTT(String dt, String ten, String gt, String tk){
@@ -99,12 +101,12 @@ public class PnTTKhach extends javax.swing.JPanel {
             ps.close();
             connect.close();
         } catch (SQLException e) {
-            Logger.getLogger(ChinhSuaKH.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PnTTKhach.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     public void chinhSuaTK(String tk, String matKhau){
         Connection connect=Code.KetNoi.layKetNoi();
-        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+taiKhoan+"'";
+        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+BanVeXe.Account+"'";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
             ps.setString(1, tk);
@@ -114,7 +116,7 @@ public class PnTTKhach extends javax.swing.JPanel {
             ps.close();
             connect.close();
         } catch (SQLException e) {
-            Logger.getLogger(ChinhSuaKH.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PnTTKhach.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
@@ -245,7 +247,7 @@ public class PnTTKhach extends javax.swing.JPanel {
 
         lbMkMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbMkMoi.setForeground(Color.GREEN);
-        lbMkMoi.setText("Mật khẩu mới:");
+        lbMkMoi.setText("Mật khẩu mới (nếu muốn thay đổi):");
         lbMkMoi.setVisible(false);
 
         txtPass1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -448,8 +450,9 @@ public class PnTTKhach extends javax.swing.JPanel {
                 if(confirm==JOptionPane.OK_OPTION)// xác nhận == OK
                 {
                     // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
-                    if(!txtTK1.getText().equals(taiKhoan) || !txtPass1.getText().isEmpty()){
-                        chinhSuaTK(txtTK1.getText(), txtPass1.getText());
+                    if(!txtTK1.getText().equals(BanVeXe.Account)){
+                        chinhSuaTK(txtTK1.getText(), (!txtPass1.getText().isEmpty())?txtPass1.getText():BanVeXe.pass);
+                        
                     }
                     String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";// chuyển giới tính sang String
                     
@@ -457,7 +460,8 @@ public class PnTTKhach extends javax.swing.JPanel {
                     chinhSuaTT(txtSDT1.getText(), txtHoTen1.getText(), gt, txtTK1.getText());
 
                     JOptionPane.showMessageDialog(this, "Cập nhập thành công");
-                    
+                    BanVeXe.setBanVeXe(txtTK1.getText(), txtPass1.getText(), txtHoTen1.getText(), gt, BanVeXe.quyen);
+                    lbAc.setText(BanVeXe.Account);
                     //Khóa các txt lại
                     setEditableTxt(false, Color.BLACK);
                     lbMkMoi.setVisible(false);
