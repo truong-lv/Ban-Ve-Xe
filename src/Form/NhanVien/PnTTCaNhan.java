@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,10 +24,11 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     /**
      * Creates new form PnTTCaNhan
      */
-    public PnTTCaNhan() {
+    private JLabel lbAc;
+    public PnTTCaNhan(JLabel lb) {
+        this.lbAc=lb;
         initComponents();
         loadThongTinNV();
-        
         //quyenChinhSua();
     }
 
@@ -37,25 +39,13 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         txtCMND.setEditable(trangThai);
         txtTK.setEditable(trangThai);
         txtMK.setEditable(trangThai);
-        cbbChucVu.enable(trangThai);
         txtSDT.setEditable(trangThai);
         rBtnNam1.setEnabled(trangThai);
         rBtnNu1.setEnabled(trangThai);
+        btnSeePass.setEnabled(!trangThai);
     }
     
-    private void loadCbbChucVu(){
-        cbbChucVu.removeAllItems();
-        Connection connect=Code.KetNoi.layKetNoi();
-        String sql="SELECT MaLoaiNV, ChucVu  FROM LOAI_NHAN_VIEN";
-        try {
-            PreparedStatement ps=connect.prepareStatement(sql);
-            ResultSet rs =ps.executeQuery();
-            while(rs.next()){
-                cbbChucVu.addItem(rs.getString(1)+"- "+rs.getString(2));
-            }
-        } catch (Exception e) {
-        }
-    }
+
     
     private void loadThongTinNV(){
         Connection connect=Code.KetNoi.layKetNoi();
@@ -69,7 +59,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                 txtCMND.setText(rs.getString(1));
                 if(rs.getString(2).equalsIgnoreCase("Nam")){rBtnNam1.setSelected(true);}
                 txtSDT.setText(rs.getString(3));
-                cbbChucVu.addItem(rs.getString(4)+"- "+rs.getString(5));
                 txtTK.setText(BanVeXe.Account);
                 
             }
@@ -82,10 +71,10 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     }
     
    
-    private void loadHieuChinhTT(String maNV, String ten, String CMND, String gioiTinh, String chucVu, String sdt, String taiKhoan, String matKhau){
+    private void loadHieuChinhTT(String maNV, String ten, String CMND, String gioiTinh, String sdt, String taiKhoan, String matKhau){
         Connection connect=Code.KetNoi.layKetNoi();
         if(!taiKhoan.equals(BanVeXe.Account)||!matKhau.equals(BanVeXe.pass)){// kiểm tra thông tin tài khoản có khác hiện tại ko
-            String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+taiKhoan+"'";
+            String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+BanVeXe.Account+"'";
             try {
                 PreparedStatement ps=connect.prepareStatement(sql);
                 ps.setString(1, taiKhoan);
@@ -97,14 +86,13 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                 Logger.getLogger(PnTTCaNhan.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        String sql="UPDATE NHAN_VIEN SET HoTen=?, CMND=?, GioiTinh=?, DienThoai=?,MaLoaiNV=? WHERE MaNV='"+maNV+"'";
+        String sql2="UPDATE NHAN_VIEN SET HoTen=?, CMND=?, GioiTinh=?, DienThoai=? WHERE MaNV='"+maNV+"'";
         try {
-            PreparedStatement ps=connect.prepareStatement(sql);
+            PreparedStatement ps=connect.prepareStatement(sql2);
             ps.setString(1, ten);
             ps.setString(2, CMND);
             ps.setString(3, gioiTinh);
             ps.setString(4, sdt);
-            ps.setString(5, chucVu);
             ps.executeUpdate();
             // dong ket noi
             ps.close();
@@ -128,7 +116,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         lbThongBao = new javax.swing.JLabel();
         btnSeePass = new javax.swing.JButton();
         txtMaNV = new javax.swing.JTextField();
@@ -140,7 +127,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         rBtnNu1 = new javax.swing.JRadioButton();
         btnChinhSua = new javax.swing.JButton();
         txtMK = new javax.swing.JTextField();
-        cbbChucVu = new javax.swing.JComboBox<>();
         btnHuy = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -173,9 +159,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel22.setText("CMND/CCCD:");
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel24.setText("Chức vụ:");
 
         lbThongBao.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lbThongBao.setForeground(new java.awt.Color(255, 51, 51));
@@ -228,8 +211,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         txtMK.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         txtMK.setText("**********");
 
-        cbbChucVu.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-
         btnHuy.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHuy.setText("Hủy");
         btnHuy.setVisible(false);
@@ -246,7 +227,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(466, 466, 466)
                 .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(546, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -281,7 +262,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                     .addComponent(jLabel14))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel15)
                         .addGap(166, 166, 166))
                     .addGroup(layout.createSequentialGroup()
@@ -289,25 +270,24 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                         .addComponent(jLabel16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(jLabel20)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(117, 117, 117)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel24)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(79, 79, 79)
+                                        .addComponent(jLabel20)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(117, 117, 117)
                                         .addComponent(jLabel21)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lbThongBao))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSeePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(130, 130, 130))))
+                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                        .addComponent(btnSeePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(130, 130, 130))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(170, 170, 170)
+                                .addComponent(lbThongBao)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(463, 463, 463)
                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,11 +340,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                                 .addComponent(jLabel21)
                                 .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnSeePass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbbChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel24))
-                        .addGap(27, 27, 27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbThongBao)))
                 .addGap(43, 43, 43)
                 .addComponent(btnChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,13 +367,13 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             if(BanVeXe.quyen.equals("Nhân viên")){
                 txtMK.setEditable(true);
                 lbThongBao.setVisible(true);
+                btnSeePass.setEnabled(false);
             }else
             {
                 setEdit(true);
-                loadCbbChucVu();
             }
             
-        }else{// chuyển qua chức năng xem
+        }else{// chuyển qua chức năng lưu
             
             String maNV=txtMaNV.getText();
             String ten=txtTen.getText();
@@ -406,9 +382,10 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             String sdt=txtSDT.getText();
             String tk=txtTK.getText();
             String mk=txtMK.getText();
-            String chucVu=cbbChucVu.getSelectedItem().toString();
-            chucVu=chucVu.substring(0, chucVu.indexOf("-"));
-            loadHieuChinhTT(maNV, ten, cmnd, gt, chucVu, sdt, tk, mk);
+            loadHieuChinhTT(maNV, ten, cmnd, gt, sdt, tk, mk);
+            
+            BanVeXe.setBanVeXe(tk, mk, ten, gt, BanVeXe.quyen);
+            lbAc.setText(tk);
             JOptionPane.showMessageDialog(this, "Hiệu chỉnh thông tin thành công");
             txtMK.setText("**********");
             btnChinhSua.setText("Chỉnh sửa");
@@ -434,7 +411,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnSeePass;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> cbbChucVu;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -445,7 +421,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel lbThongBao;
     private javax.swing.JRadioButton rBtnNam1;
     private javax.swing.JRadioButton rBtnNu1;
