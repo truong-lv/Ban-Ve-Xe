@@ -49,6 +49,25 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         }
         return temp;
     }
+    
+    public String layGio(String maChuyen) {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "SELECT * FROM CHUYEN_XE";
+        String temp = "";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString(1).equals(maChuyen)) {
+                    temp = rs.getString(2);
+                }
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(PnKhachXemVe.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return temp;
+    }
 
     public boolean ktVe(String ngayVe, String thangVe, String namVe, String maChuyen) {
         String namht = String.valueOf(java.time.LocalDate.now()).substring(0, 4);
@@ -91,7 +110,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     value.add(rs.getString(3)); // lấy dữ liệu ở cột 3
                     value.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                     value.add(rs.getString(5)); // lấy dữ liệu ở cột 5
-                    value.add(rs.getString(6)); // lấy dữ liệu ở cột 6
+                    value.add(layGio(rs.getString(6)).substring(0, 8)); // lấy dữ liệu ở cột 6
                     String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
                     value.add(trangThai); // lấy dữ liệu ở cột 7
                     dtm.addRow(value);
@@ -153,7 +172,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Ngày Đi", "Mã Chuyến", "Trạng Thái"
+                "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Ngày Đi", "Giờ Đi", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {

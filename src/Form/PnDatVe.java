@@ -1356,7 +1356,7 @@ public class PnDatVe extends javax.swing.JPanel {
             }
             String trangThai = "1";
             if (JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Muốn Đặt Vé? \nHãy Kiểm Tra Kỹ Thông Tin !!!", "Xác Nhận", JOptionPane.YES_NO_OPTION) == 0) {
-                if (JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Thanh Toán Online ?", "Thanh Toán Online", JOptionPane.YES_NO_OPTION) == 0) {
+                if (JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Thanh Toán Online ?\nLưu Ý: Thanh Toán Online Sẽ Không Được Hủy Vé!!!", "Thanh Toán Online", JOptionPane.YES_NO_OPTION) == 0) {
                     trangThai = "0";
                 }
                 for (int i = 0; i < selected.size(); i++) {
@@ -1367,11 +1367,10 @@ public class PnDatVe extends javax.swing.JPanel {
                     String ngayDi = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
 
                     //mặc định để "0": chưa được thanh toán
-                   // String trangThai ="0";
-
+                    // String trangThai ="0";
                     //mặc định để null chưa có nhân viên duyệt
                     String maNV = null;
-                    
+
 //=======
 //                    //nếu là khách hàng đặt thì maNV null
 //                    String maNV = (BanVeXe.quyen.equalsIgnoreCase("Khách hàng")) ? null : BanVeXe.primaryKey;
@@ -1381,7 +1380,12 @@ public class PnDatVe extends javax.swing.JPanel {
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }
                 taiGheDaDat();
-                JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công");
+                if (trangThai.equals("1")) {
+                    JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công. Vé Chưa Được Thanh Toán.\nVui Lòng Đến Quầy Thanh Toán.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công. Vé Đã Được Thanh Toán");
+                }
+
                 lbSoLuongVe.setText("0");
                 jLabel_priceAll.setText("0 VND");
                 selected.clear();

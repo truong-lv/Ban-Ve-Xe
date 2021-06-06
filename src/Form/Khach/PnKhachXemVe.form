@@ -123,7 +123,7 @@
                 <Column editable="false" title="V&#x1ecb; Tr&#xed; Gh&#x1ebf;" type="java.lang.Object"/>
                 <Column editable="false" title="Gi&#xe1; V&#xe9;" type="java.lang.Object"/>
                 <Column editable="false" title="Ng&#xe0;y &#x110;i" type="java.lang.Object"/>
-                <Column editable="false" title="M&#xe3; Chuy&#x1ebf;n" type="java.lang.Object"/>
+                <Column editable="false" title="Gi&#x1edd; &#x110;i" type="java.lang.Object"/>
                 <Column editable="false" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
               </Table>
             </Property>
