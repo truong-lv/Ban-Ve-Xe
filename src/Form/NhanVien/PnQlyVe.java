@@ -720,6 +720,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             vt1.add("Ngày: "+ngay);
             vt1.add("Giờ: "+gio);
             vt1.add("Chuyến xe số: "+chuyen);
+            
             ghiFile.setChiTiet1(vt1);
             Vector vt2=new Vector();
             vt2.add("Nhân viên: "+BanVeXe.hoTen);

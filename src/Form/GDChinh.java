@@ -120,11 +120,11 @@ public class GDChinh extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user-icon.png"))); // NOI18N
         pnInfor.add(jLabel1);
-        jLabel1.setBounds(140, 10, 30, 30);
+        jLabel1.setBounds(130, 20, 30, 30);
 
         LbUserName.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         pnInfor.add(LbUserName);
-        LbUserName.setBounds(170, 10, 180, 30);
+        LbUserName.setBounds(160, 20, 180, 30);
 
         jBtnCancelGDNhanVien.setBackground(new java.awt.Color(19, 101, 175));
         jBtnCancelGDNhanVien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -140,7 +140,7 @@ public class GDChinh extends javax.swing.JFrame {
         lbTopBanner.setForeground(new java.awt.Color(19, 101, 175));
         lbTopBanner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/Logo.png"))); // NOI18N
         pnInfor.add(lbTopBanner);
-        lbTopBanner.setBounds(430, 30, 300, 50);
+        lbTopBanner.setBounds(450, 30, 300, 50);
 
         lbTopBanner1.setForeground(new java.awt.Color(19, 101, 175));
         lbTopBanner1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/Logo-Car1.png"))); // NOI18N
