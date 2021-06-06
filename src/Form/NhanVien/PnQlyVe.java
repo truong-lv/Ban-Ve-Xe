@@ -16,6 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -74,39 +76,64 @@ public class PnQlyVe extends javax.swing.JPanel {
         LocalDate localDate = LocalDate.now();
         Date htai=StringToDate(dtf.format(localDate));
         Date ngayTam=new Date();
+        
+        ArrayList<String> arrCbb=new ArrayList();
         for(int i=0;i<tbTam.getRowCount() ;i++)//Đk = với trạm đang được chọn
         {
             ngayTam=StringToDate(tbTam.getValueAt(i, 6).toString());
-            if((tram.equals(tbTam.getValueAt(i, 8).toString())&&(cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) ) /*|| cheDo.equals("Tất cả vé")*/)//nếu chế độ là vé đặt trc thì load vé >tg hiện tại, ngược lại load tất cả
+            if((tram.equals(tbTam.getValueAt(i, 8).toString())&&(cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) ))//nếu chế độ là vé đặt trc thì load vé >tg hiện tại, ngược lại load tất cả
             {
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(arrCbb.size()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
-                    for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
-                        if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
+                    for(int j=0;ktTrung==false && j<arrCbb.size();j++){
+                        if(tbTam.getValueAt(i, 6).toString().equals(arrCbb.get(j)))// kt ngày đã tồn tại trong combobox chưa
                         {
                             ktTrung=true;
                         }
                     }
-                    if(!ktTrung)cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
+                    if(!ktTrung)arrCbb.add(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
                 }
+                else arrCbb.add(tbTam.getValueAt(i, 6).toString());
                 
-                else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
             }else if(tram.equals(tbTam.getValueAt(i, 8).toString())&&cheDo.equals("Tất cả vé")){
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(arrCbb.size()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
-                    for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
-                        if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
+                    for(int j=0;ktTrung==false && j<arrCbb.size();j++){
+                        if(tbTam.getValueAt(i, 6).toString().equals(arrCbb.get(j)))// kt ngày đã tồn tại trong combobox chưa
                         {
                             ktTrung=true;
                         }
                     }
-                    if(!ktTrung)cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
+                   if(!ktTrung)arrCbb.add(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
                 }
-                
-                else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
+                else arrCbb.add(tbTam.getValueAt(i, 6).toString());
             }
         }
 
+        //Sắp xếp tăng dần
+        arrCbb.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                if(Integer.parseInt(o1.substring(6, 10))==Integer.parseInt(o2.substring(6, 10)))
+                {
+                    if(Integer.parseInt(o1.substring(3,5))==Integer.parseInt(o2.substring(3,5)))
+                    {
+                        if(Integer.parseInt(o1.substring(0,2))==Integer.parseInt(o2.substring(0,2))){
+                            return 0;
+                        }
+                        else return Integer.parseInt(o1.substring(0,2))-Integer.parseInt(o2.substring(0,2));
+                        
+                    }
+                    else return Integer.parseInt(o1.substring(3,5))-Integer.parseInt(o2.substring(3,5));
+                }
+                else return Integer.parseInt(o1.substring(6, 10))-Integer.parseInt(o2.substring(6, 10));
+                
+            }
+        });
+        
+        for(int i=0;i<arrCbb.size();i++){
+            cbbNgayDi.addItem(arrCbb.get(i));
+        }
     }
     
     public void loadComboGio(){
@@ -669,6 +696,8 @@ public class PnQlyVe extends javax.swing.JPanel {
 
     private void txtSearchVeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyReleased
         // TODO add your handling code here:
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
         if(!txtSearchVe.getText().isEmpty()){
             locDuLieuVeXe(false);
             xLBang.locTatCa(tbVeXe,txtSearchVe.getText(),-1);
@@ -701,7 +730,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Specify a file to save");   
+        fileChooser.setDialogTitle("Xuất File Excel");   
 
         int userSelection = fileChooser.showSaveDialog(this);
 
