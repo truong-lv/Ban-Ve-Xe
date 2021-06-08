@@ -25,8 +25,10 @@ public class PnTTCaNhan extends javax.swing.JPanel {
      * Creates new form PnTTCaNhan
      */
     private JLabel lbAc;
-    public PnTTCaNhan(JLabel lb) {
+    private JLabel lbName;
+    public PnTTCaNhan(JLabel lb, JLabel lbName) {
         this.lbAc=lb;
+        this.lbName=lbName;
         initComponents();
         loadThongTinNV();
         //quyenChinhSua();
@@ -386,6 +388,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             
             BanVeXe.setBanVeXe(tk, mk, ten, gt, BanVeXe.quyen);
             lbAc.setText(tk);
+            lbName.setText(ten);
             JOptionPane.showMessageDialog(this, "Hiệu chỉnh thông tin thành công");
             txtMK.setText("**********");
             btnChinhSua.setText("Chỉnh sửa");
@@ -401,6 +404,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         btnChinhSua.setText("Chỉnh sửa");
         btnHuy.setVisible(false);
         txtMK.setText("**********");
+        lbThongBao.setVisible(false);
         setEdit(false);
         loadThongTinNV();
     }//GEN-LAST:event_btnHuyActionPerformed

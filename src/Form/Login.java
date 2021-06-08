@@ -10,6 +10,7 @@ import Code.BanVeXe;
 import java.awt.event.KeyEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +34,8 @@ public class Login extends javax.swing.JFrame {
         String mk=psMatkhau.getText();
         //=========================LOAD TÀI KHOẢN TỪ DATABASE============================
         try {
-            CallableStatement command = connect.prepareCall("{call SP_LOAD_LOGIN (?,?)}");
+            //CallableStatement command = connect.prepareCall("{call SP_LOAD_LOGIN (?,?)}");
+            PreparedStatement command=connect.prepareStatement("{call SP_LOAD_LOGIN (?,?)}");
              //cung cap gia tri cho bien
             command.setString(1, tk);
             command.setString(2, mk);
@@ -68,6 +70,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pndky = new javax.swing.JPanel();
         pnLogin = new javax.swing.JPanel();
         lbErorrLogin = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -79,8 +82,19 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        lbTopBanner1 = new javax.swing.JLabel();
         BackgroundLogin = new javax.swing.JLabel();
-        pndky = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout pndkyLayout = new javax.swing.GroupLayout(pndky);
+        pndky.setLayout(pndkyLayout);
+        pndkyLayout.setHorizontalGroup(
+            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 420, Short.MAX_VALUE)
+        );
+        pndkyLayout.setVerticalGroup(
+            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PHẦN MỀM BÁN VÉ XE");
@@ -97,12 +111,12 @@ public class Login extends javax.swing.JFrame {
         lbErorrLogin.setText("Tài hoặc mật khẩu không hợp lệ !!Vui lòng nhập lại");
         lbErorrLogin.setVisible(false);
         pnLogin.add(lbErorrLogin);
-        lbErorrLogin.setBounds(50, 470, 330, 33);
+        lbErorrLogin.setBounds(50, 460, 330, 33);
 
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Nếu bạn chưa có tài khoản?");
         pnLogin.add(jLabel13);
-        jLabel13.setBounds(140, 520, 158, 16);
+        jLabel13.setBounds(140, 590, 158, 16);
 
         btnDangNhap.setBackground(new java.awt.Color(242, 227, 57));
         btnDangNhap.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
@@ -130,7 +144,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         pnLogin.add(fLbDangKy);
-        fLbDangKy.setBounds(180, 550, 67, 20);
+        fLbDangKy.setBounds(180, 610, 67, 20);
 
         psMatkhau.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -153,27 +167,18 @@ public class Login extends javax.swing.JFrame {
         pnLogin.add(jLabel2);
         jLabel2.setBounds(100, 230, 232, 16);
         pnLogin.add(jSeparator1);
-        jSeparator1.setBounds(130, 560, 50, 10);
+        jSeparator1.setBounds(130, 620, 50, 10);
         pnLogin.add(jSeparator2);
-        jSeparator2.setBounds(250, 560, 50, 10);
+        jSeparator2.setBounds(250, 620, 50, 10);
+
+        lbTopBanner1.setForeground(new java.awt.Color(19, 101, 175));
+        lbTopBanner1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/Logo-Car2.png"))); // NOI18N
+        pnLogin.add(lbTopBanner1);
+        lbTopBanner1.setBounds(130, 490, 170, 100);
 
         BackgroundLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/LoginEdit.png"))); // NOI18N
         pnLogin.add(BackgroundLogin);
         BackgroundLogin.setBounds(0, 0, 422, 670);
-
-        javax.swing.GroupLayout pndkyLayout = new javax.swing.GroupLayout(pndky);
-        pndky.setLayout(pndkyLayout);
-        pndkyLayout.setHorizontalGroup(
-            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-        );
-        pndkyLayout.setVerticalGroup(
-            pndkyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
-
-        pnLogin.add(pndky);
-        pndky.setBounds(0, 0, 420, 670);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -259,6 +264,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbErorrLogin;
+    private javax.swing.JLabel lbTopBanner1;
     private javax.swing.JPanel pnLogin;
     private javax.swing.JPanel pndky;
     private javax.swing.JPasswordField psMatkhau;

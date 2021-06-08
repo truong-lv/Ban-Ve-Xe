@@ -45,6 +45,23 @@ public class PnQlyXe extends javax.swing.JPanel {
         btnSuaTX.setEnabled(sua);
         btnXoaTX.setEnabled(xoa);
         btnHuyTX.setEnabled(huy);
+        if(huy==true){// nếu đang trong trạng thái thêm/xóa/sửa/thêm TK thì ko cho tìm kiếm
+            tbTaiXe.setEnabled(false);
+            
+//            btnThemXe.setEnabled(false);
+//            btnSuaXe.setEnabled(false);
+//            btnXoaXe.setEnabled(false);
+//            btnHuy.setEnabled(false);
+        }
+        else{
+            tbTaiXe.setEnabled(true);
+            
+//            tbTaiXe.setEnabled(true);
+//            btnThemXe.setEnabled(true);
+//            btnSuaXe.setEnabled(true);
+//            btnXoaXe.setEnabled(true);
+//            btnHuy.setEnabled(true);
+        }
     }
     private String layMaTX(){
         java.sql.Connection connect=Code.KetNoi.layKetNoi();
@@ -163,6 +180,20 @@ public class PnQlyXe extends javax.swing.JPanel {
         btnSuaXe.setEnabled(sua);
         btnXoaXe.setEnabled(xoa);
         btnHuy.setEnabled(huy);
+        if(huy==true){// nếu đang trong trạng thái thêm/xóa/sửa/thêm TK thì ko cho tìm kiếm
+            tbXe.setEnabled(false);
+//            btnThemTX.setEnabled(false);
+//            btnSuaTX.setEnabled(false);
+//            btnXoaTX.setEnabled(false);
+//            btnHuyTX.setEnabled(false);
+        }
+        else{
+            tbXe.setEnabled(true);
+//            btnThemTX.setEnabled(true);
+//            btnSuaTX.setEnabled(true);
+//            btnXoaTX.setEnabled(true);
+//            btnHuyTX.setEnabled(true);
+        }
     }
     
     
@@ -686,12 +717,14 @@ public class PnQlyXe extends javax.swing.JPanel {
 
     private void tbXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbXeMouseClicked
         // TODO add your handling code here:
+        if(tbXe.getSelectionModel().isSelectionEmpty() || !(tbXe.isEnabled())){return;}
         int rowSelect=tbXe.getSelectedRow();
         txtSoXe.setText(tbXe.getValueAt(rowSelect, 0).toString());
         cbbLoaiXe.setSelectedItem(tbXe.getValueAt(rowSelect, 1).toString());
         cbbChoNgoi.setSelectedItem(tbXe.getValueAt(rowSelect, 2).toString());
         cbbHeSoGia.setSelectedItem(tbXe.getValueAt(rowSelect, 3).toString());
         cbbMaTX.setSelectedItem(xuLyBang.selectRow(tbXe, 4));
+        tbTaiXe.clearSelection();
         
 
     }//GEN-LAST:event_tbXeMouseClicked
@@ -721,7 +754,7 @@ public class PnQlyXe extends javax.swing.JPanel {
                 String soGhe=cbbChoNgoi.getSelectedItem().toString();
                 String heSoGia=cbbHeSoGia.getSelectedItem().toString();
                 String maTX=cbbMaTX.getSelectedItem().toString();
-                themSuaXe("INSERT INTO XE VALUES (?,?,?)",soXe, soGhe, loaiXe, maTX);
+                themSuaXe("INSERT INTO XE VALUES (?,?,?,?)",soXe, soGhe, loaiXe, maTX);
                     
                 JOptionPane.showMessageDialog(this, "Đã thêm xe thành công");
                 xuLyBang.loadDuLieuVaoBang(tbXe, "{call SP_LOAD_XE ()}");
@@ -744,7 +777,7 @@ public class PnQlyXe extends javax.swing.JPanel {
         btnThemTX.setText("Thêm");
         btnSuaTX.setText("Sửa");
         btnXoaTX.setText("Xóa");
-        txtSoXe.setText(tbXe.getValueAt(tbXe.getSelectedRow(), 0).toString());
+//        txtSoXe.setText(tbXe.getValueAt(tbXe.getSelectedRow(), 0).toString());
         lbLoiSoXe.setVisible(false);
         
         setEditableXe(false, null);
@@ -826,12 +859,13 @@ public class PnQlyXe extends javax.swing.JPanel {
                 }
             }
        
-        }else JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");
+        }else JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần xóa trong bảng");
             
     }//GEN-LAST:event_btnXoaXeActionPerformed
 
     private void tbTaiXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTaiXeMouseClicked
         // TODO add your handling code here:
+        if(tbTaiXe.getSelectionModel().isSelectionEmpty() || !(tbTaiXe.isEnabled())){return;}
         int rowSelect=tbTaiXe.getSelectedRow();
         txtMaTX.setText(tbTaiXe.getValueAt(rowSelect, 0).toString());
         txtHoTen.setText(tbTaiXe.getValueAt(rowSelect, 1).toString());
@@ -840,10 +874,12 @@ public class PnQlyXe extends javax.swing.JPanel {
         if(gt.equals("Nam")){rBtnNam1.setSelected(true);}
         else {rBtnNu1.setSelected(true);}
         txtSDT.setText(tbTaiXe.getValueAt(rowSelect, 4).toString());
+        tbXe.clearSelection();
     }//GEN-LAST:event_tbTaiXeMouseClicked
 
     private void btnThemTXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemTXActionPerformed
         // TODO add your handling code here:
+        
         if(btnThemTX.getText().equals("Thêm")){
             setField("", "", "", false, false, "");
             txtMaTX.setText(layMaTX());
@@ -885,6 +921,8 @@ public class PnQlyXe extends javax.swing.JPanel {
 
     private void btnSuaTXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaTXActionPerformed
         // TODO add your handling code here:
+        if(tbTaiXe.getSelectionModel().isSelectionEmpty()){// kiểm tra người dùng đã click chọn dữ liệu trong bảng chưa
+         JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");}
         if(btnSuaTX.getText().equals("Sửa")){
             lbMaTX.setForeground(Color.red);
             setEditableTaiXe(true,Color.GREEN);
@@ -945,14 +983,14 @@ public class PnQlyXe extends javax.swing.JPanel {
                 xuLyBang.loadDuLieuVaoBang(tbTaiXe, "SELECT * FROM TAI_XE");
                 xuLyBang.loadDuLieuVaoBang(tbXe, "{call SP_LOAD_XE ()}");// cập nhập lại bảng
                 loadCbbXe();
-                btnSuaTX.setText("Xóa");
+                btnXoaTX.setText("Xóa");
                 setEnableBtnXe(true, true, true, false);
                 setEnableBtnTaiXe(true, true, true, false);
                 setEditableTaiXe(false, null);
                 }
             }
        
-        }else JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần Chỉnh sửa trong bảng");
+        }else JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần Xóa trong bảng");
     }//GEN-LAST:event_btnXoaTXActionPerformed
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged

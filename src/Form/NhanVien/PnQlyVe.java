@@ -370,11 +370,6 @@ public class PnQlyVe extends javax.swing.JPanel {
         });
         tbVeXe.setRowHeight(23);
         tbVeXe.setRowMargin(3);
-        tbVeXe.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tbVeXeFocusLost(evt);
-            }
-        });
         tbVeXe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbVeXeMouseClicked(evt);
@@ -481,7 +476,9 @@ public class PnQlyVe extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Xuất file excel ");
+        jButton1.setBackground(new java.awt.Color(102, 255, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/print-icon.png"))); // NOI18N
+        jButton1.setText("Xuất File");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -527,14 +524,15 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(256, 256, 256))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(441, 441, 441)
                                 .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(68, 68, 68)
                                 .addComponent(btnHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(420, 420, 420))
+                                .addGap(282, 282, 282)
+                                .addComponent(jButton1)
+                                .addGap(21, 21, 21))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -555,8 +553,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                     .addComponent(txtSearchVe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClearText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(jButton1))
+                    .addComponent(jLabel13))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -577,10 +574,15 @@ public class PnQlyVe extends javax.swing.JPanel {
                         .addComponent(cbbCheDoXem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -592,27 +594,6 @@ public class PnQlyVe extends javax.swing.JPanel {
         txtSearchVe.setText("");
         locDuLieuVeXe(true);
     }//GEN-LAST:event_btnClearTextActionPerformed
-
-    private void tbVeXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeXeMouseClicked
-
-        // đưa dữ liệu đc chọn lên txt search
-        String tbSelect=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), 1);
-        txtSearchVe.setText(tbSelect);
-        
-        //lấy trạng thái của dữ liệu được chọn
-        String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(),tbVeXe.getColumnCount()-1);
-        
-        if(trangThai.equals("Chưa thanh toán"))// vé nào chưa thanh toán thì cho phép duyệt, hủy
-        {
-            btnDuyetVe.setEnabled(true);
-            btnHuyVe.setEnabled(true);
-        }
-        else{
-            btnHuyVe.setEnabled(true);
-            btnDuyetVe.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_tbVeXeMouseClicked
 
     private void btnDuyetVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDuyetVeActionPerformed
         // TODO add your handling code here:
@@ -664,22 +645,38 @@ public class PnQlyVe extends javax.swing.JPanel {
         // TODO add your handling code here:
         loadComboNgayDi();
         locDuLieuVeXe(true);
+        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbTramDiItemStateChanged
 
     private void cbbNgayDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbNgayDiItemStateChanged
         // TODO add your handling code here
         loadComboGio();
         locDuLieuVeXe(true);
+        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbNgayDiItemStateChanged
 
     private void cbbGioDiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbGioDiItemStateChanged
         loadComboChuyenXe();
         locDuLieuVeXe(true);
+        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbGioDiItemStateChanged
 
     private void cbbChuyenXeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbChuyenXeItemStateChanged
         // TODO add your handling code here:
         locDuLieuVeXe(true);
+        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbChuyenXeItemStateChanged
 
     private void cbbCheDoXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbCheDoXemActionPerformed
@@ -692,6 +689,10 @@ public class PnQlyVe extends javax.swing.JPanel {
         loadComboGio();
         loadComboChuyenXe();
         locDuLieuVeXe(true);
+        
+        btnDuyetVe.setEnabled(false);
+        btnHuyVe.setEnabled(false);
+        tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbCheDoXemItemStateChanged
 
     private void txtSearchVeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyReleased
@@ -718,14 +719,6 @@ public class PnQlyVe extends javax.swing.JPanel {
         loadComboChuyenXe();
         locDuLieuVeXe(true);
     }//GEN-LAST:event_formHierarchyChanged
-
-    private void tbVeXeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tbVeXeFocusLost
-        // TODO add your handling code here:
-        if(btnDuyetVe.isEnabled() || btnHuyVe.isEnabled()) {return;}
-        btnDuyetVe.setEnabled(false);
-        btnHuyVe.setEnabled(false);
-        tbVeXe.clearSelection();
-    }//GEN-LAST:event_tbVeXeFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -759,6 +752,27 @@ public class PnQlyVe extends javax.swing.JPanel {
         }
 }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tbVeXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeXeMouseClicked
+        // TODO add your handling code here:
+        if(tbVeXe.getSelectionModel().isSelectionEmpty()){return;}
+        // đưa dữ liệu đc chọn lên txt search
+        String tbSelect=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), 1);
+        txtSearchVe.setText(tbSelect);
+        
+        //lấy trạng thái của dữ liệu được chọn
+        String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(),tbVeXe.getColumnCount()-1);
+        
+        if(trangThai.equals("Chưa thanh toán"))// vé nào chưa thanh toán thì cho phép duyệt, hủy
+        {
+            btnDuyetVe.setEnabled(true);
+            btnHuyVe.setEnabled(true);
+        }
+        else{
+            btnHuyVe.setEnabled(true);
+            btnDuyetVe.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbVeXeMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

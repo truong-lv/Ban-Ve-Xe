@@ -95,7 +95,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
 
     public void loadVe() {
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT * FROM VE_XE";
+        String sql = "SELECT VX.*, CONVERT(varchar, CX.GioDi,120) FROM VE_XE VX, CHUYEN_XE CX WHERE VX.MaChuyenXe=CX.MaChuyenXe";
         DefaultTableModel dtm = (DefaultTableModel) tbVe.getModel();
         dtm.setNumRows(0);
         Vector value;
@@ -110,9 +110,13 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     value.add(rs.getString(3)); // lấy dữ liệu ở cột 3
                     value.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                     value.add(rs.getString(5)); // lấy dữ liệu ở cột 5
-                    value.add(layGio(rs.getString(6)).substring(0, 8)); // lấy dữ liệu ở cột 6
-                    String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
-                    value.add(trangThai); // lấy dữ liệu ở cột 7
+                    //value.add(layGio(rs.getString(6)).substring(0, 8)); // lấy dữ liệu ở cột 6
+                    //String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
+                    
+                    String trangThai = rs.getString(6).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
+                    value.add(trangThai); // lấy dữ liệu ở cột 6
+                    value.add(rs.getString(7)); // lấy dữ liệu ở cột 7
+                    
                     dtm.addRow(value);
                 }
             }
@@ -132,7 +136,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Xoa Ve Thanh Cong");
             }
-
+            
         } catch (Exception e) {
             System.out.println("Xoa Ve That Bai");
         }
