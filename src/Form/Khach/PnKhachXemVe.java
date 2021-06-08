@@ -11,10 +11,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,31 +28,16 @@ public class PnKhachXemVe extends javax.swing.JPanel {
     /**
      * Creates new form PnKhachXemVe
      */
+    ArrayList<String> gio = new ArrayList<String>();
+    Boolean z = true;
+
     public PnKhachXemVe() {
         initComponents();
+
         loadVe();
     }
 
-    public int ktGioVe(String maChuyen) {
-        Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT * FROM CHUYEN_XE";
-        int temp = 0;
-        try {
-            PreparedStatement ps = ketNoi.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getString(1).equals(maChuyen)) {
-                    temp = Integer.valueOf(rs.getString(2).substring(0, 2));
-                }
-            }
-        } catch (SQLException e) {
-            Logger.getLogger(PnKhachXemVe.class.getName()).log(Level.SEVERE, null, e);
-        }
-        return temp;
-    }
-    
-    public String layGio(String maChuyen) {
+    public String ktGioVe(String maChuyen) {
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "SELECT * FROM CHUYEN_XE";
         String temp = "";
@@ -83,7 +70,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 if (Integer.parseInt(ngayht) > Integer.parseInt(ngayVe)) {
                     return false;
                 } else if (Integer.parseInt(ngayht) == Integer.parseInt(ngayVe)) {
-                    if (Integer.parseInt(gioht) - ktGioVe(maChuyen) < 0) {
+                    if (Integer.parseInt(gioht) - Integer.parseInt(ktGioVe(maChuyen).substring(0, 2)) < 0) {
                         return false;
                     }
                 }
@@ -95,6 +82,21 @@ public class PnKhachXemVe extends javax.swing.JPanel {
 
     public void loadVe() {
         Connection ketNoi = KetNoi.layKetNoi();
+        if (z == true) {
+            String sql1 = "SELECT * FROM CHUYEN_XE";
+            try {
+                PreparedStatement ps = ketNoi.prepareStatement(sql1);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    gio.add(rs.getString(2).substring(0, 8));
+                }
+                System.out.println(gio.get(80));
+            } catch (SQLException e) {
+                Logger.getLogger(PnKhachXemVe.class.getName()).log(Level.SEVERE, null, e);
+            }
+            z = false;
+        }
+
         String sql = "SELECT * FROM VE_XE";
         DefaultTableModel dtm = (DefaultTableModel) tbVe.getModel();
         dtm.setNumRows(0);
@@ -102,7 +104,6 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
                 if (rs.getString(2).equals(BanVeXe.primaryKey)) {
                     value = new Vector();
@@ -110,7 +111,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     value.add(rs.getString(3)); // lấy dữ liệu ở cột 3
                     value.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                     value.add(rs.getString(5)); // lấy dữ liệu ở cột 5
-                    value.add(layGio(rs.getString(6)).substring(0, 8)); // lấy dữ liệu ở cột 6
+                    value.add(gio.get(Integer.parseInt(rs.getString(6)))); // lấy dữ liệu ở cột 6
                     String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
                     value.add(trangThai); // lấy dữ liệu ở cột 7
                     dtm.addRow(value);
@@ -244,7 +245,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         jLabel3.setText("Ngày đi:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Mã chuyến xe:");
+        jLabel4.setText("Giờ Đi :");
 
         txtMaChuyenXe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtMaChuyenXe.addActionListener(new java.awt.event.ActionListener() {
@@ -293,28 +294,25 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNgayDi, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(127, 127, 127)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(127, 127, 127)
-                                .addComponent(lb)
+                                .addComponent(txtMaChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtTrangThaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtViTriGhe, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(114, 114, 114)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addGap(391, 391, 391)
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtTrangThaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(42, 42, 42)
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtMaChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 95, Short.MAX_VALUE)))
+                                .addComponent(txtGiaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 84, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -361,13 +359,13 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         String ngayVe = txtNgayDi.getText().substring(0, 2);
         String thangVe = txtNgayDi.getText().substring(3, 5);
         String namVe = txtNgayDi.getText().substring(6, 10);
-        
-        if(!trangThai.equals("0")){
+
+        if (!trangThai.equals("0")) {
             JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán. Không Thể Xóa !!!");
             loadVe();
-        }else if(ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == false){
+        } else if (ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == false) {
             JOptionPane.showMessageDialog(this, "Vé Này Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
-        }else if(trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true){
+        } else if (trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true) {
             xoaVe(maVe);
             loadVe();
         }
