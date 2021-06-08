@@ -27,8 +27,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         initComponents();
         xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
         
-        tbChuyenXe.setRowSelectionInterval(0, 0);
-        loadCbb(0);
     }
     
     private void setEnableCbb(boolean bool, Color col){
@@ -51,6 +49,10 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         btnSua.setEnabled(sua);
         btnXoa.setEnabled(xoa);
         btnHuy.setEnabled(huy);
+        if(huy){
+            tbChuyenXe.setEnabled(false);
+        }
+        else tbChuyenXe.setEnabled(true);
     }
     
     private void loadCbb(int chon){// load dữ liệu được chọn từ bảng vào combobox, textField
@@ -93,7 +95,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         }
          return false;
     }
-    private void themSuaChuyenXe(String sql, String maChuyen, String gio, String soXe, String tram, int trangThai){
+    private void themSuaChuyenXe(String sql, String maChuyen, String gio, String soXe, String tram,String tramDen, int trangThai){
         Connection con =Code.KetNoi.layKetNoi();
         try {
             PreparedStatement ps= con.prepareStatement(sql);
@@ -101,7 +103,8 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
             ps.setString(2, gio);
             ps.setString(3, soXe);
             ps.setString(4, tram);
-            ps.setInt(5, trangThai);
+            ps.setString(5, tramDen);
+            ps.setInt(6, trangThai);
             ps.executeUpdate();
             
             ps.close();
@@ -218,7 +221,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
 
         cbbTrangThai.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         cbbTrangThai.setMaximumRowCount(6);
-        cbbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Đã dừng" }));
+        cbbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã dừng", "Đang hoạt động" }));
         cbbTrangThai.setEnabled(false);
 
         txtSoXe.setEditable(false);
@@ -377,6 +380,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
 
     private void tbChuyenXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChuyenXeMouseClicked
         // TODO add your handling code here:
+        if(tbChuyenXe.getSelectionModel().isSelectionEmpty() || !(tbChuyenXe.isEnabled())){return;}
         // load dữ liệu đc chọn 
         loadCbb(tbChuyenXe.getSelectedRow());
     }//GEN-LAST:event_tbChuyenXeMouseClicked
@@ -386,6 +390,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         if(btnThem.getText().equals("Thêm")){
             txtMaCx.setText("");
             txtSoXe.setText("");
+            tbChuyenXe.clearSelection();
             setEnableCbb(true,Color.GREEN);
             setEnableBtn(true, false, false, true);
             btnThem.setText("Lưu");
@@ -416,8 +421,10 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
             if(chon==JOptionPane.OK_OPTION){
                 String gioDi=cbbGio.getSelectedItem().toString()+":"+cbbPhut.getSelectedItem().toString()+":00";
                 String tram=cbbTram.getSelectedItem().toString();
-                int trangThai=(cbbTrangThai.getSelectedItem().toString().equals("Đang hoạt động"))?0:1;
-                themSuaChuyenXe("INSERT INTO CHUYEN_XE VALUES (?,?,?,?,?)", machuyen, gioDi, soXe, tram, trangThai);
+                String tramDen=tram.equals("TP.HCM")?"Đồng Nai":"TP.HCM";
+
+                int trangThai=cbbTrangThai.getSelectedIndex();
+                themSuaChuyenXe("INSERT INTO CHUYEN_XE VALUES (?,?,?,?,?,?)", machuyen, gioDi, soXe, tram,tramDen, trangThai);
 
                 JOptionPane.showMessageDialog(this, "Đã thêm chuyến xe thành công");
                 xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
@@ -454,25 +461,26 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
                 lbLoiMaChuyenXe.setText("Mã chuyến xe phải là số");
                 lbLoiMaChuyenXe.setVisible(true);
                 return;}
-
-            if(!ktMaChuyen(maChuyenSau)){lbLoiMaChuyenXe.setVisible(false);
-            }else{
-                lbLoiMaChuyenXe.setText("Mã này đã tồn tại");
-                lbLoiMaChuyenXe.setVisible(true);
-                return;}
+            
             if(ktTrungXe(soXe)){lbLoiSoXe.setVisible(false);}
             else{lbLoiSoXe.setVisible(true);return;}
 
-            int chon=JOptionPane.showConfirmDialog(this, "Xác nhận sửa chuyến xe: "+maChuyenBanDau+" thành: "+maChuyenSau, "Thông Báo",0);
+            int chon=JOptionPane.showConfirmDialog(this, "Xác nhận sửa chuyến xe: "+maChuyenBanDau, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
+                //lấy dữ liệu từ các txt và cbb
                 String gioDi=cbbGio.getSelectedItem().toString()+":"+cbbPhut.getSelectedItem().toString()+":00";
                 String tram=cbbTram.getSelectedItem().toString();
-                int trangThai=(cbbTrangThai.getSelectedItem().toString().equals("Đang hoạt động"))?0:1;
-                themSuaChuyenXe("UPDATE CHUYEN_XE SET MaChuyenXe=?, GioDi=?, SoXe=?, TramXuatPhat=?, TrangThai=? WHERE MaChuyenXe='"+maChuyenBanDau+"'",
-                maChuyenSau, gioDi, soXe, tram, trangThai);
+                String tramDen=tram.equals("TP.HCM")?"Đồng Nai":"TP.HCM";
+                int trangThai=cbbTrangThai.getSelectedIndex();
+                
+                //truy vấn Sửa thông tin
+                themSuaChuyenXe("UPDATE CHUYEN_XE SET MaChuyenXe=?, GioDi=?, SoXe=?, TramXuatPhat=?, TramDen=?, TrangThai=? WHERE MaChuyenXe='"+maChuyenBanDau+"'",
+                maChuyenSau, gioDi, soXe, tram, tramDen, trangThai);
+                
+                //thông báo và load lại dữ liệu
                 JOptionPane.showMessageDialog(this, "Đã SỬA chuyến xe thành công");
                 xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
-                btnThem.setText("Sửa");
+                btnSua.setText("Sửa");
                 setEnableBtn(true, true, true, false);
                 setEnableCbb(false, null);
             }
@@ -484,6 +492,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(tbChuyenXe.getSelectionModel().isSelectionEmpty()){
             JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần Xóa trong bảng");
+            return;
         }
         if(btnXoa.getText().equals("Xóa")){// kt tra nếu Button đang ở trạng thái Sửa thì
             setEnableBtn(false, false, true, true); // mở khóa các button cần phục vụ cho chức năng
@@ -505,8 +514,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
                 btnXoa.setText("Xóa");
                 setEnableBtn(true, true, true, false);
                 setEnableCbb(false, null);
-                tbChuyenXe.setRowSelectionInterval(0, 0);
-                loadCbb(0);
             }
         }
 
@@ -520,8 +527,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         btnThem.setText("Thêm");
         btnSua.setText("Sửa");
         btnXoa.setText("Xóa");
-        loadCbb(tbChuyenXe.getSelectedRow());
-
         setEnableCbb(false, null);
         setEnableBtn(true, true, true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
@@ -529,8 +534,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
         xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
-        tbChuyenXe.setRowSelectionInterval(0, 0);
-        loadCbb(0);
     }//GEN-LAST:event_formHierarchyChanged
 
 
