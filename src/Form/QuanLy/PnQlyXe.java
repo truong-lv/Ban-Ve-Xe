@@ -182,22 +182,18 @@ public class PnQlyXe extends javax.swing.JPanel {
         btnHuy.setEnabled(huy);
         if(huy==true){// nếu đang trong trạng thái thêm/xóa/sửa/thêm TK thì ko cho tìm kiếm
             tbXe.setEnabled(false);
-//            btnThemTX.setEnabled(false);
-//            btnSuaTX.setEnabled(false);
-//            btnXoaTX.setEnabled(false);
-//            btnHuyTX.setEnabled(false);
         }
         else{
             tbXe.setEnabled(true);
-//            btnThemTX.setEnabled(true);
-//            btnSuaTX.setEnabled(true);
-//            btnXoaTX.setEnabled(true);
-//            btnHuyTX.setEnabled(true);
         }
     }
     
     
     private void loadCbbXe(){
+        cbbMaTX.removeAllItems();
+        cbbLoaiXe.removeAllItems();
+        cbbHeSoGia.removeAllItems();   
+        cbbChoNgoi.removeAllItems();
         Connection connect =Code.KetNoi.layKetNoi();
         String sql="SELECT MaLoaiXe, TenLoaiXe, HeSoGia FROM LOAI_XE";
         String sql2="SELECT DISTINCT SoGhe FROM XE";
@@ -218,7 +214,6 @@ public class PnQlyXe extends javax.swing.JPanel {
                 cbbChoNgoi.addItem(rs1.getString(1));
             }
             //load combobox MÃ TÀI XẾ
-            cbbMaTX.removeAllItems();
             for(int i=0;i<tbTaiXe.getRowCount();i++){
                 cbbMaTX.addItem(tbTaiXe.getValueAt(i, 0).toString());
             }
@@ -776,8 +771,6 @@ public class PnQlyXe extends javax.swing.JPanel {
         btnXoaXe.setText("Xóa");
         btnThemTX.setText("Thêm");
         btnSuaTX.setText("Sửa");
-        btnXoaTX.setText("Xóa");
-//        txtSoXe.setText(tbXe.getValueAt(tbXe.getSelectedRow(), 0).toString());
         lbLoiSoXe.setVisible(false);
         
         setEditableXe(false, null);
@@ -790,7 +783,9 @@ public class PnQlyXe extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         if(tbXe.getSelectionModel().isSelectionEmpty()){// kiểm tra người dùng đã click chọn dữ liệu trong bảng chưa
-         JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");}
+         JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");
+         return;
+        }
         
         if(btnSuaXe.getText().equals("Sửa")){// kt tra nếu Button đang ở trạng thái Sửa thì
             setEditableXe(true,Color.blue); // mở khóa các combobox cho người dùng chọn
@@ -884,6 +879,7 @@ public class PnQlyXe extends javax.swing.JPanel {
             setField("", "", "", false, false, "");
             txtMaTX.setText(layMaTX());
             lbMaTX.setForeground(Color.red);
+            tbTaiXe.clearSelection();
             setEditableTaiXe(true,Color.GREEN);
             setEnableBtnTaiXe(true, false, false, true);
             setEnableBtnXe(false, false, false, false);
@@ -922,7 +918,9 @@ public class PnQlyXe extends javax.swing.JPanel {
     private void btnSuaTXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaTXActionPerformed
         // TODO add your handling code here:
         if(tbTaiXe.getSelectionModel().isSelectionEmpty()){// kiểm tra người dùng đã click chọn dữ liệu trong bảng chưa
-         JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");}
+         JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần sửa trong bảng");
+         return;
+        }
         if(btnSuaTX.getText().equals("Sửa")){
             lbMaTX.setForeground(Color.red);
             setEditableTaiXe(true,Color.GREEN);

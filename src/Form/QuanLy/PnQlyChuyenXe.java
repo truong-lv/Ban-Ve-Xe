@@ -27,8 +27,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         initComponents();
         xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
         
-        tbChuyenXe.setRowSelectionInterval(0, 0);
-        loadCbb(0);
     }
     
     private void setEnableCbb(boolean bool, Color col){
@@ -382,6 +380,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
 
     private void tbChuyenXeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbChuyenXeMouseClicked
         // TODO add your handling code here:
+        if(tbChuyenXe.getSelectionModel().isSelectionEmpty() || !(tbChuyenXe.isEnabled())){return;}
         // load dữ liệu đc chọn 
         loadCbb(tbChuyenXe.getSelectedRow());
     }//GEN-LAST:event_tbChuyenXeMouseClicked
@@ -493,6 +492,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(tbChuyenXe.getSelectionModel().isSelectionEmpty()){
             JOptionPane.showMessageDialog(this, "Vui lòng chọn thông tin cần Xóa trong bảng");
+            return;
         }
         if(btnXoa.getText().equals("Xóa")){// kt tra nếu Button đang ở trạng thái Sửa thì
             setEnableBtn(false, false, true, true); // mở khóa các button cần phục vụ cho chức năng
@@ -514,8 +514,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
                 btnXoa.setText("Xóa");
                 setEnableBtn(true, true, true, false);
                 setEnableCbb(false, null);
-                tbChuyenXe.setRowSelectionInterval(0, 0);
-                loadCbb(0);
             }
         }
 
@@ -529,8 +527,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
         btnThem.setText("Thêm");
         btnSua.setText("Sửa");
         btnXoa.setText("Xóa");
-        loadCbb(tbChuyenXe.getSelectedRow());
-
         setEnableCbb(false, null);
         setEnableBtn(true, true, true, false);
     }//GEN-LAST:event_btnHuyActionPerformed
@@ -538,8 +534,6 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
         xuLyBang.loadDuLieuVaoBang(tbChuyenXe, "{call SP_LOAD_CHUYENXE_TO_JTABLE()}");
-        tbChuyenXe.setRowSelectionInterval(0, 0);
-        loadCbb(0);
     }//GEN-LAST:event_formHierarchyChanged
 
 

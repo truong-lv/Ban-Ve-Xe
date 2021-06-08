@@ -144,6 +144,7 @@ public class GDChinh extends javax.swing.JFrame {
         pnInfor.add(LbUserAcc);
         LbUserAcc.setBounds(460, 10, 180, 40);
 
+
         jBtnCancelGDNhanVien.setBackground(new java.awt.Color(19, 101, 175));
         jBtnCancelGDNhanVien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jBtnCancelGDNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/logout-icon.png"))); // NOI18N
@@ -185,6 +186,7 @@ public class GDChinh extends javax.swing.JFrame {
         lbTopBanner.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/Logo.png"))); // NOI18N
         pnInfor.add(lbTopBanner);
         lbTopBanner.setBounds(30, 0, 300, 110);
+
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/name-card-icon.png"))); // NOI18N
