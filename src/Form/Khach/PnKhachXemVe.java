@@ -97,7 +97,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
             z = false;
         }
 
-        String sql = "SELECT * FROM VE_XE";
+        String sql = "SELECT * FROM VE_XE ORDER BY TRY_CONVERT(date, NgayDi, 105) ASC";
         DefaultTableModel dtm = (DefaultTableModel) tbVe.getModel();
         dtm.setNumRows(0);
         Vector value;
@@ -112,7 +112,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     value.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                     value.add(rs.getString(5)); // lấy dữ liệu ở cột 5
                     value.add(gio.get(Integer.parseInt(rs.getString(6)))); // lấy dữ liệu ở cột 6
-                    String trangThai = rs.getString(7).equals("0") ? "Đã thanh toán" : "Chưa thanh toán";
+                    String trangThai = rs.getString(7).equals("1") ? "Đã thanh toán" : "Chưa thanh toán";
                     value.add(trangThai); // lấy dữ liệu ở cột 7
                     dtm.addRow(value);
                 }
