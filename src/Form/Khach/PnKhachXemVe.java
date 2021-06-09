@@ -82,6 +82,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
 
     public void loadVe() {
         Connection ketNoi = KetNoi.layKetNoi();
+
         if (z == true) {
             String sql1 = "SELECT * FROM CHUYEN_XE";
             try {
@@ -133,7 +134,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 ps.executeUpdate();
                 JOptionPane.showMessageDialog(this, "Xoa Ve Thanh Cong");
             }
-
+            
         } catch (Exception e) {
             System.out.println("Xoa Ve That Bai");
         }

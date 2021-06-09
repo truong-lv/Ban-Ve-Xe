@@ -320,8 +320,8 @@
         <Property name="maximumRowCount" type="int" value="6"/>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
-            <StringItem index="0" value="&#x110;ang ho&#x1ea1;t &#x111;&#x1ed9;ng"/>
-            <StringItem index="1" value="&#x110;&#xe3; d&#x1eeb;ng"/>
+            <StringItem index="0" value="&#x110;&#xe3; d&#x1eeb;ng"/>
+            <StringItem index="1" value="&#x110;ang ho&#x1ea1;t &#x111;&#x1ed9;ng"/>
           </StringArray>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>

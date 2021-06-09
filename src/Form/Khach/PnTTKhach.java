@@ -26,9 +26,11 @@ public class PnTTKhach extends javax.swing.JPanel {
 
     private String dienThoai;
     private JLabel lbAc;
-    public PnTTKhach(String phone, JLabel lb) {
+    private JLabel lbName;
+    public PnTTKhach(String phone, JLabel lb, JLabel lbName) {
         this.dienThoai=phone;
         this.lbAc=lb;
+        this.lbName=lbName;
         initComponents();
         loadKH();
     }
@@ -104,12 +106,12 @@ public class PnTTKhach extends javax.swing.JPanel {
             Logger.getLogger(PnTTKhach.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    public void chinhSuaTK(String tk, String matKhau){
+    public void chinhSuaTK(String tkTruoc, String tkSau, String matKhau){
         Connection connect=Code.KetNoi.layKetNoi();
-        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+BanVeXe.Account+"'";
+        String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+tkTruoc+"'";
         try {
             PreparedStatement ps=connect.prepareStatement(sql);
-            ps.setString(1, tk);
+            ps.setString(1, tkSau);
             ps.setString(2, matKhau);
             ps.executeUpdate();
             // dong ket noi
@@ -451,7 +453,7 @@ public class PnTTKhach extends javax.swing.JPanel {
                 {
                     // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
                     if(!txtTK1.getText().equals(BanVeXe.Account)){
-                        chinhSuaTK(txtTK1.getText(), (!txtPass1.getText().isEmpty())?txtPass1.getText():BanVeXe.pass);
+                        chinhSuaTK(BanVeXe.Account, txtTK1.getText(), (!txtPass1.getText().isEmpty())?txtPass1.getText():BanVeXe.pass);
                         
                     }
                     String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";// chuyển giới tính sang String
@@ -462,6 +464,7 @@ public class PnTTKhach extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Cập nhập thành công");
                     BanVeXe.setBanVeXe(txtTK1.getText(), txtPass1.getText(), txtHoTen1.getText(), gt, BanVeXe.quyen);
                     lbAc.setText(BanVeXe.Account);
+                    lbName.setText(BanVeXe.hoTen);
                     //Khóa các txt lại
                     setEditableTxt(false, Color.BLACK);
                     lbMkMoi.setVisible(false);

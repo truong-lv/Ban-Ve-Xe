@@ -137,7 +137,9 @@ public class PnDatVe extends javax.swing.JPanel {
                     giaVe = String.valueOf(150000 * (Integer.parseInt(rs.getString(3))));
                 }
             }
-
+            rs.close();
+            ps.close();
+            ketNoi.close();
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -161,6 +163,9 @@ public class PnDatVe extends javax.swing.JPanel {
             while (rs.next()) {
                 maCX = rs.getString(1);
             }
+            rs.close();
+            ps.close();
+            ketNoi.close();
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -185,6 +190,9 @@ public class PnDatVe extends javax.swing.JPanel {
             while (rs.next()) {
                 jComboBox_chuyenDi.addItem(rs.getString(1));
             }
+            rs.close();
+            ps.close();
+            ketNoi.close();
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -202,6 +210,9 @@ public class PnDatVe extends javax.swing.JPanel {
             while (rs.next()) {
                 jComboBox_loaiXe.addItem(rs.getString(2));
             }
+            rs.close();
+            ps.close();
+            ketNoi.close();
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -221,6 +232,9 @@ public class PnDatVe extends javax.swing.JPanel {
             while (rs.next()) {
                 jComboBox_diemDen.addItem(rs.getString(1));
             }
+            rs.close();
+            ps.close();
+            ketNoi.close();
         } catch (SQLException e) {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
