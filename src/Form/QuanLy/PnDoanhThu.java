@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,8 +55,9 @@ public class PnDoanhThu extends javax.swing.JPanel {
         DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
         dtm.setNumRows(0);
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "select * from VE_XE";
+        String sql = "select * from VE_XE order by TRY_CONVERT(date, NgayDi, 105) ASC";
         int sum = 0;
+        int gn = 0, cn = 0;
         Vector vt;
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
@@ -71,15 +74,24 @@ public class PnDoanhThu extends javax.swing.JPanel {
                         vt.add(rs.getString(4)); // lấy dữ liệu ở cột 4
                         vt.add(rs.getString(5)); // lấy dữ liệu ở cột 5
                         vt.add(rs.getString(6)); // lấy dữ liệu ở cột 6
-                        vt.add(rs.getString(7)); // lấy dữ liệu ở cột 7
+
+                        String trangThai = rs.getString(7).equals("1") ? "Đã thanh toán" : "Chưa thanh toán";
+                        vt.add(trangThai); // lấy dữ liệu ở cột 7
                         sum += Integer.parseInt(rs.getString(4));
                         dtm.addRow(vt);
+                        if(Integer.parseInt(rs.getString(4)) == 300000){
+                            gn++;
+                        }else{
+                            cn++;
+                        }
                     }
-                    System.err.println("==================");
                 }
             }
-            jLabel_DoanhThu.setText(String.valueOf(sum));
+            Locale localeVN = new Locale("vi", "VN");
+            jLabel_DoanhThu.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).length() - 1) + " VND");
             jTable2.setModel(dtm);
+            SLVGN.setText(String.valueOf(gn) + " * 300.000");
+            SLVCN.setText(String.valueOf(cn)+ " * 150.000");
         } catch (SQLException e) {
             Logger.getLogger(PnDoanhThu.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -95,7 +107,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
         jComboBox_thangKetThuc = new javax.swing.JComboBox<>();
         jLabel_DoanhThu = new javax.swing.JLabel();
         jComboBox_ngayKetThuc = new javax.swing.JComboBox<>();
-        jLabel9 = new javax.swing.JLabel();
         jComboBox_namBatDau = new javax.swing.JComboBox<>();
         jButton_Xem = new javax.swing.JButton();
         jComboBox_namKetThuc = new javax.swing.JComboBox<>();
@@ -107,6 +118,10 @@ public class PnDoanhThu extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        SLVCN = new javax.swing.JLabel();
+        SLVGN = new javax.swing.JLabel();
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("/");
@@ -119,12 +134,14 @@ public class PnDoanhThu extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setText("Tổng Doanh Thu :");
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("TỔNG DOANH THU :");
 
         jComboBox_thangKetThuc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_thangKetThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
 
-        jLabel_DoanhThu.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel_DoanhThu.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel_DoanhThu.setForeground(new java.awt.Color(255, 0, 51));
 
         jComboBox_ngayKetThuc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_ngayKetThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
@@ -133,9 +150,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
                 jComboBox_ngayKetThucActionPerformed(evt);
             }
         });
-
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel9.setText("vnd");
 
         jComboBox_namBatDau.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_namBatDau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021", "2022" }));
@@ -197,19 +211,24 @@ public class PnDoanhThu extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("/");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Vé Giường Nằm :");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setText("Vé Xe Chổ Ngồi :");
+
+        SLVCN.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        SLVCN.setForeground(new java.awt.Color(255, 0, 51));
+
+        SLVGN.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        SLVGN.setForeground(new java.awt.Color(255, 0, 51));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(348, 348, 348)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(490, 490, 490)
                         .addComponent(jButton_Xem, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -242,7 +261,20 @@ public class PnDoanhThu extends javax.swing.JPanel {
                             .addComponent(jComboBox_namKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(SLVCN, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SLVGN, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(72, 72, 72)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -268,12 +300,25 @@ public class PnDoanhThu extends javax.swing.JPanel {
                 .addComponent(jButton_Xem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                            .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(66, 66, 66))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SLVGN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SLVCN, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(40, 40, 40))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -303,6 +348,8 @@ public class PnDoanhThu extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel SLVCN;
+    private javax.swing.JLabel SLVGN;
     private javax.swing.JButton jButton_Xem;
     private javax.swing.JComboBox<String> jComboBox_namBatDau;
     private javax.swing.JComboBox<String> jComboBox_namKetThuc;
@@ -317,6 +364,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_DoanhThu;
     private javax.swing.JScrollPane jScrollPane2;
