@@ -10,7 +10,6 @@ import Code.BanVeXe;
 import Code.HamXuLyBang;
 import Form.Khach.PnKhachXemVe;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -150,7 +149,7 @@ public class PnDatVe extends javax.swing.JPanel {
     public String getMaCX(String time, String start) {
         String maCX = "";
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT * FROM CHUYEN_XE WHERE GioDi=? AND TramXuatPhat=?";
+        String sql = "SELECT * FROM CHUYEN_XE WHERE TrangThai=1 AND GioDi=? AND TramXuatPhat=?";
 
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
@@ -183,7 +182,7 @@ public class PnDatVe extends javax.swing.JPanel {
     //Hàm Tải Nơi Xuất Phát
     public void taiNoiXuatPhat() {
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "select DISTINCT TramXuatPhat from CHUYEN_XE";
+        String sql = "select DISTINCT TramXuatPhat from CHUYEN_XE WHERE TrangThai=1";
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -225,7 +224,7 @@ public class PnDatVe extends javax.swing.JPanel {
             jComboBox_diemDen.removeItemAt(i);
         }
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT DISTINCT TramDen FROM CHUYEN_XE WHERE  TramXuatPhat = N'" + noiXuatPhat + "'";
+        String sql = "SELECT DISTINCT TramDen FROM CHUYEN_XE WHERE TrangThai=1 AND TramXuatPhat = N'" + noiXuatPhat + "'";
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -1286,7 +1285,7 @@ public class PnDatVe extends javax.swing.JPanel {
         int ngay = Integer.parseInt(dtf.format(localDate));
         int gio = Integer.parseInt(java.time.LocalTime.now().toString().substring(0, 2)) + 2;
         Connection ketNoi = KetNoi.layKetNoi();
-        String sql = "SELECT DISTINCT GioDi FROM CHUYEN_XE where TramXuatPhat=N'" + tramXuatPhat + "' AND TramDen=N'" + tramDen + "'";
+        String sql = "SELECT DISTINCT GioDi FROM CHUYEN_XE where TrangThai=1 AND TramXuatPhat=N'" + tramXuatPhat + "' AND TramDen=N'" + tramDen + "'";
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

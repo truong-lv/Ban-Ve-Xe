@@ -66,6 +66,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     //LOAD CÁC COMBOBOX TỪ BẢNG TẠM
     public void loadComboNgayDi(){
         cbbNgayDi.removeAllItems();
+        cbbNgayDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String cheDo=cbbCheDoXem.getSelectedItem().toString();
         
@@ -79,7 +80,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             ngayTam=StringToDate(tbTam.getValueAt(i, 6).toString());
             if((tram.equals(tbTam.getValueAt(i, 8).toString())&&(cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) ) /*|| cheDo.equals("Tất cả vé")*/)//nếu chế độ là vé đặt trc thì load vé >tg hiện tại, ngược lại load tất cả
             {
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(cbbNgayDi.getItemCount()>1){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
                         if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -92,7 +93,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                 
                 else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
             }else if(tram.equals(tbTam.getValueAt(i, 8).toString())&&cheDo.equals("Tất cả vé")){
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(cbbNgayDi.getItemCount()>1){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
                         if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -111,6 +112,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     
     public void loadComboGio(){
         cbbGioDi.removeAllItems();
+        cbbGioDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         //String ngay=cbbNgayDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
@@ -118,7 +120,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         {
             if(tram.equals(tbTam.getValueAt(i, 8).toString()) && ngay.equals(tbTam.getValueAt(i, 6).toString()) )//Trạm nằm ở cột thứ 7
             {
-                if(cbbGioDi.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(cbbGioDi.getItemCount()>1){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
                         if(tbTam.getValueAt(i, 7).toString().equals(cbbGioDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -136,6 +138,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     
     public void loadComboChuyenXe(){
         cbbChuyenXe.removeAllItems();
+        cbbChuyenXe.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
         String gio=cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"";
@@ -145,7 +148,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                     && ngay.equals(tbTam.getValueAt(i, 6).toString())
                     && gio.equals(tbTam.getValueAt(i, 7).toString()) )//Trạm nằm ở cột thứ 7
             {
-                if(cbbChuyenXe.getItemCount()>0){//kt cbb đã có item nào chưa
+                if(cbbChuyenXe.getItemCount()>1){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
                         //System.out.println(i+" "+cbbGioDi.getItemAt(j)+" "+j);
@@ -195,6 +198,18 @@ public class PnQlyVe extends javax.swing.JPanel {
             }
             
         }
+        
+        //nếu bảng Trống thì hiện thị thông báo trống
+        if(dtm.getRowCount()==0){
+            vt=new Vector();
+            for(int i=1;i<=dtm.getColumnCount();i++){
+                if(i==dtm.getColumnCount()/2){
+                    vt.add("(Trống)");
+                }
+                else vt.add("");
+            }
+            dtm.addRow(vt);
+            }
         
         tbVeXe.setModel(dtm);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -394,7 +409,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         jLabel9.setText("( Click chọn vé cần thao tác )");
 
         cbbTramDi.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TP.HCM", "Đồng Nai" }));
+        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "TP.HCM", "Đồng Nai" }));
         cbbTramDi.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbTramDiItemStateChanged(evt);
@@ -496,8 +511,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(256, 256, 256))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -739,7 +753,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             btnHuyVe.setEnabled(true);
         }
         else{
-            btnHuyVe.setEnabled(true);
+            btnHuyVe.setEnabled(false);
             btnDuyetVe.setEnabled(false);
         }
     }//GEN-LAST:event_tbVeXeMouseClicked

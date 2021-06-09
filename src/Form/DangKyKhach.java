@@ -227,28 +227,28 @@ public class DangKyKhach extends javax.swing.JFrame {
         jLabel10.setBounds(220, 340, 70, 16);
 
         lbTK.setForeground(new java.awt.Color(255, 153, 204));
-        lbTK.setText("Vui lòng nhập Tài Khoản");
+        lbTK.setText("Tài khoản không hợp lệ");
         lbTK.setVisible(false);
         pnDKY.add(lbTK);
         lbTK.setBounds(20, 420, 150, 16);
 
         lbTen.setForeground(new java.awt.Color(255, 153, 204));
-        lbTen.setText("Vui lòng nhập Tên.");
+        lbTen.setText("Họ tên không hợp lệ");
         lbTen.setVisible(false);
         pnDKY.add(lbTen);
-        lbTen.setBounds(10, 310, 108, 16);
+        lbTen.setBounds(10, 310, 150, 16);
 
         lbSDT.setForeground(new java.awt.Color(255, 153, 204));
-        lbSDT.setText("Vui lòng nhập SĐT");
+        lbSDT.setText("SĐT không hợp lệ");
         lbSDT.setVisible(false);
         pnDKY.add(lbSDT);
-        lbSDT.setBounds(10, 190, 107, 16);
+        lbSDT.setBounds(10, 190, 102, 16);
 
         lbMK.setForeground(new java.awt.Color(255, 153, 204));
-        lbMK.setText("Vui lòng nhập Mật khẩu.");
+        lbMK.setText("Mật khẩu không hợp lệ");
         lbMK.setVisible(false);
         pnDKY.add(lbMK);
-        lbMK.setBounds(240, 440, 138, 16);
+        lbMK.setBounds(240, 440, 129, 16);
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Từ 6 đến 50 ký tự");
@@ -356,6 +356,8 @@ public class DangKyKhach extends javax.swing.JFrame {
             if(!ktTaiKhoan("SELECT * FROM HANH_KHACH WHERE DienThoai = '",sđt)) {
                 themKhachHang(sđt, hoten, gt, tk);
                 JOptionPane.showMessageDialog(this, "Đăng ký thành công");
+                this.dispose();
+                new Login().setVisible(true);
             }
             else JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại. Vui lòng nhập lại!");
            

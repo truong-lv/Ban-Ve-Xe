@@ -123,6 +123,25 @@ public class PnQlyKhach extends javax.swing.JPanel {
           Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
          }
     }
+    private boolean ktXoaKhach(String ma){
+        Connection con =Code.KetNoi.layKetNoi();
+        String sql="SELECT DISTINCT DienThoai FROM VE_XE WHERE DienThoai=?";
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, ma);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                return false;
+            }
+            rs.close();
+            ps.close();
+            con.close();
+            
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return true;
+    }
     private void xoaKhach(String sdt){
         Connection con =Code.KetNoi.layKetNoi();
         String sql="DELETE FROM HANH_KHACH WHERE DienThoai=?";
@@ -697,6 +716,11 @@ public class PnQlyKhach extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(!tbKhachHang.getSelectionModel().isSelectionEmpty()){
             if(btnXoa.getText().equals("Xóa")){// kt tra nếu Button đang ở trạng thái Sửa thì
+                
+                if(!ktXoaKhach(txtSDT.getText())){
+                JOptionPane.showMessageDialog(this, "Khách đã từng đặt vé không thể xóa");
+                return;
+            }
                 setEnableBtn(false, false, true, true); // mở khóa các button cần phục vụ cho chức năng
                 setEditableTxt(false, Color.red);
                 

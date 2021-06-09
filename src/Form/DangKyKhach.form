@@ -176,7 +176,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Vui l&#xf2;ng nh&#x1ead;p T&#xe0;i Kho&#x1ea3;n"/>
+            <Property name="text" type="java.lang.String" value="T&#xe0;i kho&#x1ea3;n kh&#xf4;ng h&#x1ee3;p l&#x1ec7;"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbTK.setVisible(false);"/>
@@ -192,14 +192,14 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Vui l&#xf2;ng nh&#x1ead;p T&#xea;n."/>
+            <Property name="text" type="java.lang.String" value="H&#x1ecd; t&#xea;n kh&#xf4;ng h&#x1ee3;p l&#x1ec7;"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbTen.setVisible(false);"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="10" y="310" width="-1" height="-1"/>
+              <AbsoluteConstraints x="10" y="310" width="150" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -208,7 +208,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Vui l&#xf2;ng nh&#x1ead;p S&#x110;T"/>
+            <Property name="text" type="java.lang.String" value="S&#x110;T kh&#xf4;ng h&#x1ee3;p l&#x1ec7;"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbSDT.setVisible(false);"/>
@@ -224,7 +224,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="99" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Vui l&#xf2;ng nh&#x1ead;p M&#x1ead;t kh&#x1ea9;u."/>
+            <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u kh&#xf4;ng h&#x1ee3;p l&#x1ec7;"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbMK.setVisible(false);"/>
