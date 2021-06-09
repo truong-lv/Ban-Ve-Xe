@@ -1367,10 +1367,10 @@ public class PnDatVe extends javax.swing.JPanel {
                 String gt = (rBtnNam1.isSelected()) ? "Nam" : "Nữ";
                 dky.themKhachHang(txtSDT.getText(), txtHoTen_Khach.getText(), gt, null);
             }
-            String trangThai = "1";
+            String trangThai = "0";
             if (JOptionPane.showConfirmDialog(null, "Bạn Có Chắc Muốn Đặt Vé? \nHãy Kiểm Tra Kỹ Thông Tin !!!", "Xác Nhận", JOptionPane.YES_NO_OPTION) == 0) {
                 if (JOptionPane.showConfirmDialog(null, "Bạn Có Muốn Thanh Toán Online ?\nLưu Ý: Thanh Toán Online Sẽ Không Được Hủy Vé!!!", "Thanh Toán Online", JOptionPane.YES_NO_OPTION) == 0) {
-                    trangThai = "0";
+                    trangThai = "1";
                 }
                 for (int i = 0; i < selected.size(); i++) {
                     String viTriGhe = selected.get(i).getText();
