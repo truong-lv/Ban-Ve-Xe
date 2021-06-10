@@ -28,6 +28,32 @@ public class PnDoanhThu extends javax.swing.JPanel {
      */
     public PnDoanhThu() {
         initComponents();
+        layNgayXem();
+    }
+
+    public void layNgayXem() {
+        Connection ketNoi = KetNoi.layKetNoi();
+        String sql = "select * from VE_XE order by TRY_CONVERT(date, NgayDi, 105) ASC";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            jComboBox_namBatDau.addItem(rs.getString(5).substring(6, 10));
+
+        } catch (SQLException e) {
+            Logger.getLogger(PnDoanhThu.class.getName()).log(Level.SEVERE, null, e);
+        }
+
+        sql = "select * from VE_XE order by TRY_CONVERT(date, NgayDi, 105) DESC";
+        try {
+            PreparedStatement ps = ketNoi.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            jComboBox_namKetThuc.addItem(rs.getString(5).substring(6, 10));
+
+        } catch (SQLException e) {
+            Logger.getLogger(PnDoanhThu.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public boolean kiemTraNgay(String ngaybd, String thangbd, String nambd, String ngaykt, String thangkt, String namkt, String ngayht, String thanght, String namht) {
@@ -69,19 +95,19 @@ public class PnDoanhThu extends javax.swing.JPanel {
                     String namht = rs.getString(5).substring(6, 10);
                     if (kiemTraNgay(ngaybd, thangbd, nambd, ngaykt, thangkt, namkt, ngayht, thanght, namht)) {
                         vt = new Vector();
-                        vt.add(rs.getString(1)); // lấy dữ liệu ở cột 1
-                        vt.add(rs.getString(3)); // lấy dữ liệu ở cột 3
-                        vt.add(rs.getString(4)); // lấy dữ liệu ở cột 4
-                        vt.add(rs.getString(5)); // lấy dữ liệu ở cột 5
+                        vt.add(rs.getString(5)); // lấy dữ liệu ở cột 1
+                        vt.add(rs.getString(1)); // lấy dữ liệu ở cột 3
+                        vt.add(rs.getString(3)); // lấy dữ liệu ở cột 4
+                        vt.add(rs.getString(4)); // lấy dữ liệu ở cột 5
                         vt.add(rs.getString(6)); // lấy dữ liệu ở cột 6
 
                         String trangThai = rs.getString(7).equals("1") ? "Đã thanh toán" : "Chưa thanh toán";
                         vt.add(trangThai); // lấy dữ liệu ở cột 7
                         sum += Integer.parseInt(rs.getString(4));
                         dtm.addRow(vt);
-                        if(Integer.parseInt(rs.getString(4)) == 300000){
+                        if (Integer.parseInt(rs.getString(4)) == 300000) {
                             gn++;
-                        }else{
+                        } else {
                             cn++;
                         }
                     }
@@ -91,7 +117,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
             jLabel_DoanhThu.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).length() - 1) + " VND");
             jTable2.setModel(dtm);
             SLVGN.setText(String.valueOf(gn) + " * 300.000");
-            SLVCN.setText(String.valueOf(cn)+ " * 150.000");
+            SLVCN.setText(String.valueOf(cn) + " * 150.000");
         } catch (SQLException e) {
             Logger.getLogger(PnDoanhThu.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -152,7 +178,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
         });
 
         jComboBox_namBatDau.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox_namBatDau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021", "2022" }));
 
         jButton_Xem.setText("Xem");
         jButton_Xem.addActionListener(new java.awt.event.ActionListener() {
@@ -162,7 +187,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
         });
 
         jComboBox_namKetThuc.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jComboBox_namKetThuc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2019", "2020", "2021", "2022" }));
         jComboBox_namKetThuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox_namKetThucActionPerformed(evt);
@@ -193,7 +217,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Ngày Đi", "Mã Chuyến", "Trạng Thái"
+                "Ngày Đi", "Mã Vé", "Vị Trí Ghế", "Giá Vé", "Mã Chuyến", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -229,9 +253,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(490, 490, 490)
-                        .addComponent(jButton_Xem, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(309, 309, 309)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -274,7 +295,10 @@ public class PnDoanhThu extends javax.swing.JPanel {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(486, 486, 486)
+                        .addComponent(jButton_Xem, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(158, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -296,9 +320,9 @@ public class PnDoanhThu extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jButton_Xem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
