@@ -63,7 +63,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if (rs.getString(7).equals("1")) {
+                if (rs.getString(7).equals("1")) {// lấy vé đã than toán
                     String ngayht = rs.getString(5).substring(0, 2);
                     String thanght = rs.getString(5).substring(3, 5);
                     String namht = rs.getString(5).substring(6, 10);

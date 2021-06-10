@@ -123,6 +123,25 @@ public class PnQlyKhach extends javax.swing.JPanel {
           Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
          }
     }
+    private boolean ktXoaKhach(String ma){
+        Connection con =Code.KetNoi.layKetNoi();
+        String sql="SELECT DISTINCT DienThoai FROM VE_XE WHERE DienThoai=?";
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, ma);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                return false;
+            }
+            rs.close();
+            ps.close();
+            con.close();
+            
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return true;
+    }
     private void xoaKhach(String sdt){
         Connection con =Code.KetNoi.layKetNoi();
         String sql="DELETE FROM HANH_KHACH WHERE DienThoai=?";
@@ -153,7 +172,26 @@ public class PnQlyKhach extends javax.swing.JPanel {
             java.util.logging.Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+    private String layMK(String tk){
+        String str="";
+        Connection con =Code.KetNoi.layKetNoi();
+        String sql="SELECT MatKhau FROM TAI_KHOAN WHERE TaiKhoan=?";
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, tk);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                str=rs.getString(1);
+            }
+            
+            ps.close();
+            con.close();
+            
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyKhach.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return str;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -598,6 +636,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
             
             btnSua.setText("Lưu");// đổi button sang trạng thái Lưu
         }else {// ngược lại là trạng thái lưu
+            
             // Tiến hành kt vs lưu dữ liệu đã được sửa
             String sdt=txtSDT.getText();
             String hoTen=txtHoTen.getText();
@@ -605,18 +644,22 @@ public class PnQlyKhach extends javax.swing.JPanel {
             hoTen=chuanHoa.chuanHoa(hoTen);
             String gt=jRadioButton_Nam.isSelected()?"Nam":"Nữ";
             String tk=txtTK.getText();
+            String tkTruoc=xLBang.selectRow(tbKhachHang, 3);
             String mk=psMK.getText();
-
+            
             PnTTKhach ttKhach=new PnTTKhach(sdt, null,null);
           
             // kt trùng tài khoản
-            if(ttKhach.ktTrungTaiKhoan(tk)){return;}
             
+            if(ttKhach.ktTrungTaiKhoan(tkTruoc, tk)){return;}
             //Xác nhận thêm
             int chon=JOptionPane.showConfirmDialog(this, "Xác nhận Sửa TT khách hàng: "+hoTen, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
-                String tkTruoc=xLBang.selectRow(tbKhachHang, 3);
-                ttKhach.chinhSuaTK(tkTruoc, txtTK.getText(), mk);
+                
+                // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
+                ttKhach.chinhSuaTK(tkTruoc, txtTK.getText(), mk.isEmpty()?layMK(tkTruoc):mk);
+                
+                //Sửa thông tin
                 ttKhach.chinhSuaTT(sdt, hoTen, gt, tk);
                 xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
                 btnSua.setText("Sửa");
@@ -697,6 +740,11 @@ public class PnQlyKhach extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(!tbKhachHang.getSelectionModel().isSelectionEmpty()){
             if(btnXoa.getText().equals("Xóa")){// kt tra nếu Button đang ở trạng thái Sửa thì
+                
+                if(!ktXoaKhach(txtSDT.getText())){
+                JOptionPane.showMessageDialog(this, "Khách đã từng đặt vé không thể xóa");
+                return;
+            }
                 setEnableBtn(false, false, true, true); // mở khóa các button cần phục vụ cho chức năng
                 setEditableTxt(false, Color.red);
                 

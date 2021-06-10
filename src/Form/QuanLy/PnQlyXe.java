@@ -48,19 +48,9 @@ public class PnQlyXe extends javax.swing.JPanel {
         if(huy==true){// nếu đang trong trạng thái thêm/xóa/sửa/thêm TK thì ko cho tìm kiếm
             tbTaiXe.setEnabled(false);
             
-//            btnThemXe.setEnabled(false);
-//            btnSuaXe.setEnabled(false);
-//            btnXoaXe.setEnabled(false);
-//            btnHuy.setEnabled(false);
         }
         else{
             tbTaiXe.setEnabled(true);
-            
-//            tbTaiXe.setEnabled(true);
-//            btnThemXe.setEnabled(true);
-//            btnSuaXe.setEnabled(true);
-//            btnXoaXe.setEnabled(true);
-//            btnHuy.setEnabled(true);
         }
     }
     private String layMaTX(){
@@ -169,10 +159,8 @@ public class PnQlyXe extends javax.swing.JPanel {
         lbLoaiXe.setForeground(col);
         cbbChoNgoi.setEnabled(bool);
         lbChoNgoi.setForeground(col);
-        cbbHeSoGia.setEnabled(bool);
+        txtHeSoGia.setEditable(bool);
         lbHSG.setForeground(col);
-        cbbMaTX.setEnabled(bool);
-        lbMaTX2.setForeground(col);
         
     }
     private void setEnableBtnXe(boolean them, boolean sua, boolean xoa, boolean huy){
@@ -190,12 +178,10 @@ public class PnQlyXe extends javax.swing.JPanel {
     
     
     private void loadCbbXe(){
-        cbbMaTX.removeAllItems();
-        cbbLoaiXe.removeAllItems();
-        cbbHeSoGia.removeAllItems();   
+        cbbLoaiXe.removeAllItems();  
         cbbChoNgoi.removeAllItems();
         Connection connect =Code.KetNoi.layKetNoi();
-        String sql="SELECT MaLoaiXe, TenLoaiXe, HeSoGia FROM LOAI_XE";
+        String sql="SELECT MaLoaiXe, TenLoaiXe FROM LOAI_XE";
         String sql2="SELECT DISTINCT SoGhe FROM XE";
         try {
             PreparedStatement ps =connect.prepareStatement(sql);
@@ -203,7 +189,7 @@ public class PnQlyXe extends javax.swing.JPanel {
             // load combobox LOẠI XE và HỆ SỐ GIÁ
             while(rs.next()){
                 cbbLoaiXe.addItem(rs.getString(1)+"- "+rs.getString(2));
-                cbbHeSoGia.addItem(rs.getString(3));
+//                cbbHeSoGia.addItem(rs.getString(3));
             }
             rs.close();
             ps.close();
@@ -212,10 +198,6 @@ public class PnQlyXe extends javax.swing.JPanel {
             ResultSet rs1= ps1.executeQuery();
             while(rs1.next()){
                 cbbChoNgoi.addItem(rs1.getString(1));
-            }
-            //load combobox MÃ TÀI XẾ
-            for(int i=0;i<tbTaiXe.getRowCount();i++){
-                cbbMaTX.addItem(tbTaiXe.getValueAt(i, 0).toString());
             }
         } catch (SQLException e) {
             java.util.logging.Logger.getLogger(PnQlyXe.class.getName()).log(Level.SEVERE, null, e);
@@ -243,14 +225,13 @@ public class PnQlyXe extends javax.swing.JPanel {
          return false;
     }
     
-    private void themSuaXe(String sql, String soXe, String soGhe, String loaiXe, String tx){
+    private void themSuaXe(String sql, String soXe, String soGhe, String loaiXe){
         Connection con =Code.KetNoi.layKetNoi();
         try {
             PreparedStatement ps= con.prepareStatement(sql);
             ps.setString(1, soXe);
             ps.setString(2, soGhe);
             ps.setString(3, loaiXe);
-            ps.setString(4, tx);
             ps.executeUpdate();
             
             ps.close();
@@ -259,6 +240,25 @@ public class PnQlyXe extends javax.swing.JPanel {
         } catch (SQLException e) {
             java.util.logging.Logger.getLogger(PnQlyXe.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+    private boolean ktXoaXe(String soXe){
+        Connection con =Code.KetNoi.layKetNoi();
+        String sql="SELECT SoXe FROM CHUYEN_XE WHERE SoXe=?";
+        try {
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, soXe);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                return false;
+            }
+            rs.close();
+            ps.close();
+            con.close();
+            
+        } catch (SQLException e) {
+            java.util.logging.Logger.getLogger(PnQlyXe.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return true;
     }
     private void xoaXe(String soXe){
         Connection con =Code.KetNoi.layKetNoi();
@@ -279,6 +279,7 @@ public class PnQlyXe extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cbbHeSoGia = new javax.swing.JComboBox<>();
         btnThemXe = new javax.swing.JButton();
         btnXoaXe = new javax.swing.JButton();
         btnSuaXe = new javax.swing.JButton();
@@ -306,7 +307,6 @@ public class PnQlyXe extends javax.swing.JPanel {
         txtSoXe = new javax.swing.JTextField();
         lbLoaiXe = new javax.swing.JLabel();
         cbbLoaiXe = new javax.swing.JComboBox<>();
-        cbbHeSoGia = new javax.swing.JComboBox<>();
         lbHSG = new javax.swing.JLabel();
         cbbChoNgoi = new javax.swing.JComboBox<>();
         lbChoNgoi = new javax.swing.JLabel();
@@ -315,8 +315,11 @@ public class PnQlyXe extends javax.swing.JPanel {
         tbXe = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        lbMaTX2 = new javax.swing.JLabel();
-        cbbMaTX = new javax.swing.JComboBox<>();
+        txtHeSoGia = new javax.swing.JTextField();
+
+        cbbHeSoGia.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        cbbHeSoGia.setMaximumRowCount(6);
+        cbbHeSoGia.setEnabled(false);
 
         setBackground(new java.awt.Color(255, 255, 255));
         addHierarchyListener(new java.awt.event.HierarchyListener() {
@@ -561,10 +564,6 @@ public class PnQlyXe extends javax.swing.JPanel {
         cbbLoaiXe.setMaximumRowCount(6);
         cbbLoaiXe.setEnabled(false);
 
-        cbbHeSoGia.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        cbbHeSoGia.setMaximumRowCount(6);
-        cbbHeSoGia.setEnabled(false);
-
         lbHSG.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lbHSG.setText("Hệ số giá:");
 
@@ -585,11 +584,11 @@ public class PnQlyXe extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Số xe", "Loại xe", "Số chỗ", "Hệ số giá", "Mã TX"
+                "Số xe", "Loại xe", "Số chỗ", "Hệ số giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -608,8 +607,7 @@ public class PnQlyXe extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel12.setText("Quản Lý Xe");
 
-        lbMaTX2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        lbMaTX2.setText("Mã TX:");
+        txtHeSoGia.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -647,20 +645,13 @@ public class PnQlyXe extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(cbbLoaiXe, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lbChoNgoi)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(cbbChoNgoi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lbHSG)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(cbbHeSoGia, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lbMaTX2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(cbbMaTX, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(258, 258, 258)))
+                                        .addComponent(lbChoNgoi)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cbbChoNgoi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lbHSG)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtHeSoGia, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(39, 39, 39)
@@ -695,12 +686,8 @@ public class PnQlyXe extends javax.swing.JPanel {
                             .addComponent(lbChoNgoi)
                             .addComponent(cbbChoNgoi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbHSG)
-                            .addComponent(cbbHeSoGia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lbMaTX2)
-                            .addComponent(cbbMaTX, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(74, 74, 74)))
+                            .addComponent(txtHeSoGia, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(149, 149, 149)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThemXe, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoaXe, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -717,8 +704,7 @@ public class PnQlyXe extends javax.swing.JPanel {
         txtSoXe.setText(tbXe.getValueAt(rowSelect, 0).toString());
         cbbLoaiXe.setSelectedItem(tbXe.getValueAt(rowSelect, 1).toString());
         cbbChoNgoi.setSelectedItem(tbXe.getValueAt(rowSelect, 2).toString());
-        cbbHeSoGia.setSelectedItem(tbXe.getValueAt(rowSelect, 3).toString());
-        cbbMaTX.setSelectedItem(xuLyBang.selectRow(tbXe, 4));
+        txtHeSoGia.setText(tbXe.getValueAt(rowSelect, 3).toString());
         tbTaiXe.clearSelection();
         
 
@@ -728,6 +714,7 @@ public class PnQlyXe extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(btnThemXe.getText().equals("Thêm")){
             txtSoXe.setText("");
+            txtHeSoGia.setText("");
             setEditableXe(true,Color.GREEN);
             setEnableBtnXe(true, false, false, true);
             setEnableBtnTaiXe(false, false, false, false);
@@ -747,9 +734,7 @@ public class PnQlyXe extends javax.swing.JPanel {
                 String loaiXe=cbbLoaiXe.getSelectedItem().toString();
                 loaiXe=loaiXe.substring(0,loaiXe.indexOf("-"));
                 String soGhe=cbbChoNgoi.getSelectedItem().toString();
-                String heSoGia=cbbHeSoGia.getSelectedItem().toString();
-                String maTX=cbbMaTX.getSelectedItem().toString();
-                themSuaXe("INSERT INTO XE VALUES (?,?,?,?)",soXe, soGhe, loaiXe, maTX);
+                themSuaXe("INSERT INTO XE VALUES (?,?,?)",soXe, soGhe, loaiXe);
                     
                 JOptionPane.showMessageDialog(this, "Đã thêm xe thành công");
                 xuLyBang.loadDuLieuVaoBang(tbXe, "{call SP_LOAD_XE ()}");
@@ -804,10 +789,8 @@ public class PnQlyXe extends javax.swing.JPanel {
             String loaiXe=cbbLoaiXe.getSelectedItem().toString();
             loaiXe=loaiXe.substring(0,loaiXe.indexOf("-"));
             String soGhe=cbbChoNgoi.getSelectedItem().toString();
-            String heSoGia=cbbHeSoGia.getSelectedItem().toString();
-            String maTX=cbbMaTX.getSelectedItem().toString();
             // sửa thông tin xe
-            themSuaXe("UPDATE XE SET SoGhe=?, MaLoaiXe=?, MaTX=? WHERE SoXe=?",soGhe, loaiXe, maTX, soXe);
+            themSuaXe("UPDATE XE SET SoGhe=?, MaLoaiXe=? WHERE SoXe=?",soGhe, loaiXe, soXe);
 
             JOptionPane.showMessageDialog(this, "Đã Sửa thông tin xe thành công");
             xuLyBang.loadDuLieuVaoBang(tbXe, "{call SP_LOAD_XE ()}");// cập nhập lại bảng
@@ -828,6 +811,11 @@ public class PnQlyXe extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(!tbXe.getSelectionModel().isSelectionEmpty()){
             if(btnXoaXe.getText().equals("Xóa")){// kt tra nếu Button đang ở trạng thái Sửa thì
+                if(!ktXoaXe(txtSoXe.getText())){
+                    JOptionPane.showMessageDialog(this, "Xe đang hoạt động không thể xóa");
+                    return;
+                }
+                
                 setEnableBtnXe(false, false, true, true); // mở khóa các button cần phục vụ cho chức năng
                 setEnableBtnTaiXe(false, false, false, false);
                 setEditableXe(false, Color.red);
@@ -1011,7 +999,6 @@ public class PnQlyXe extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbbChoNgoi;
     private javax.swing.JComboBox<String> cbbHeSoGia;
     private javax.swing.JComboBox<String> cbbLoaiXe;
-    private javax.swing.JComboBox<String> cbbMaTX;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -1026,7 +1013,6 @@ public class PnQlyXe extends javax.swing.JPanel {
     private javax.swing.JLabel lbLoiSoXe;
     private javax.swing.JLabel lbLoiSoXe1;
     private javax.swing.JLabel lbMaTX;
-    private javax.swing.JLabel lbMaTX2;
     private javax.swing.JLabel lbSDT;
     private javax.swing.JLabel lbSoXe;
     private javax.swing.JRadioButton rBtnNam1;
@@ -1034,6 +1020,7 @@ public class PnQlyXe extends javax.swing.JPanel {
     private javax.swing.JTable tbTaiXe;
     private javax.swing.JTable tbXe;
     private javax.swing.JTextField txtCMND;
+    private javax.swing.JTextField txtHeSoGia;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMaTX;
     private javax.swing.JTextField txtSDT;

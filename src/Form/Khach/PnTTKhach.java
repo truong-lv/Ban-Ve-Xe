@@ -44,9 +44,9 @@ public class PnTTKhach extends javax.swing.JPanel {
         rBtnNam1.setEnabled(bool);
         rBtnNu1.setEnabled(bool);
     }
-    public boolean ktTrungTaiKhoan(String tk){
+    public boolean ktTrungTaiKhoan(String tkTruoc, String tk){
         java.sql.Connection conn = Code.KetNoi.layKetNoi();
-        String sql="SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '"+tk+"' AND TaiKhoan !='"+BanVeXe.Account+"'";
+        String sql="SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '"+tk+"' AND TaiKhoan !='"+tkTruoc+"'";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs =ps.executeQuery();
@@ -446,16 +446,14 @@ public class PnTTKhach extends javax.swing.JPanel {
         }else{// Nếu btn đang ở trạng thái "Lưu" thì tiến hành lưu thông tin đã chỉnh sửa và khóa các txt lại
             if(!ktLoiNhapLieu()){// kiểm tra các lỗi nhập 
                 
-                if(ktTrungTaiKhoan(txtTK1.getText())){return;}// kt tài khoản mà khách chỉnh sửa cá trùng với tk khác ko
+                if(ktTrungTaiKhoan(BanVeXe.Account,txtTK1.getText())){return;}// kt tài khoản mà khách chỉnh sửa cá trùng với tk khác ko
                 // hiện dialog cho người dùng xác nhận lại
                 int confirm=JOptionPane.showConfirmDialog(this, "Xác nhận cập nhập thông tin");
                 if(confirm==JOptionPane.OK_OPTION)// xác nhận == OK
                 {
                     // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
-                    if(!txtTK1.getText().equals(BanVeXe.Account)){
-                        chinhSuaTK(BanVeXe.Account, txtTK1.getText(), (!txtPass1.getText().isEmpty())?txtPass1.getText():BanVeXe.pass);
+                    chinhSuaTK(BanVeXe.Account, txtTK1.getText(), (!txtPass1.getText().isEmpty())?txtPass1.getText():BanVeXe.pass);
                         
-                    }
                     String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";// chuyển giới tính sang String
                     
                     //Thực hiện câu truy vấn chỉnh sửa thông tin cá nhân khách

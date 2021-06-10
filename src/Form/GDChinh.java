@@ -30,13 +30,12 @@ public class GDChinh extends javax.swing.JFrame {
     
     // LOAD TỪNG PANEL CHỨC NĂNG  VÀO GIAO DIỆN CHÍNH DỰA THEO QUYỀN TRUY CẬP CỦA TỪNG ĐỐI TƯỢNG
     private void loadGiaoDien(){
-        //LOAD CHỨC NĂNG ĐẶT VÉ 
-        PnDatVe datVe =new PnDatVe();
-        addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
-         
+        
         // CHỨC NĂNG CHO KHÁCH
         if(BanVeXe.quyen.equals("Khách hàng"))
         {
+            PnDatVe datVe =new PnDatVe();
+            addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
             
             PnKhachXemVe xemVe = new PnKhachXemVe();
             addPanel(xemVe, "XEM LỊCH SỬ ĐẶT", "/image/History-icon.png");
@@ -44,10 +43,16 @@ public class GDChinh extends javax.swing.JFrame {
             PnTTKhach ttKhach=new PnTTKhach(BanVeXe.primaryKey,LbUserAcc,LbUserName);
             addPanel(ttKhach, "THÔNG TIN CÁ NHÂN", "/image/edit-user-icon.png");
         }
-        // CHỨC NĂNG CHO CẢ NHÂN VIÊN VÀ QUẢN LÝ
-        else {
+        
+        // CHỨC NĂNG CHO CẢ NHÂN VIÊN
+        else /*if(BanVeXe.quyen.equals("Nhân viên")) */{
+            
+            PnDatVe datVe =new PnDatVe();
+            addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
+        
             PnQlyVe qlyVe =new PnQlyVe();
             addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
+            
             PnQlyKhach qlykhach =new PnQlyKhach();
             addPanel(qlykhach, "QLÝ KHÁCH", "/image/edit-user-icon.png");
             
@@ -57,8 +62,10 @@ public class GDChinh extends javax.swing.JFrame {
             PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserAcc,LbUserName);
             addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
         }
+        
         // CHỨC NĂNG CỦA QUẢN LÝ
-        if(BanVeXe.quyen.equals("Quản lý")){
+        if(BanVeXe.quyen.equals("Quản lý"))  {
+            
             PnQLyNhanVien qlyNV =new PnQLyNhanVien();
             addPanel(qlyNV, "QLÝ NHÂN VIÊN", "/image/user-icon11.png");
             
@@ -70,6 +77,9 @@ public class GDChinh extends javax.swing.JFrame {
             
             PnDoanhThu doanhThu =new PnDoanhThu();
             addPanel(doanhThu, "DOANH THU", "/image/Money-icon.png");
+            
+//            PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserAcc,LbUserName);
+//            addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
         }
         
     }
@@ -119,11 +129,6 @@ public class GDChinh extends javax.swing.JFrame {
         tbPnMenu.setBackground(new java.awt.Color(102, 102, 255));
         tbPnMenu.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         tbPnMenu.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        tbPnMenu.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                tbPnMenuStateChanged(evt);
-            }
-        });
 
         pnInfor.setBackground(new java.awt.Color(19, 101, 175));
         pnInfor.setLayout(null);
@@ -143,7 +148,6 @@ public class GDChinh extends javax.swing.JFrame {
         LbUserAcc.setText("Tài khoản");
         pnInfor.add(LbUserAcc);
         LbUserAcc.setBounds(460, 10, 180, 40);
-
 
         jBtnCancelGDNhanVien.setBackground(new java.awt.Color(19, 101, 175));
         jBtnCancelGDNhanVien.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -187,7 +191,6 @@ public class GDChinh extends javax.swing.JFrame {
         pnInfor.add(lbTopBanner);
         lbTopBanner.setBounds(30, 0, 300, 110);
 
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/name-card-icon.png"))); // NOI18N
         jLabel2.setText(":");
@@ -225,19 +228,6 @@ public class GDChinh extends javax.swing.JFrame {
         this.dispose();
         new Login().setVisible(true);
     }//GEN-LAST:event_jBtnCancelGDNhanVienActionPerformed
-
-    private void tbPnMenuStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbPnMenuStateChanged
-//        BẮT SỰ KIỆN THAY ĐỔI MENU CỦA TABBED
-//        if(tbPnMenu.getSelectedComponent().getName().equals("ĐẶT VÉ")){
-//            
-//        }else if(tbPnMenu.getSelectedComponent().getName().equals("")){
-//            
-//        }
-//        if(this.khoiTao){
-//           tbPnMenu.removeAll();
-//           loadGiaoDien();
-//        }
-    }//GEN-LAST:event_tbPnMenuStateChanged
 
     /**
      * @param args the command line arguments
