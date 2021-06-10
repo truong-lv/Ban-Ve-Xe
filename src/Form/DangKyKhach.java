@@ -37,12 +37,12 @@ public class DangKyKhach extends javax.swing.JFrame {
                             JLabel lbTen, JLabel lbGioiTinh, JLabel lbSDT, JLabel lbTK, JLabel lbMK){
         boolean ktTen=false,ktGT=false, ktTK=false, ktSDT=false, ktMK=false;
         // KT Nhập họ tên
-        if(txtTen.getText().isEmpty()){
+        if(!txtTen.getText().matches("([a-zA-Z]|\\s)+") || txtTen.getText().trim().isEmpty()){
             ktTen=true;
             lbTen.setVisible(true);
             txtTen.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        else if(!txtTen.getText().isEmpty()) {
+        else {
             lbTen.setVisible(false);
             txtTen.setBorder(BorderFactory.createLineBorder(null));
 
@@ -69,27 +69,28 @@ public class DangKyKhach extends javax.swing.JFrame {
         }
 
         //KT nhập Tai khoản
-        if(txtTK.getText().isEmpty()||txtTK.getText().matches("[0-9]{9}")){
+        if(txtTK.getText().isEmpty()|| !txtTK.getText().matches("\\S")){
             ktTK=true;
             lbTK.setVisible(true);
             txtTK.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        else if(!txtTK.getText().isEmpty()) {
+        else /*if(!txtTK.getText().isEmpty())*/ {
             lbTK.setVisible(false);
             txtTK.setBorder(BorderFactory.createLineBorder(null));
         }
 
         
         // KT nhập mật khẩu
-        if(psMK.getText().isEmpty()){
+        if(!psMK.getText().matches("\\w{6,}")){
             ktMK=true;
             lbMK.setVisible(true);
             psMK.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        else if(!psMK.getText().isEmpty()) {
+        else if(psMK.getText().matches("\\w{6,}")) {
             lbMK.setVisible(false);
             psMK.setBorder(BorderFactory.createLineBorder(null));
         }
+        
         if( ktSDT || ktTen || ktGT ||ktTK || ktMK){
             return false;
 

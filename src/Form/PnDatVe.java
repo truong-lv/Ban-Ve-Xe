@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -99,18 +100,20 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private boolean ktNhap() {
         boolean kt = true;
-        if (txtSDT.getText().isEmpty()) {
+        if( !txtSDT.getText().matches("0\\d{9,10}")){
             lbLoiSDT.setVisible(true);
             kt = false;
         }
+        else {lbLoiSDT.setVisible(false);}
+        
         if (txtHoTen_Khach.getText().isEmpty()) {
             lbLoiTen.setVisible(true);
             kt = false;
-        }
+        }else {lbLoiTen.setVisible(false);}
         if ((!rBtnNam1.isSelected() && !rBtnNu1.isSelected())) {
             lbLoiGioiTinh.setVisible(true);
             kt = false;
-        }
+        }else {lbLoiGioiTinh.setVisible(false);}
 
         return kt;
     }
@@ -270,8 +273,8 @@ public class PnDatVe extends javax.swing.JPanel {
             Logger.getLogger(PnDatVe.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        PnKhachXemVe loadVe = new PnKhachXemVe();
-        loadVe.loadVe();
+//        PnKhachXemVe loadVe = new PnKhachXemVe();
+//        loadVe.loadVe();
     }
 
     // Hàm load thời gian để khách hàng đặt vé
@@ -460,6 +463,11 @@ public class PnDatVe extends javax.swing.JPanel {
 
         jLabel_month.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
 
+        addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                formHierarchyChanged(evt);
+            }
+        });
         addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 formFocusLost(evt);
@@ -1097,11 +1105,11 @@ public class PnDatVe extends javax.swing.JPanel {
         lbLoiGioiTinh.setVisible(false);
 
         lbLoiTen.setForeground(new java.awt.Color(255, 51, 51));
-        lbLoiTen.setText("Vui lòng nhập Tên.");
+        lbLoiTen.setText("Họ Tên không hợp lệ.");
         lbLoiTen.setVisible(false);
 
         lbLoiSDT.setForeground(new java.awt.Color(255, 51, 51));
-        lbLoiSDT.setText("Vui lòng nhập SĐT");
+        lbLoiSDT.setText("Vui lòng nhập đúng SĐT");
         lbLoiSDT.setVisible(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -1470,6 +1478,11 @@ public class PnDatVe extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Điểm Đến");
         }
     }//GEN-LAST:event_jComboBox_TimeMouseClicked
+
+    private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
+        // TODO add your handling code here:
+        phanQuyenDatVe();
+    }//GEN-LAST:event_formHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

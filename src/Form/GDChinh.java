@@ -45,7 +45,7 @@ public class GDChinh extends javax.swing.JFrame {
         }
         
         // CHỨC NĂNG CHO CẢ NHÂN VIÊN
-        else if(BanVeXe.quyen.equals("Nhân viên")) {
+        else /*if(BanVeXe.quyen.equals("Nhân viên")) */{
             
             PnDatVe datVe =new PnDatVe();
             addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
@@ -64,12 +64,7 @@ public class GDChinh extends javax.swing.JFrame {
         }
         
         // CHỨC NĂNG CỦA QUẢN LÝ
-        else {
-            PnDatVe datVe =new PnDatVe();
-            addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
-        
-            PnQlyVe qlyVe =new PnQlyVe();
-            addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
+        if(BanVeXe.quyen.equals("Quản lý"))  {
             
             PnQLyNhanVien qlyNV =new PnQLyNhanVien();
             addPanel(qlyNV, "QLÝ NHÂN VIÊN", "/image/user-icon11.png");
@@ -83,8 +78,8 @@ public class GDChinh extends javax.swing.JFrame {
             PnDoanhThu doanhThu =new PnDoanhThu();
             addPanel(doanhThu, "DOANH THU", "/image/Money-icon.png");
             
-            PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserAcc,LbUserName);
-            addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
+//            PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserAcc,LbUserName);
+//            addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
         }
         
     }

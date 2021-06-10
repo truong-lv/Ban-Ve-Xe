@@ -66,7 +66,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     //LOAD CÁC COMBOBOX TỪ BẢNG TẠM
     public void loadComboNgayDi(){
         cbbNgayDi.removeAllItems();
-        cbbNgayDi.addItem("Tất Cả");
+        //cbbNgayDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String cheDo=cbbCheDoXem.getSelectedItem().toString();
         
@@ -112,7 +112,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     
     public void loadComboGio(){
         cbbGioDi.removeAllItems();
-        cbbGioDi.addItem("Tất Cả");
+        //cbbGioDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         //String ngay=cbbNgayDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
@@ -138,7 +138,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     
     public void loadComboChuyenXe(){
         cbbChuyenXe.removeAllItems();
-        cbbChuyenXe.addItem("Tất Cả");
+        //cbbChuyenXe.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
         String gio=cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"";
@@ -308,6 +308,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         }
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1139, 651));
         addHierarchyListener(new java.awt.event.HierarchyListener() {
             public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
                 formHierarchyChanged(evt);
@@ -409,7 +410,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         jLabel9.setText("( Click chọn vé cần thao tác )");
 
         cbbTramDi.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "TP.HCM", "Đồng Nai" }));
+        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TP.HCM", "Đồng Nai" }));
         cbbTramDi.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbTramDiItemStateChanged(evt);
@@ -500,8 +501,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addGap(29, 29, 29)
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -511,8 +511,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel13)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(256, 256, 256))
+                                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(68, 68, 68)
@@ -520,7 +519,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                                 .addGap(282, 282, 282)
                                 .addComponent(jButton1)
                                 .addGap(21, 21, 21))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1101, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(109, 109, 109)

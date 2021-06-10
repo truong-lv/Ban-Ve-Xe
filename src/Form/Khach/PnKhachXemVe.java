@@ -91,7 +91,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 while (rs.next()) {
                     gio.add(rs.getString(2).substring(0, 8));
                 }
-                System.out.println(gio.get(80));
+                //System.out.println(gio.get(80));
             } catch (SQLException e) {
                 Logger.getLogger(PnKhachXemVe.class.getName()).log(Level.SEVERE, null, e);
             }
