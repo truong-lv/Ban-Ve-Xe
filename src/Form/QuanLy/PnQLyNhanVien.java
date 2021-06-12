@@ -59,7 +59,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         } catch (Exception e) {
         }
     }
-    
+
     // Hàm kiểm tra tài khoản
     public boolean ktTaiKhoan(String taiKhoan) {
         boolean kt = true;
@@ -82,9 +82,9 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         }
         return kt;
     }
-    
+
     // Hàm Xóa Nhân Viên
-    public void xoaNhanVien(String maNV){
+    public void xoaNhanVien(String maNV) {
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "Delete from NHAN_VIEN where MaNV = ?";
 
@@ -101,6 +101,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             Logger.getLogger(PnQLyNhanVien.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
     // Hàm Thêm Tạo Khoản Mới
     public void taoTaiKhoan(String tk, String mk, String quyen) {
         Connection ketNoi = KetNoi.layKetNoi();
@@ -118,9 +119,9 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             Logger.getLogger(PnQLyNhanVien.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
     // Hàm Sửa Thông Tin Nhân Viên
-    public void suaNhanVien(String maNV, String hoTen, String CMND,String gioiTinh, String sdt, String chucVu) {
+    public void suaNhanVien(String maNV, String hoTen, String CMND, String gioiTinh, String sdt, String chucVu) {
         Connection connect = Code.KetNoi.layKetNoi();
         String sql = "UPDATE NHAN_VIEN SET HoTen=?, CMND=?, GioiTinh=?, DienThoai=?, MaLoaiNV=? where MaNV=?";
         try {
@@ -132,13 +133,13 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             ps.setString(5, chucVu);
             ps.setString(6, maNV);
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Thêm Tài Khoản Thành Công");
+            JOptionPane.showMessageDialog(this, "Chỉnh Sửa Nhân Viên Thành Công");
         } catch (SQLException e) {
             Logger.getLogger(PnQLyNhanVien.class.getName()).log(Level.SEVERE, null, e);
         }
         loadNhanVien();
     }
-    
+
     // Hàm Thêm Tài Khoản Cho Nhân Viên
     public void themTaiKhoan(String maNV, String tk) {
         Connection connect = Code.KetNoi.layKetNoi();
@@ -147,7 +148,6 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             PreparedStatement ps = connect.prepareStatement(sql);
             ps.setString(1, tk);
             ps.setString(2, maNV);
-
             ps.executeUpdate();
             ps.close();
             connect.close();
@@ -157,7 +157,6 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         }
         loadNhanVien();
     }
-    
 
     //Hàm Làm Mới Các TextField
     @SuppressWarnings("unchecked")
@@ -437,9 +436,9 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jRadioButton_Nam.disable();
         jRadioButton_Nu.disable();
         jTextField_MaNV.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        if(jTable1.getValueAt(jTable1.getSelectedRow(), 5).equals("AD")){
+        if (jTable1.getValueAt(jTable1.getSelectedRow(), 5).equals("AD")) {
             jComboBox_ChucVu.setSelectedIndex(0);
-        }else{
+        } else {
             jComboBox_ChucVu.setSelectedIndex(1);
         }
         jTextField_TenNV.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 1));
@@ -452,9 +451,9 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         }
         jTextField_CMND.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 2));
         jTextField_SDT.setText((String) jTable1.getValueAt(jTable1.getSelectedRow(), 4));
-        if(jTable1.getValueAt(jTable1.getSelectedRow(), 3).equals("Nam")){
+        if (jTable1.getValueAt(jTable1.getSelectedRow(), 3).equals("Nam")) {
             jRadioButton_Nam.setSelected(true);
-        }else{
+        } else {
             jRadioButton_Nu.setSelected(true);
         }
         jTextField_MaNV.disable();
@@ -465,6 +464,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jTextField_TenNV.disable();
         jRadioButton_Nam.disable();
         jRadioButton_Nu.disable();
+        jButton_Sua.setVisible(false);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyTyped
@@ -502,16 +502,19 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
     private void jTable1HierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable1HierarchyChanged
         // TODO add your handling code here:
         loadNhanVien();
+        jButton_Sua.setVisible(false);
     }//GEN-LAST:event_jTable1HierarchyChanged
 
     private void jTable1VetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_jTable1VetoableChange
         // TODO add your handling code here:
         loadNhanVien();
+        jButton_Sua.setVisible(false);
     }//GEN-LAST:event_jTable1VetoableChange
 
     private void jTable1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable1PropertyChange
         // TODO add your handling code here:
         loadNhanVien();
+        jButton_Sua.setVisible(false);
     }//GEN-LAST:event_jTable1PropertyChange
 
     private void jButton_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SuaActionPerformed
@@ -535,7 +538,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Giới Tính");
         } else if (!jTextField_SDT.getText().matches("0\\d{9,10}") || jTextField_SDT.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Xem Lại SDT");
-        }else {
+        } else {
             hoTen = jTextField_TenNV.getText();
             CMND = jTextField_CMND.getText();
             if (jRadioButton_Nam.isSelected()) {
