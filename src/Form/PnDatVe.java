@@ -136,7 +136,7 @@ public class PnDatVe extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if (rs.getString(2).equals(loaiXe)) {
-                    giaVe = String.valueOf(150000 * (Integer.parseInt(rs.getString(3))));
+                    giaVe = String.valueOf(150000 * (Double.valueOf(rs.getString(3))));
                 }
             }
             rs.close();
@@ -349,7 +349,7 @@ public class PnDatVe extends javax.swing.JPanel {
         // Tính Tổng Tiền
         if (soLuong != 0) {
             Locale localeVN = new Locale("vi", "VN");
-            int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString())) * Integer.parseInt(lbSoLuongVe.getText());
+            double price = Double.valueOf(giaVe(jComboBox_loaiXe.getSelectedItem().toString())) * Integer.parseInt(lbSoLuongVe.getText());
             jLabel_priceAll.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length() - 1) + " VND");
         }
 
@@ -1345,7 +1345,7 @@ public class PnDatVe extends javax.swing.JPanel {
 
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
         Locale localeVN = new Locale("vi", "VN");
-        int price = Integer.parseInt(giaVe(jComboBox_loaiXe.getSelectedItem().toString()));
+        double price = Double.valueOf(giaVe(jComboBox_loaiXe.getSelectedItem().toString()));
 
         jLabel_price.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(price)).length() - 1) + " VND");
         taiGheDaDat();
