@@ -68,6 +68,10 @@ public class HamXuLyBang {
                     else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
                         dtm.setValueAt("Đã dừng", i, dtm.getColumnCount()-1);
                     }
+                    
+                    if(Integer.parseInt(dtm.getValueAt(i, 0).toString())<=9){
+                        dtm.setValueAt("0"+dtm.getValueAt(i, 0).toString(), i, 0);
+                    }
                 }
             }
             
