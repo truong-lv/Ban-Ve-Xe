@@ -47,7 +47,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
     }
     private void setEditableTxt(boolean bool, Color col){
         txtSDT.setEditable(bool);
-        jLabel_Sdt.setForeground(Color.RED);
+        jLabel_Sdt.setForeground(col);
         txtHoTen.setEditable(bool);
         jLabel_HoTen.setForeground(col);
         jRadioButton_Nam.setEnabled(bool);
@@ -231,7 +231,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
         lbLoiGioiTinh = new javax.swing.JLabel();
         lbLoiHoTen = new javax.swing.JLabel();
         psMK = new javax.swing.JPasswordField();
-        lbLoiTrungTK1 = new javax.swing.JLabel();
+        lbLoiMK = new javax.swing.JLabel();
         jLabel_Sdt1 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         btnThemTKKhach = new javax.swing.JButton();
@@ -412,10 +412,10 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
         psMK.setVisible(false);
 
-        lbLoiTrungTK1.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
-        lbLoiTrungTK1.setForeground(new java.awt.Color(255, 51, 51));
-        lbLoiTrungTK1.setText("Mật khẩu không đc để trống");
-        lbLoiTrungTK1.setVisible(false);
+        lbLoiMK.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        lbLoiMK.setForeground(new java.awt.Color(255, 51, 51));
+        lbLoiMK.setText("Mật khẩu không đc để trống");
+        lbLoiMK.setVisible(false);
 
         jLabel_Sdt1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel_Sdt1.setText("Tìm kiếm:");
@@ -510,7 +510,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(psMK, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbLoiTrungTK1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbLoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lbLoiHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(37, 37, 37)
                         .addComponent(jLabel1_GioiTinh)
@@ -524,8 +524,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(78, 78, 78)
-                .addComponent(btnThemTKKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addComponent(btnThemTKKhach)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -578,7 +578,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
                             .addComponent(jLabel1_MK)
                             .addComponent(psMK, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbLoiTrungTK1))
+                        .addComponent(lbLoiMK))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel_Sdt)
@@ -593,17 +593,17 @@ public class PnQlyKhach extends javax.swing.JPanel {
                         .addComponent(lbLoiTrungTK)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnThemTKKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(53, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31))))
+                        .addGap(31, 31, 31))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnThemTKKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -637,11 +637,13 @@ public class PnQlyKhach extends javax.swing.JPanel {
         
         if(btnSua.getText().equals("Sửa")){//kt thời điểm nhấn vào button đang ở trạng thái Sửa chưa
             setEditableTxt(true,Color.blue);//mở khóa tất cả txt cho người dùng sửa
+            jLabel_Sdt.setForeground(Color.RED);
             txtSDT.setEditable(false);
             setEnableBtn(false, true, false, true);
             psMK.setVisible(true);
             jLabel1_MK.setVisible(true);
-            
+            lbLoiMK.setText("Để trống nếu không muốn đổi");
+            lbLoiMK.setVisible(true);
             btnSua.setText("Lưu");// đổi button sang trạng thái Lưu
         }else {// ngược lại là trạng thái lưu
             
@@ -675,6 +677,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
                 setField("", "", "", false, false, false); 
                 setEnableBtn(true, true, true, false);
                 setEditableTxt(false, null);
+                lbLoiMK.setVisible(false);
             }
         }
         
@@ -728,7 +731,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
 
             DangKyKhach themKhach=new DangKyKhach();
             // kiểm tra lỗi nhập
-            if(!themKhach.ktLoi(txtHoTen, txtSDT, txtTK, psMK, jRadioButton_Nam, jRadioButton_Nu, lbLoiHoTen, lbLoiGioiTinh, lbLoiSDT, lbLoiTrungTK, lbLoiTrungTK1))
+            if(!themKhach.ktLoi(txtHoTen, txtSDT, txtTK, psMK, jRadioButton_Nam, jRadioButton_Nu, lbLoiHoTen, lbLoiGioiTinh, lbLoiSDT, lbLoiTrungTK, lbLoiMK))
             {return;}
             
             //kt trùng số điện thoại
@@ -849,9 +852,10 @@ public class PnQlyKhach extends javax.swing.JPanel {
             
             //kiểm tra mk có rỗng không
             if(psMK.getText().isEmpty()){
-                lbLoiTrungTK1.setVisible(true);
+                lbLoiMK.setText("Mật khẩu không đc để trống");
+                lbLoiMK.setVisible(true);
                 return;
-            }else lbLoiTrungTK1.setVisible(false);
+            }else lbLoiMK.setVisible(false);
             
             //Thêm tài khoản
             themTaiKhoanKhach(txtTK.getText(), psMK.getText(), txtSDT.getText());
@@ -963,9 +967,9 @@ public class PnQlyKhach extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbLoiGioiTinh;
     private javax.swing.JLabel lbLoiHoTen;
+    private javax.swing.JLabel lbLoiMK;
     private javax.swing.JLabel lbLoiSDT;
     private javax.swing.JLabel lbLoiTrungTK;
-    private javax.swing.JLabel lbLoiTrungTK1;
     private javax.swing.JPasswordField psMK;
     private javax.swing.JTable tbKhachHang;
     private javax.swing.JTextField txtHoTen;

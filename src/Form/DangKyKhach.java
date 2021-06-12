@@ -5,6 +5,7 @@
  */
 package Form;
 
+import Code.BanVeXe;
 import Code.XuLyNhap;
 import Form.Login;
 import java.awt.Color;
@@ -86,6 +87,11 @@ public class DangKyKhach extends javax.swing.JFrame {
             lbMK.setVisible(true);
             psMK.setBorder(BorderFactory.createLineBorder(Color.red));
         }
+        else if(psMK.getText().matches("\\w{6,}")) {
+            lbMK.setVisible(false);
+            psMK.setBorder(BorderFactory.createLineBorder(null));
+        }
+        
         else if(psMK.getText().matches("\\w{6,}")) {
             lbMK.setVisible(false);
             psMK.setBorder(BorderFactory.createLineBorder(null));
@@ -182,6 +188,9 @@ public class DangKyKhach extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         lbGioiTinh = new javax.swing.JLabel();
         btnDangKy = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        psMK2 = new javax.swing.JPasswordField();
+        lbMK2 = new javax.swing.JLabel();
         lbBackgroundDky = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -210,12 +219,12 @@ public class DangKyKhach extends javax.swing.JFrame {
         pnDKY.add(txtTen);
         txtTen.setBounds(10, 260, 190, 42);
         pnDKY.add(txtTK);
-        txtTK.setBounds(10, 370, 190, 42);
+        txtTK.setBounds(220, 140, 190, 42);
 
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Tài Khoản:");
         pnDKY.add(jLabel8);
-        jLabel8.setBounds(10, 350, 62, 16);
+        jLabel8.setBounds(220, 120, 62, 16);
 
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("SĐT:");
@@ -225,13 +234,13 @@ public class DangKyKhach extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Mật khẩu:");
         pnDKY.add(jLabel10);
-        jLabel10.setBounds(220, 340, 70, 16);
+        jLabel10.setBounds(220, 230, 70, 16);
 
         lbTK.setForeground(new java.awt.Color(255, 153, 204));
         lbTK.setText("Tài khoản không hợp lệ");
         lbTK.setVisible(false);
         pnDKY.add(lbTK);
-        lbTK.setBounds(20, 420, 150, 16);
+        lbTK.setBounds(230, 190, 150, 16);
 
         lbTen.setForeground(new java.awt.Color(255, 153, 204));
         lbTen.setText("Họ tên không hợp lệ");
@@ -249,12 +258,12 @@ public class DangKyKhach extends javax.swing.JFrame {
         lbMK.setText("Mật khẩu không hợp lệ");
         lbMK.setVisible(false);
         pnDKY.add(lbMK);
-        lbMK.setBounds(240, 440, 129, 16);
+        lbMK.setBounds(240, 330, 129, 16);
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Từ 6 đến 50 ký tự");
         pnDKY.add(jLabel12);
-        jLabel12.setBounds(230, 420, 102, 16);
+        jLabel12.setBounds(230, 310, 102, 16);
 
         lbDangKy.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lbDangKy.setForeground(new java.awt.Color(102, 255, 255));
@@ -267,7 +276,7 @@ public class DangKyKhach extends javax.swing.JFrame {
         pnDKY.add(lbDangKy);
         lbDangKy.setBounds(160, 600, 87, 20);
         pnDKY.add(psMK);
-        psMK.setBounds(220, 370, 190, 42);
+        psMK.setBounds(220, 260, 190, 42);
         pnDKY.add(jSeparator3);
         jSeparator3.setBounds(110, 610, 50, 10);
         pnDKY.add(jSeparator4);
@@ -276,23 +285,23 @@ public class DangKyKhach extends javax.swing.JFrame {
         buttonGroup1.add(rBtnNam);
         rBtnNam.setText("Nam");
         pnDKY.add(rBtnNam);
-        rBtnNam.setBounds(240, 270, 55, 25);
+        rBtnNam.setBounds(30, 390, 55, 25);
 
         buttonGroup1.add(rBtnNu);
         rBtnNu.setText("Nữ");
         pnDKY.add(rBtnNu);
-        rBtnNu.setBounds(320, 270, 45, 25);
+        rBtnNu.setBounds(110, 390, 45, 25);
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Giới Tính:");
         pnDKY.add(jLabel11);
-        jLabel11.setBounds(220, 230, 70, 16);
+        jLabel11.setBounds(10, 360, 70, 16);
 
         lbGioiTinh.setForeground(new java.awt.Color(255, 153, 204));
         lbGioiTinh.setText("Vui lòng chọn giới tính");
         lbGioiTinh.setVisible(false);
         pnDKY.add(lbGioiTinh);
-        lbGioiTinh.setBounds(250, 310, 126, 16);
+        lbGioiTinh.setBounds(40, 430, 126, 16);
 
         btnDangKy.setBackground(new java.awt.Color(242, 227, 57));
         btnDangKy.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
@@ -305,6 +314,19 @@ public class DangKyKhach extends javax.swing.JFrame {
         });
         pnDKY.add(btnDangKy);
         btnDangKy.setBounds(100, 520, 220, 50);
+
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Nhập lại mật khẩu:");
+        pnDKY.add(jLabel13);
+        jLabel13.setBounds(220, 360, 120, 16);
+        pnDKY.add(psMK2);
+        psMK2.setBounds(220, 390, 190, 42);
+
+        lbMK2.setForeground(new java.awt.Color(255, 153, 204));
+        lbMK2.setText("Vui lòng nhập lại");
+        lbMK2.setVisible(false);
+        pnDKY.add(lbMK2);
+        lbMK2.setBounds(230, 440, 95, 20);
 
         lbBackgroundDky.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ImageBackground/backgroundDky.png"))); // NOI18N
         pnDKY.add(lbBackgroundDky);
@@ -343,6 +365,11 @@ public class DangKyKhach extends javax.swing.JFrame {
     private void btnDangKyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangKyActionPerformed
 
         if( ktLoi(txtTen, txtSDT, txtTK, psMK, rBtnNam, rBtnNu, lbTen, lbGioiTinh, lbSDT, lbTK,lbMK)){
+           if(!psMK2.getText().equals(psMK.getText())){
+               lbMK2.setVisible(true);
+               return;
+           }else lbMK2.setVisible(false);
+            
            String sđt= txtSDT.getText();
            String hoten=txtTen.getText();
            XuLyNhap xlyNhap=new XuLyNhap();
@@ -358,6 +385,7 @@ public class DangKyKhach extends javax.swing.JFrame {
                 themKhachHang(sđt, hoten, gt, tk);
                 JOptionPane.showMessageDialog(this, "Đăng ký thành công");
                 this.dispose();
+                BanVeXe.setAccount(tk);
                 new Login().setVisible(true);
             }
             else JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại. Vui lòng nhập lại!");
@@ -409,6 +437,7 @@ public class DangKyKhach extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -419,11 +448,13 @@ public class DangKyKhach extends javax.swing.JFrame {
     private javax.swing.JLabel lbDangKy;
     private javax.swing.JLabel lbGioiTinh;
     private javax.swing.JLabel lbMK;
+    private javax.swing.JLabel lbMK2;
     private javax.swing.JLabel lbSDT;
     private javax.swing.JLabel lbTK;
     private javax.swing.JLabel lbTen;
     private javax.swing.JPanel pnDKY;
     private javax.swing.JPasswordField psMK;
+    private javax.swing.JPasswordField psMK2;
     private javax.swing.JRadioButton rBtnNam;
     private javax.swing.JRadioButton rBtnNu;
     private javax.swing.JTextField txtSDT;
