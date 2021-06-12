@@ -5,7 +5,10 @@
  */
 package Form.QuanLy;
 
+import Code.BanVeXe;
+import Code.GhiFileExcel;
 import Code.KetNoi;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +18,7 @@ import java.util.Locale;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -78,7 +82,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
     }
 
     public void doanhThu(String ngaybd, String thangbd, String nambd, String ngaykt, String thangkt, String namkt) {
-        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) jTable_VeXe.getModel();
         dtm.setNumRows(0);
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "select * from VE_XE order by TRY_CONVERT(date, NgayDi, 105) ASC";
@@ -115,7 +119,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
             }
             Locale localeVN = new Locale("vi", "VN");
             jLabel_DoanhThu.setText(String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).substring(0, String.valueOf(NumberFormat.getCurrencyInstance(localeVN).format(sum)).length() - 1) + " VND");
-            jTable2.setModel(dtm);
+            jTable_VeXe.setModel(dtm);
             SLVGN.setText(String.valueOf(gn) + " * 300.000");
             SLVCN.setText(String.valueOf(cn) + " * 150.000");
         } catch (SQLException e) {
@@ -142,12 +146,13 @@ public class PnDoanhThu extends javax.swing.JPanel {
         jComboBox_ngayBatDau = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTable_VeXe = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         SLVCN = new javax.swing.JLabel();
         SLVGN = new javax.swing.JLabel();
+        jButton_excel = new javax.swing.JButton();
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("/");
@@ -208,8 +213,8 @@ public class PnDoanhThu extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel4.setText("/");
 
-        jTable2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_VeXe.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTable_VeXe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -228,9 +233,9 @@ public class PnDoanhThu extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setRowHeight(23);
-        jTable2.setRowMargin(3);
-        jScrollPane2.setViewportView(jTable2);
+        jTable_VeXe.setRowHeight(23);
+        jTable_VeXe.setRowMargin(3);
+        jScrollPane2.setViewportView(jTable_VeXe);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("/");
@@ -246,6 +251,14 @@ public class PnDoanhThu extends javax.swing.JPanel {
 
         SLVGN.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         SLVGN.setForeground(new java.awt.Color(255, 0, 51));
+
+        jButton_excel.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_excel.setText("XUẤT FILE EXCEL");
+        jButton_excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_excelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -282,7 +295,7 @@ public class PnDoanhThu extends javax.swing.JPanel {
                             .addComponent(jComboBox_namKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel8)
@@ -291,10 +304,12 @@ public class PnDoanhThu extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(SLVCN, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(SLVGN, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(72, 72, 72)
+                                .addGap(61, 61, 61)
                                 .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_excel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(486, 486, 486)
@@ -325,12 +340,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
                 .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                            .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(66, 66, 66))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -342,7 +351,15 @@ public class PnDoanhThu extends javax.swing.JPanel {
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(40, 40, 40))))
+                        .addGap(40, 40, 40))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_excel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                                .addComponent(jLabel_DoanhThu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(66, 66, 66))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -370,11 +387,37 @@ public class PnDoanhThu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox_namKetThucActionPerformed
 
+    private void jButton_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_excelActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                GhiFileExcel ghiFile = new GhiFileExcel(jTable_VeXe, "THÔNG TIN VÉ");
+                ghiFile.setFileName(fileToSave.getAbsolutePath());
+                String ngaybd = jComboBox_ngayBatDau.getSelectedItem().toString() + "/" + jComboBox_thangBatDau.getSelectedItem().toString() + "/" + jComboBox_namBatDau.getSelectedItem().toString();
+                String ngaykt = jComboBox_ngayKetThuc.getSelectedItem().toString() + "/" + jComboBox_thangBatDau.getSelectedItem().toString() + "/" +jComboBox_namKetThuc.getSelectedItem().toString();
+                Vector vt1 = new Vector();
+                vt1.add("Từ Ngày : " + ngaybd);
+                vt1.add("Đến Ngày : " + ngaykt); 
+                ghiFile.setChiTiet1(vt1);
+                ghiFile.writeFileExcel2();
+            }
+        }
+    }//GEN-LAST:event_jButton_excelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel SLVCN;
     private javax.swing.JLabel SLVGN;
     private javax.swing.JButton jButton_Xem;
+    private javax.swing.JButton jButton_excel;
     private javax.swing.JComboBox<String> jComboBox_namBatDau;
     private javax.swing.JComboBox<String> jComboBox_namKetThuc;
     private javax.swing.JComboBox<String> jComboBox_ngayBatDau;
@@ -392,6 +435,6 @@ public class PnDoanhThu extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel_DoanhThu;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTable_VeXe;
     // End of variables declaration//GEN-END:variables
 }
