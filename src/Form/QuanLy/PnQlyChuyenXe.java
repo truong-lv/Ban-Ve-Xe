@@ -238,7 +238,7 @@ public class PnQlyChuyenXe extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã Chuyến", "Giờ đi", "Mã tài xế", "Số xe", "Trạm ", "Trạng Thái"
+                "Mã Chuyến", "Giờ đi", "Mã NV", "Số xe", "Trạm ", "Trạng Thái"
             }
         ) {
             boolean[] canEdit = new boolean [] {

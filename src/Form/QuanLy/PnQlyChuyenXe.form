@@ -179,7 +179,7 @@
               <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="M&#xe3; Chuy&#x1ebf;n" type="java.lang.Object"/>
                 <Column editable="true" title="Gi&#x1edd; &#x111;i" type="java.lang.Object"/>
-                <Column editable="true" title="M&#xe3; t&#xe0;i x&#x1ebf;" type="java.lang.Object"/>
+                <Column editable="true" title="M&#xe3; NV" type="java.lang.Object"/>
                 <Column editable="false" title="S&#x1ed1; xe" type="java.lang.Object"/>
                 <Column editable="false" title="Tr&#x1ea1;m " type="java.lang.Object"/>
                 <Column editable="false" title="Tr&#x1ea1;ng Th&#xe1;i" type="java.lang.Object"/>
