@@ -8,6 +8,7 @@ package Form.NhanVien;
 import Code.BanVeXe;
 import Code.GhiFileExcel;
 import Code.HamXuLyBang;
+import Form.ChiTietVe;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +37,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         initComponents();
         //LOAD DỮ LIỆU VÉ VÀO BẢNG TẠM
         xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
-        
+        //tb.getValueAt(numRow, numCol).toString();
         loadComboNgayDi();
         loadComboGio();
         loadComboChuyenXe();
@@ -80,7 +81,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             ngayTam=StringToDate(tbTam.getValueAt(i, 6).toString());
             if((tram.equals(tbTam.getValueAt(i, 8).toString())&&(cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) ) /*|| cheDo.equals("Tất cả vé")*/)//nếu chế độ là vé đặt trc thì load vé >tg hiện tại, ngược lại load tất cả
             {
-                if(cbbNgayDi.getItemCount()>1){//kt cbb đã có item nào chưa
+                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
                         if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -93,7 +94,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                 
                 else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
             }else if(tram.equals(tbTam.getValueAt(i, 8).toString())&&cheDo.equals("Tất cả vé")){
-                if(cbbNgayDi.getItemCount()>1){//kt cbb đã có item nào chưa
+                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
                         if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -120,7 +121,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         {
             if(tram.equals(tbTam.getValueAt(i, 8).toString()) && ngay.equals(tbTam.getValueAt(i, 6).toString()) )//Trạm nằm ở cột thứ 7
             {
-                if(cbbGioDi.getItemCount()>1){//kt cbb đã có item nào chưa
+                if(cbbGioDi.getItemCount()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
                         if(tbTam.getValueAt(i, 7).toString().equals(cbbGioDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
@@ -148,7 +149,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                     && ngay.equals(tbTam.getValueAt(i, 6).toString())
                     && gio.equals(tbTam.getValueAt(i, 7).toString()) )//Trạm nằm ở cột thứ 7
             {
-                if(cbbChuyenXe.getItemCount()>1){//kt cbb đã có item nào chưa
+                if(cbbChuyenXe.getItemCount()>0){//kt cbb đã có item nào chưa
                     boolean ktTrung=false;
                     for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
                         //System.out.println(i+" "+cbbGioDi.getItemAt(j)+" "+j);
@@ -172,31 +173,42 @@ public class PnQlyVe extends javax.swing.JPanel {
         DefaultTableModel dtm=(DefaultTableModel)tbVeXe.getModel();
         dtm.setNumRows(0);
         Vector vt;
+        
         for(int i=0;i<tbTam.getRowCount();i++)//Duyệt từng cột của bảng tạm
         {
-            // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
-            if (dk==true){
-                if(tbTam.getValueAt(i, 8).toString().equals(stringCbb(cbbTramDi)) && tbTam.getValueAt(i, 6).toString().equals(stringCbb(cbbNgayDi)) 
-                    && tbTam.getValueAt(i, 7).toString().equals(stringCbb(cbbGioDi)) && Integer.parseInt(tbTam.getValueAt(i, 2).toString())==numCbb(cbbChuyenXe))
-                {
-                    vt=new Vector();
-                    vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
-                    for(int j=1;j<tbTam.getColumnCount();j++){
-                        vt.add(tbTam.getValueAt(i, j));
-                    }
+           if(cbbCheDoXem.getSelectedIndex()==2 && BanVeXe.primaryKey.equals(xLBang.getRow(tbTam,i, 10).toString())){// nếu đang là chế độ xem vé đã đặt thì load những vé đã đặt của nhân viên
+                vt=new Vector();
+                vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
+                for(int j=1;j<tbTam.getColumnCount()-1;j++){
+                    vt.add(tbTam.getValueAt(i, j));
+                }
                 dtm.addRow(vt);
                 
+
+            }else if(cbbCheDoXem.getSelectedIndex()!=2){
+                // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
+                if (dk==true){
+                    if(tbTam.getValueAt(i, 8).toString().equals(stringCbb(cbbTramDi)) && tbTam.getValueAt(i, 6).toString().equals(stringCbb(cbbNgayDi)) 
+                        && tbTam.getValueAt(i, 7).toString().equals(stringCbb(cbbGioDi)) && Integer.parseInt(tbTam.getValueAt(i, 2).toString())==numCbb(cbbChuyenXe))
+                    {
+                        vt=new Vector();
+                        vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
+                        for(int j=1;j<tbTam.getColumnCount()-1;j++){
+                            vt.add(tbTam.getValueAt(i, j));
+                        }
+                    dtm.addRow(vt);
+
+                    }
+                }
+                else{
+                    vt=new Vector();
+                        vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
+                        for(int j=1;j<tbTam.getColumnCount()-1;j++){
+                            vt.add(tbTam.getValueAt(i, j));
+                        }
+                    dtm.addRow(vt);
                 }
             }
-            else{
-                vt=new Vector();
-                    vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
-                    for(int j=1;j<tbTam.getColumnCount();j++){
-                        vt.add(tbTam.getValueAt(i, j));
-                    }
-                dtm.addRow(vt);
-            }
-            
         }
         
         //nếu bảng Trống thì hiện thị thông báo trống
@@ -212,11 +224,13 @@ public class PnQlyVe extends javax.swing.JPanel {
             }
         
         tbVeXe.setModel(dtm);
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-        tbVeXe.setDefaultRenderer(Integer.class, centerRenderer);
-        // sắp xếp bảng tăng dần theo ghế
-        xLBang.sapXepBang(tbVeXe ,0,0);
+        if(cbbCheDoXem.getSelectedIndex()!=2){
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+            tbVeXe.setDefaultRenderer(Integer.class, centerRenderer);
+            // sắp xếp bảng tăng dần theo ghế
+            xLBang.sapXepBang(tbVeXe ,0,0);}
+        
     }
     
     //--------------Duyệt Vé-------------------------
@@ -287,11 +301,11 @@ public class PnQlyVe extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Ghế ngồi", "Mã vé", "Mã chuyến xe", "Điên thoại ", "Họ tên", "Giá vé", "Ngày Đi", "Giờ", "Trạm", "Trạng thái"
+                "Ghế ngồi", "Mã vé", "Mã chuyến xe", "Điên thoại ", "Họ tên", "Giá vé", "Ngày Đi", "Giờ", "Trạm", "Trạng thái", "MaNV"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false, false, false, false, false
+                false, false, true, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -453,7 +467,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Chế độ xem:");
 
-        cbbCheDoXem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vé đặt trước", "Tất cả vé" }));
+        cbbCheDoXem.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả vé", "Vé đặt trước", "Vé đã duyệt" }));
         cbbCheDoXem.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbCheDoXemItemStateChanged(evt);
@@ -496,9 +510,7 @@ public class PnQlyVe extends javax.swing.JPanel {
                         .addGap(33, 33, 33)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbCheDoXem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                        .addComponent(cbbCheDoXem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -510,36 +522,37 @@ public class PnQlyVe extends javax.swing.JPanel {
                         .addGap(56, 56, 56)
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbGioDi, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbbGioDi, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addComponent(jButton1)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cbbCheDoXem, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
                         .addComponent(txtSearchVe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnClearText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel1)))
+                        .addComponent(btnClearText, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
+                        .addComponent(cbbCheDoXem, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbTramDi, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -548,15 +561,15 @@ public class PnQlyVe extends javax.swing.JPanel {
                     .addComponent(jLabel31)
                     .addComponent(jLabel32)
                     .addComponent(cbbGioDi, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbbChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(cbbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDuyetVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHuyVe, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -662,10 +675,14 @@ public class PnQlyVe extends javax.swing.JPanel {
 
     private void cbbCheDoXemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCheDoXemItemStateChanged
         // TODO add your handling code here:
+        
         loadComboNgayDi();
         loadComboGio();
         loadComboChuyenXe();
+        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
         locDuLieuVeXe(true);
+        
+        
         
         btnDuyetVe.setEnabled(false);
         btnHuyVe.setEnabled(false);

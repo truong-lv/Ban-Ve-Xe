@@ -51,11 +51,11 @@ public class HamXuLyBang {
             // Nếu là bảng Vé Xe thì đổi trạng thái Vé xe từ số về String
             if(tb.getColumnName(0).equalsIgnoreCase("Ghế ngồi")){
                 for(int i=0;i<dtm.getRowCount();i++){
-                    if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("1")){
-                        dtm.setValueAt("Đã thanh toán", i, dtm.getColumnCount()-1);
+                    if(dtm.getValueAt(i, dtm.getColumnCount()-2).equals("1")){
+                        dtm.setValueAt("Đã thanh toán", i, dtm.getColumnCount()-2);
                     }
-                    else if(dtm.getValueAt(i, dtm.getColumnCount()-1).equals("0")){
-                        dtm.setValueAt("Chưa thanh toán", i, dtm.getColumnCount()-1);
+                    else if(dtm.getValueAt(i, dtm.getColumnCount()-2).equals("0")){
+                        dtm.setValueAt("Chưa thanh toán", i, dtm.getColumnCount()-2);
                     }
                 }
             }
@@ -99,6 +99,14 @@ public class HamXuLyBang {
         
         try {
             return tb.getValueAt(tb.getSelectedRow(), numRow).toString();
+        } catch (NullPointerException e) {
+            return "";
+        }
+    }
+    public String getRow(JTable tb, int numRow, int numCol){
+        
+        try {
+            return tb.getValueAt(numRow, numCol).toString();
         } catch (NullPointerException e) {
             return "";
         }
