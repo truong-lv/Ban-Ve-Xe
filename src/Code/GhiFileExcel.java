@@ -109,5 +109,53 @@ public class GhiFileExcel {
         }
         System.out.println("create and write success");
     }
+    
+    public void writeFileExcel2() {
+        WritableWorkbook workbook;
+        // create workbook
+        try {
+            workbook = Workbook.createWorkbook(new File(fileName));
+ 
+            // create sheet
+            WritableSheet sheet1 = workbook.createSheet("DS VE", 0);
+ 
+            // Hiện tiêu đề
+            sheet1.addCell(new Label(12, 1, this.tieuDe));
+            
+            //Hiện Thông tin liên quan của bảng 
+            int colChiTiet = 9;
+            for(int i=0; i<this.chiTiet1.size();colChiTiet+=3,i++)
+            {
+                sheet1.addCell(new Label(colChiTiet,4, this.chiTiet1.get(i).toString()));
+            }
+            colChiTiet=9;
+            
+            //sheet1.addCell(new Label(10, 5, this.chiTiet2));
+            // row begin write data
+            int rowBegin = 10;
+            int colBegin = 9;
+            for (int col = colBegin, i = 0; col < tb.getColumnCount()+ colBegin; col++, i++) {
+                sheet1.addCell(new Label(col, rowBegin, String.valueOf( tb.getColumnName(i).toUpperCase())));
+            }
+            ++rowBegin;
+            for (int row = rowBegin, i = 0; row < tb.getRowCount()+ rowBegin; row++, i++) {
+                for (int col = colBegin, j = 0; col < tb.getColumnCount() + colBegin; col++, j++) {
+                    sheet1.addCell(new Label(col, row, String.valueOf( tb.getValueAt(i, j))));
+                }
+            }
+            // write file
+            workbook.write();
+ 
+            // close
+            workbook.close();
+        } catch (IOException e) {
+            System.out.println("Error create file\n" + e.toString());
+        } catch (RowsExceededException e) {
+            System.out.println("Error write file\n" + e.toString());
+        } catch (WriteException e) {
+            System.out.println("Error write file\n" + e.toString());
+        }
+        System.out.println("create and write success");
+    }
  
 }

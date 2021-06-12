@@ -404,6 +404,13 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtNgayDi.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 3).toString());
         txtMaChuyenXe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
         txtTrangThaiVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 5).toString());
+        
+        txtGiaVe.disable();
+        txtMaVe.disable();
+        txtViTriGhe.disable();
+        txtNgayDi.disable();
+        txtMaChuyenXe.disable();
+        txtTrangThaiVe.disable();
     }//GEN-LAST:event_tbVeMouseClicked
 
     private void tbVeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeMouseEntered
