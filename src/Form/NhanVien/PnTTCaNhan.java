@@ -6,6 +6,7 @@
 package Form.NhanVien;
 
 import Code.BanVeXe;
+import Form.DangKyKhach;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -163,7 +165,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         jLabel22.setText("CMND/CCCD:");
 
         lbThongBao.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lbThongBao.setForeground(new java.awt.Color(255, 51, 51));
+        lbThongBao.setForeground(new java.awt.Color(0, 204, 0));
         lbThongBao.setText("Nhân viên chỉ có quyền đổi mật khẩu");
         lbThongBao.setVisible(false);
 
@@ -377,6 +379,7 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             
         }else{// chuyển qua chức năng lưu
             
+            // Lưu các giá trị chỉnh sửa vào biến
             String maNV=txtMaNV.getText();
             String ten=txtTen.getText();
             String gt=(rBtnNam1.isSelected())?"Nam":"Nữ";
@@ -384,8 +387,25 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             String sdt=txtSDT.getText();
             String tk=txtTK.getText();
             String mk=txtMK.getText();
+            JPasswordField pass =new JPasswordField();
+            JLabel lb=new JLabel();
+            pass.setText(mk);
+            
+            //kiểm tra regex
+            DangKyKhach ktLoi=new DangKyKhach();
+            if(!ktLoi.ktLoi(txtTen, txtSDT, txtTK, pass, rBtnNam1, rBtnNu1, lb, lb, lb, lb, lb)){
+                JOptionPane.showMessageDialog(this, "Vui lòng xem lại thông tin");
+                return;
+            }
+            if (cmnd.isEmpty() || !cmnd.matches("[0-9]{9,11}")) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Xem Lại CMND");
+                return;
+            }
+            
+            //Thực hiện chỉnh sửa
             loadHieuChinhTT(maNV, ten, cmnd, gt, sdt, tk, mk);
             
+            //Load lại thông tin
             BanVeXe.setBanVeXe(tk, mk, ten, gt, BanVeXe.quyen);
             lbAc.setText(tk);
             lbName.setText(ten);
@@ -400,12 +420,23 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     }//GEN-LAST:event_btnChinhSuaActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
-        // TODO add your handling code here:
+        
+        // Đưa nút "Lưu" về trạng thái "Chỉnh sửa"
         btnChinhSua.setText("Chỉnh sửa");
+        
+        // Tắt nút hủy
         btnHuy.setVisible(false);
+        
+        // Tắt hiển thị mật khẩu
         txtMK.setText("**********");
+        
+        // Tắt thông báo
         lbThongBao.setVisible(false);
+        
+        // Khóa các textField lại
         setEdit(false);
+        
+        // Load lại thông tin
         loadThongTinNV();
     }//GEN-LAST:event_btnHuyActionPerformed
 

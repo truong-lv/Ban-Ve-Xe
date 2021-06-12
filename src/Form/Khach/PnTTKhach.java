@@ -32,7 +32,7 @@ public class PnTTKhach extends javax.swing.JPanel {
         this.lbAc=lb;
         this.lbName=lbName;
         initComponents();
-        loadKH();
+        //loadKH();
     }
     
     private void setEditableTxt(boolean bool, Color col){
