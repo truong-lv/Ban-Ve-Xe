@@ -5,6 +5,7 @@
  */
 package Form.NhanVien;
 
+import Code.BanVeXe;
 import Form.DangKyKhach;
 import Form.Khach.PnTTKhach;
 import Code.HamXuLyBang;
@@ -32,9 +33,15 @@ public class PnQlyKhach extends javax.swing.JPanel {
     HamXuLyBang xLBang=new HamXuLyBang();
     public PnQlyKhach() {
         initComponents();
-        xLBang.loadDuLieuVaoBang(tbKhachHang,"SELECT * FROM HANH_KHACH");
+        //xLBang.loadDuLieuVaoBang(tbKhachHang,"SELECT * FROM HANH_KHACH");
     }
-    
+    private void phanQuyen(){
+        if(BanVeXe.quyen.equals("Nhân viên")){
+            btnSua.setVisible(false);
+        }else{
+            setEnableBtn(true, true, true, false);
+        }
+    }
     public JTable getTable(){
         return tbKhachHang;
     }
@@ -81,6 +88,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
         txtTK.setText(tk);
         jRadioButton_Nam.setSelected(namIsSelect);
         jRadioButton_Nu.setSelected(nuIsSelect);
+        psMK.setText("");
         psMK.setVisible(passEnable);
         jLabel1_MK.setVisible(passEnable);
         
@@ -611,12 +619,12 @@ public class PnQlyKhach extends javax.swing.JPanel {
         setField(xLBang.selectRow(tbKhachHang, 0), xLBang.selectRow(tbKhachHang, 1), xLBang.selectRow(tbKhachHang, 3), gt.equals("Nam"), gt.equals("Nữ"), false);
         btnThemTKKhach.setVisible(true);
         if(txtTK.getText().isEmpty()) {
-            
             btnThemTKKhach.setText("Thêm tài khoản");
         }
-        else {
+        else if(BanVeXe.quyen.equals("Quản lý")) {
             btnThemTKKhach.setText("Xóa tài khoản");
         }
+        else btnThemTKKhach.setVisible(false);
     }//GEN-LAST:event_tbKhachHangMouseClicked
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -691,13 +699,25 @@ public class PnQlyKhach extends javax.swing.JPanel {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
         if(btnThem.getText().equals("Thêm")){
-            setEditableTxt(true,Color.GREEN);//mở khóa các txt cho phép nhập
-            setEnableBtn(true, false, false, true);//mở khóa 2 button "Thêm" và "Hủy"
-            setField("", "", "", false, false, true); //xóa dữ liệu trên các txt để thêm mới 
-            psMK.setVisible(true);//hiển thị txt mật khẩu để nhập
+            
+            //mở khóa các txt cho phép nhập
+            setEditableTxt(true,Color.GREEN);
+            
+            //mở khóa 2 button "Thêm" và "Hủy"
+            setEnableBtn(true, false, false, true);
+            
+            //xóa dữ liệu trên các txt để thêm mới
+            setField("", "", "", false, false, true);  
+            
+            //hiển thị txt mật khẩu để nhập
+            psMK.setVisible(true);
             jLabel1_MK.setVisible(true);
-            btnThem.setText("Lưu");// đổi Text sang "Lưu" cho lần nhấn thứ hai
+            
+            // đổi Text sang "Lưu" cho lần nhấn thứ hai
+            btnThem.setText("Lưu");
+            
         }else {
+            //tạo các biên lưu giá trị vừa nhập
             String sdt=txtSDT.getText();
             String hoTen=txtHoTen.getText();
             XuLyNhap chuanHoa=new XuLyNhap();
@@ -707,6 +727,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
             String mk=psMK.getText();
 
             DangKyKhach themKhach=new DangKyKhach();
+            // kiểm tra lỗi nhập
             if(!themKhach.ktLoi(txtHoTen, txtSDT, txtTK, psMK, jRadioButton_Nam, jRadioButton_Nu, lbLoiHoTen, lbLoiGioiTinh, lbLoiSDT, lbLoiTrungTK, lbLoiTrungTK1))
             {return;}
             
@@ -716,17 +737,21 @@ public class PnQlyKhach extends javax.swing.JPanel {
                 jLabel_Sdt.setForeground(Color.red);
                 JOptionPane.showMessageDialog(this, "Số điện thoại đã tồn tại. Vui lòng nhập lại!");
                 return;}else {jLabel_Sdt.setForeground(Color.black);}
+            
             // kt trùng tài khoản
             if(themKhach.ktTaiKhoan("SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '",tk)){
                 jLabel_TK.setForeground(Color.red);
                 JOptionPane.showMessageDialog(this, "Tài khoản đã tồn tại. Vui lòng nhập lại!");
                 return;}else {jLabel_TK.setForeground(Color.black);}
             
-            //Xác nhận thêm
+            //Hiện dialog Xác nhận thêm
             int chon=JOptionPane.showConfirmDialog(this, "Xác nhận thêm khách hàng: "+hoTen, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
                 themKhach.themTaiKhoan(tk, mk, "2");// thêm tài khoản
+                
                 themKhach.themKhachHang(sdt, hoTen, gt, tk);// thêm thông tin khách
+                
+                //load lại thông tin
                 xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
                 setField("", "", "", false, false, false); 
                 btnThem.setText("Thêm");
@@ -776,9 +801,6 @@ public class PnQlyKhach extends javax.swing.JPanel {
         // TODO add your handling code here:
         btnThem.setText("Thêm");
         btnSua.setText("Sửa");
-        btnXoa.setText("Xóa");
-//        btnThemTKKhach.setText("Thêm tài khoản");
-//        btnThemTKKhach.setVisible(false);
         tbKhachHang.clearSelection();
         setField("", "", "", false, false, false); 
         setEditableTxt(false, null);
@@ -841,8 +863,13 @@ public class PnQlyKhach extends javax.swing.JPanel {
             psMK.setVisible(false);
             jLabel1_MK.setVisible(false);
             jLabel1_MK.setForeground(null);
-            btnThemTKKhach.setText("Xóa tài khoản");
             setEnableBtn(true, true, true, false);
+            
+            //phân quyền trạng thái Xóa tài khoảng
+            if(BanVeXe.quyen.equals("Quản lý")){
+                btnThemTKKhach.setText("Xóa tài khoản");
+            }
+            else { btnThemTKKhach.setVisible(false);}
         }
         else {
             String tk=txtTK.getText();
@@ -883,13 +910,22 @@ public class PnQlyKhach extends javax.swing.JPanel {
         // TODO add your handling code here:
         xLBang.loadDuLieuVaoBang(tbKhachHang,"SELECT * FROM HANH_KHACH");
         xLBang.locTatCa(tbKhachHang,"",-1);
+        
+        btnThem.setText("Thêm");
+        btnSua.setText("Sửa");
+        tbKhachHang.clearSelection();
+        setField("", "", "", false, false, false); 
+        setEditableTxt(false, null);
+        setEnableBtn(true, true, true, false);
     }//GEN-LAST:event_formHierarchyChanged
 
     private void btnClearTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearTextActionPerformed
         // TODO add your handling code here:
         setField("", "", "", false, false, false);
+        txtTimKiem.setText("");
         btnThemTKKhach.setEnabled(false);
         tbKhachHang.clearSelection();
+        xLBang.locTatCa(tbKhachHang,"",-1);
     }//GEN-LAST:event_btnClearTextActionPerformed
 
     private void cbbSortKhachItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbSortKhachItemStateChanged

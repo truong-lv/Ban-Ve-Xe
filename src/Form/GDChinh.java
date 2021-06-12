@@ -50,6 +50,9 @@ public class GDChinh extends javax.swing.JFrame {
             PnDatVe datVe =new PnDatVe();
             addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
         
+            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
+            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
+            
             PnQlyVe qlyVe =new PnQlyVe();
             addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
             
@@ -72,8 +75,8 @@ public class GDChinh extends javax.swing.JFrame {
             PnQlyXe qlyXe =new PnQlyXe();
             addPanel(qlyXe, "QLÝ XE", "/image/twitter-bus-icon.png");
             
-            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
-            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
+//            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
+//            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
             
             PnDoanhThu doanhThu =new PnDoanhThu();
             addPanel(doanhThu, "DOANH THU", "/image/Money-icon.png");

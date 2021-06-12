@@ -37,7 +37,7 @@ public class DangKyKhach extends javax.swing.JFrame {
                             JLabel lbTen, JLabel lbGioiTinh, JLabel lbSDT, JLabel lbTK, JLabel lbMK){
         boolean ktTen=false,ktGT=false, ktTK=false, ktSDT=false, ktMK=false;
         // KT Nhập họ tên
-        if(!txtTen.getText().matches("([a-zA-Z]|\\s)+") || txtTen.getText().trim().isEmpty()){
+        if(txtTen.getText().matches("\\d+") || txtTen.getText().trim().isEmpty()){
             ktTen=true;
             lbTen.setVisible(true);
             txtTen.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -69,7 +69,7 @@ public class DangKyKhach extends javax.swing.JFrame {
         }
 
         //KT nhập Tai khoản
-        if(txtTK.getText().isEmpty()|| !txtTK.getText().matches("\\S")){
+        if(txtTK.getText().matches(".*\\s.*")|| txtTK.getText().trim().isEmpty()){
             ktTK=true;
             lbTK.setVisible(true);
             txtTK.setBorder(BorderFactory.createLineBorder(Color.red));
