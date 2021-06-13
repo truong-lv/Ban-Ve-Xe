@@ -850,7 +850,7 @@ public class PnQlyXe extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Dữ liệu không được để trống");
                 return;
             }
-            if(!hsg.matches("[0-9]+")){
+            if(!hsg.matches("[0-9|.]+")){
                 lbLoiHSG.setVisible(true);
                 return;
             }else lbLoiHSG.setVisible(false);
