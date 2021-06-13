@@ -405,12 +405,12 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtMaChuyenXe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
         txtTrangThaiVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 5).toString());
         
-        txtGiaVe.disable();
-        txtMaVe.disable();
-        txtViTriGhe.disable();
-        txtNgayDi.disable();
-        txtMaChuyenXe.disable();
-        txtTrangThaiVe.disable();
+        txtGiaVe.setEditable(false);
+        txtMaVe.setEditable(false);
+        txtViTriGhe.setEditable(false);
+        txtNgayDi.setEditable(false);
+        txtMaChuyenXe.setEditable(false);
+        txtTrangThaiVe.setEditable(false);
     }//GEN-LAST:event_tbVeMouseClicked
 
     private void tbVeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbVeMouseEntered
