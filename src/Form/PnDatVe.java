@@ -1398,6 +1398,7 @@ public class PnDatVe extends javax.swing.JPanel {
 //                    System.out.println("ma: " + maNV);
 //>>>>>>> fdb8fe87cd2cf4e04defd45e4ad5fcb4db52d119
                     String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
+                    giaVe = giaVe.substring(0, giaVe.indexOf("."));
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }
                 taiGheDaDat();
