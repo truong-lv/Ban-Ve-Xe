@@ -50,11 +50,11 @@ public class GDChinh extends javax.swing.JFrame {
             PnDatVe datVe =new PnDatVe();
             addPanel(datVe, "ĐẶT VÉ", "/image/payment-icon.png");
         
-            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
-            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
-            
             PnQlyVe qlyVe =new PnQlyVe();
             addPanel(qlyVe, "QLÝ VÉ XE", "/image/database.png");
+            
+            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
+            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
             
             PnQlyKhach qlykhach =new PnQlyKhach();
             addPanel(qlykhach, "QLÝ KHÁCH", "/image/edit-user-icon.png");
