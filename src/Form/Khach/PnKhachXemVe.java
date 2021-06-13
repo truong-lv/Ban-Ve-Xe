@@ -35,6 +35,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         initComponents();
 
         loadVe();
+        
     }
 
     public String ktGioVe(String maChuyen) {
@@ -56,7 +57,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         return temp;
     }
 
-    public boolean ktVe(String ngayVe, String thangVe, String namVe, String maChuyen) {
+    public boolean ktVe(String ngayVe, String thangVe, String namVe, String gioDi) {
         String namht = String.valueOf(java.time.LocalDate.now()).substring(0, 4);
         String thanght = String.valueOf(java.time.LocalDate.now()).substring(5, 7);
         String ngayht = String.valueOf(java.time.LocalDate.now()).substring(8, 10);
@@ -70,7 +71,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                 if (Integer.parseInt(ngayht) > Integer.parseInt(ngayVe)) {
                     return false;
                 } else if (Integer.parseInt(ngayht) == Integer.parseInt(ngayVe)) {
-                    if (Integer.parseInt(gioht) - Integer.parseInt(ktGioVe(maChuyen).substring(0, 2)) < 0) {
+                    if (Integer.parseInt(gioht) - Integer.parseInt(gioDi) < 0) {
                         return false;
                     }
                 }
@@ -159,7 +160,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtNgayDi = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtMaChuyenXe = new javax.swing.JTextField();
+        txGioDi = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtTrangThaiVe = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -248,10 +249,10 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Giờ Đi :");
 
-        txtMaChuyenXe.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtMaChuyenXe.addActionListener(new java.awt.event.ActionListener() {
+        txGioDi.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txGioDi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaChuyenXeActionPerformed(evt);
+                txGioDiActionPerformed(evt);
             }
         });
 
@@ -302,7 +303,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtMaChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txGioDi, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -340,7 +341,7 @@ public class PnKhachXemVe extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(txtTrangThaiVe, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(txtMaChuyenXe, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txGioDi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(jButton_XoaVe, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(52, Short.MAX_VALUE))
@@ -364,9 +365,9 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         if (!trangThai.equals("0")) {
             JOptionPane.showMessageDialog(this, "Vé Này Đã Được Thanh Toán. Không Thể Xóa !!!");
             loadVe();
-        } else if (ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == false) {
+        } else if (ktVe(ngayVe, thangVe, namVe, txGioDi.getText().toString().substring(0, 2)) == false) {
             JOptionPane.showMessageDialog(this, "Vé Này Đã Hết Hạn Sử Dụng. Không Thể Xóa !!!");
-        } else if (trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txtMaChuyenXe.getText()) == true) {
+        } else if (trangThai.equals("0") && ktVe(ngayVe, thangVe, namVe, txGioDi.getText()) == true) {
             xoaVe(maVe);
             loadVe();
         }
@@ -384,9 +385,9 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNgayDiActionPerformed
 
-    private void txtMaChuyenXeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaChuyenXeActionPerformed
+    private void txGioDiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txGioDiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaChuyenXeActionPerformed
+    }//GEN-LAST:event_txGioDiActionPerformed
 
     private void txtTrangThaiVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTrangThaiVeActionPerformed
         // TODO add your handling code here:
@@ -402,14 +403,14 @@ public class PnKhachXemVe extends javax.swing.JPanel {
         txtViTriGhe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 1).toString());
         txtGiaVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 2).toString());
         txtNgayDi.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 3).toString());
-        txtMaChuyenXe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
+        txGioDi.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 4).toString());
         txtTrangThaiVe.setText(tbVe.getValueAt(tbVe.getSelectedRow(), 5).toString());
         
         txtGiaVe.setEditable(false);
         txtMaVe.setEditable(false);
         txtViTriGhe.setEditable(false);
         txtNgayDi.setEditable(false);
-        txtMaChuyenXe.setEditable(false);
+        txGioDi.setEditable(false);
         txtTrangThaiVe.setEditable(false);
     }//GEN-LAST:event_tbVeMouseClicked
 
@@ -437,8 +438,8 @@ public class PnKhachXemVe extends javax.swing.JPanel {
     private javax.swing.JLabel lb;
     private javax.swing.JLabel lbMave;
     private javax.swing.JTable tbVe;
+    private javax.swing.JTextField txGioDi;
     private javax.swing.JTextField txtGiaVe;
-    private javax.swing.JTextField txtMaChuyenXe;
     private javax.swing.JTextField txtMaVe;
     private javax.swing.JTextField txtNgayDi;
     private javax.swing.JTextField txtTrangThaiVe;
