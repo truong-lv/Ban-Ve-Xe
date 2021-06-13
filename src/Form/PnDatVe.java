@@ -100,20 +100,25 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private boolean ktNhap() {
         boolean kt = true;
-        if( !txtSDT.getText().matches("0\\d{9,10}")){
+        if (!txtSDT.getText().matches("0\\d{9,10}")) {
             lbLoiSDT.setVisible(true);
             kt = false;
+        } else {
+            lbLoiSDT.setVisible(false);
         }
-        else {lbLoiSDT.setVisible(false);}
-        
+
         if (txtHoTen_Khach.getText().isEmpty()) {
             lbLoiTen.setVisible(true);
             kt = false;
-        }else {lbLoiTen.setVisible(false);}
+        } else {
+            lbLoiTen.setVisible(false);
+        }
         if ((!rBtnNam1.isSelected() && !rBtnNu1.isSelected())) {
             lbLoiGioiTinh.setVisible(true);
             kt = false;
-        }else {lbLoiGioiTinh.setVisible(false);}
+        } else {
+            lbLoiGioiTinh.setVisible(false);
+        }
 
         return kt;
     }
@@ -246,6 +251,9 @@ public class PnDatVe extends javax.swing.JPanel {
     public void taiGheDaDat() {
         setChair();
         String price = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
+        if (price.length() > 1) {
+            price = price.substring(0, price.indexOf("."));
+        }
         String loaiXe = jComboBox_loaiXe.getSelectedItem().toString();
 
         String day = jComboBox_Day.getSelectedItem().toString() /*+ jLabel_month.getText()*/;
@@ -256,6 +264,7 @@ public class PnDatVe extends javax.swing.JPanel {
         } else {
             maCX = getMaCX(jComboBox_Time.getSelectedItem().toString(), jComboBox_chuyenDi.getSelectedItem().toString());
         }
+
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "select * from VE_XE";
         //"select * from VE_XE where GiaVe=? AND NgayDi=? AND MaChuyenXe=?"
@@ -264,7 +273,7 @@ public class PnDatVe extends javax.swing.JPanel {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 for (int i = 0; i < chair.size(); i++) {
-                    if (chair.get(i).getText().equals(rs.getString(3)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6)) && price.equals(rs.getString(4))) {
+                    if (chair.get(i).getText().equals(rs.getString(3)) && price.equals(rs.getString(4)) && day.equals(rs.getString(5)) && maCX.equals(rs.getString(6))) {
                         chair.get(Integer.parseInt(rs.getString(3)) - 2).setBackground(Color.RED);
                     }
                 }
@@ -1399,10 +1408,12 @@ public class PnDatVe extends javax.swing.JPanel {
 //>>>>>>> fdb8fe87cd2cf4e04defd45e4ad5fcb4db52d119
                     String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
                     giaVe = giaVe.substring(0, giaVe.indexOf("."));
+
+//                    System.out.println(giaVe);
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }
                 taiGheDaDat();
-                if (trangThai.equals("1")) {
+                if (trangThai.equals("0")) {
                     JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công. Vé Chưa Được Thanh Toán.\nVui Lòng Đến Quầy Thanh Toán.");
                 } else {
                     JOptionPane.showMessageDialog(this, "Bạn Đã Đặt Vé Thanh Công. Vé Đã Được Thanh Toán");
