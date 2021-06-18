@@ -75,14 +75,9 @@ public class GDChinh extends javax.swing.JFrame {
             PnQlyXe qlyXe =new PnQlyXe();
             addPanel(qlyXe, "QLÝ XE", "/image/twitter-bus-icon.png");
             
-//            PnQlyChuyenXe qlyChuyenXe=new PnQlyChuyenXe();
-//            addPanel(qlyChuyenXe, "QLÝ CHUYẾN XE", "/image/icon-qly-chuyenXe.png");
             
             PnDoanhThu doanhThu =new PnDoanhThu();
             addPanel(doanhThu, "DOANH THU", "/image/Money-icon.png");
-            
-//            PnTTCaNhan ttCaNhan=new PnTTCaNhan(LbUserAcc,LbUserName);
-//            addPanel(ttCaNhan, "TT CÁ NHÂN", "/image/edit-configure.png");
         }
         
     }

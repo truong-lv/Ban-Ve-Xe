@@ -9,7 +9,9 @@ import Code.BanVeXe;
 import Form.DangKyKhach;
 import Form.Khach.PnTTKhach;
 import Code.HamXuLyBang;
+import Code.MaHoa;
 import Code.XuLyNhap;
+import Form.DoiMatKhau;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -236,6 +238,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
         txtTimKiem = new javax.swing.JTextField();
         btnThemTKKhach = new javax.swing.JButton();
         btnClearText = new javax.swing.JButton();
+        btnDoiMatKhau = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         addHierarchyListener(new java.awt.event.HierarchyListener() {
@@ -447,6 +450,15 @@ public class PnQlyKhach extends javax.swing.JPanel {
             }
         });
 
+        btnDoiMatKhau.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnDoiMatKhau.setText("Đổi mật khẩu");
+        btnDoiMatKhau.setVisible(false);
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -523,8 +535,10 @@ public class PnQlyKhach extends javax.swing.JPanel {
                             .addComponent(lbLoiGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+                .addGap(63, 63, 63)
                 .addComponent(btnThemTKKhach)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDoiMatKhau)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -602,7 +616,9 @@ public class PnQlyKhach extends javax.swing.JPanel {
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnThemTKKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnThemTKKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -618,6 +634,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
         String gt=xLBang.selectRow(tbKhachHang, 2);
         setField(xLBang.selectRow(tbKhachHang, 0), xLBang.selectRow(tbKhachHang, 1), xLBang.selectRow(tbKhachHang, 3), gt.equals("Nam"), gt.equals("Nữ"), false);
         btnThemTKKhach.setVisible(true);
+        
         if(txtTK.getText().isEmpty()) {
             btnThemTKKhach.setText("Thêm tài khoản");
         }
@@ -638,12 +655,15 @@ public class PnQlyKhach extends javax.swing.JPanel {
         if(btnSua.getText().equals("Sửa")){//kt thời điểm nhấn vào button đang ở trạng thái Sửa chưa
             setEditableTxt(true,Color.blue);//mở khóa tất cả txt cho người dùng sửa
             jLabel_Sdt.setForeground(Color.RED);
+            jLabel_TK.setForeground(Color.RED);
             txtSDT.setEditable(false);
+            txtTK.setEditable(false);
             setEnableBtn(false, true, false, true);
-            psMK.setVisible(true);
-            jLabel1_MK.setVisible(true);
-            lbLoiMK.setText("Để trống nếu không muốn đổi");
-            lbLoiMK.setVisible(true);
+            
+            if(!txtTK.getText().isEmpty()){
+                btnDoiMatKhau.setVisible(true);
+            }
+            
             btnSua.setText("Lưu");// đổi button sang trạng thái Lưu
         }else {// ngược lại là trạng thái lưu
             
@@ -655,7 +675,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
             String gt=jRadioButton_Nam.isSelected()?"Nam":"Nữ";
             String tk=txtTK.getText();
             String tkTruoc=xLBang.selectRow(tbKhachHang, 3);
-            String mk=psMK.getText();
+//            String mk=psMK.getText();
             
             PnTTKhach ttKhach=new PnTTKhach(sdt, null,null);
           
@@ -666,14 +686,12 @@ public class PnQlyKhach extends javax.swing.JPanel {
             int chon=JOptionPane.showConfirmDialog(this, "Xác nhận Sửa TT khách hàng: "+hoTen, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
                 
-                // Nếu tại khoản mật khẩu bị gì thay đổi thì cập nhập lại tài khoản mật khẩu trước
-                ttKhach.chinhSuaTK(tkTruoc, txtTK.getText(), mk.isEmpty()?layMK(tkTruoc):mk);
                 
                 //Sửa thông tin
-                ttKhach.chinhSuaTT(sdt, hoTen, gt, tk);
+                ttKhach.chinhSuaTT(sdt, hoTen, gt);
                 xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
                 btnSua.setText("Sửa");
-                
+                btnDoiMatKhau.setVisible(false);
                 setField("", "", "", false, false, false); 
                 setEnableBtn(true, true, true, false);
                 setEditableTxt(false, null);
@@ -711,7 +729,7 @@ public class PnQlyKhach extends javax.swing.JPanel {
             
             //xóa dữ liệu trên các txt để thêm mới
             setField("", "", "", false, false, true);  
-            
+
             //hiển thị txt mật khẩu để nhập
             psMK.setVisible(true);
             jLabel1_MK.setVisible(true);
@@ -723,8 +741,6 @@ public class PnQlyKhach extends javax.swing.JPanel {
             //tạo các biên lưu giá trị vừa nhập
             String sdt=txtSDT.getText();
             String hoTen=txtHoTen.getText();
-            XuLyNhap chuanHoa=new XuLyNhap();
-            hoTen=chuanHoa.chuanHoa(hoTen);
             String gt=jRadioButton_Nam.isSelected()?"Nam":"Nữ";
             String tk=txtTK.getText();
             String mk=psMK.getText();
@@ -750,8 +766,11 @@ public class PnQlyKhach extends javax.swing.JPanel {
             //Hiện dialog Xác nhận thêm
             int chon=JOptionPane.showConfirmDialog(this, "Xác nhận thêm khách hàng: "+hoTen, "Thông Báo",0);
             if(chon==JOptionPane.OK_OPTION){
-                themKhach.themTaiKhoan(tk, mk, "2");// thêm tài khoản
                 
+                mk=new MaHoa(mk).maHoa();
+                themKhach.themTaiKhoan(tk, mk, "2");// thêm tài khoản
+                XuLyNhap chuanHoa=new XuLyNhap();
+                hoTen=chuanHoa.chuanHoa(hoTen);
                 themKhach.themKhachHang(sdt, hoTen, gt, tk);// thêm thông tin khách
                 
                 //load lại thông tin
@@ -804,6 +823,9 @@ public class PnQlyKhach extends javax.swing.JPanel {
         // TODO add your handling code here:
         btnThem.setText("Thêm");
         btnSua.setText("Sửa");
+        btnXoa.setText("Xóa");
+        btnThemTKKhach.setVisible(false);
+        btnDoiMatKhau.setVisible(false);
         tbKhachHang.clearSelection();
         setField("", "", "", false, false, false); 
         setEditableTxt(false, null);
@@ -858,7 +880,8 @@ public class PnQlyKhach extends javax.swing.JPanel {
             }else lbLoiMK.setVisible(false);
             
             //Thêm tài khoản
-            themTaiKhoanKhach(txtTK.getText(), psMK.getText(), txtSDT.getText());
+            String mk=new MaHoa(psMK.getText()).maHoa();
+            themTaiKhoanKhach(txtTK.getText(), mk, txtSDT.getText());
             
             //load lại bảng, set các button,txt về trạng thái ban đầu
             xLBang.loadDuLieuVaoBang(tbKhachHang, "SELECT * FROM HANH_KHACH");
@@ -942,9 +965,15 @@ public class PnQlyKhach extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_cbbSortKhachItemStateChanged
 
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // TODO add your handling code here:
+        new DoiMatKhau(txtTK.getText()).setVisible(true);
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClearText;
+    private javax.swing.JButton btnDoiMatKhau;
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;

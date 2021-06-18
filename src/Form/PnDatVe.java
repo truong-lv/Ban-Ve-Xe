@@ -1408,7 +1408,8 @@ public class PnDatVe extends javax.swing.JPanel {
 //>>>>>>> fdb8fe87cd2cf4e04defd45e4ad5fcb4db52d119
                     String giaVe = giaVe(jComboBox_loaiXe.getSelectedItem().toString());
                     giaVe = giaVe.substring(0, giaVe.indexOf("."));
-                    System.out.println(giaVe);
+
+//                    System.out.println(giaVe);
                     datVe(maVe, txtSDT.getText(), viTriGhe, giaVe, ngayDi, maCX, trangThai, maNV);
                 }
                 taiGheDaDat();
@@ -1492,6 +1493,10 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
+        txtSDT.setText("");
+        txtHoTen_Khach.setText("");
+        rBtnNam1.setSelected(false);
+        rBtnNu1.setSelected(false);
         phanQuyenDatVe();
     }//GEN-LAST:event_formHierarchyChanged
 

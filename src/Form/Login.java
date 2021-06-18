@@ -7,6 +7,7 @@ package Form;
 
 
 import Code.BanVeXe;
+import Code.MaHoa;
 import java.awt.event.KeyEvent;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -31,7 +32,7 @@ public class Login extends javax.swing.JFrame {
         boolean checkLogin=false;
         Connection connect=Code.KetNoi.layKetNoi();
         String tk=txtTK.getText();
-        String mk=psMatkhau.getText();
+        String mk=new MaHoa(psMatkhau.getText()).maHoa();
         //=========================LOAD TÀI KHOẢN TỪ DATABASE============================
         try {
             //CallableStatement command = connect.prepareCall("{call SP_LOAD_LOGIN (?,?)}");
