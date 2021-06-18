@@ -6,6 +6,7 @@
 package Form.QuanLy;
 
 import Code.KetNoi;
+import Code.MaHoa;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,13 +80,14 @@ public class ThemNV extends javax.swing.JFrame {
     }
 
     public void themTaiKhoan(String taiKhoan, String loaiTaiKhoan) {
+        String mk=new MaHoa("123456").maHoa();
         Connection ketNoi = KetNoi.layKetNoi();
         String sql = "insert into TAI_KHOAN values (?,?,?)";
 
         try {
             PreparedStatement ps = ketNoi.prepareStatement(sql);
             ps.setString(1, taiKhoan);
-            ps.setString(2, "123456");
+            ps.setString(2, mk);
             ps.setString(3, loaiTaiKhoan);
             ps.executeUpdate();
             ps.close();
@@ -358,7 +360,7 @@ public class ThemNV extends javax.swing.JFrame {
         String maNV, hoTen, CMND, gioiTinh, dienThoai, chucVu, taiKhoan, loaiTaiKhoan;
         if (jTextField_tenNV.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Điền Tên Nhân Viên");
-        } else if (jTextField_CMND.getText().isEmpty() || !jTextField_CMND.getText().matches("[0-9]{9}")) {
+        } else if (jTextField_CMND.getText().isEmpty() || !jTextField_CMND.getText().matches("[0-9]{9,11}")) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Xem Lại CMND");
         } else if (!jRadioButton_Nu.isSelected() && !jRadioButton_Nam.isSelected()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Giới Tính");

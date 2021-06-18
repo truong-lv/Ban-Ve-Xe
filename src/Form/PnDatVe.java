@@ -1493,6 +1493,10 @@ public class PnDatVe extends javax.swing.JPanel {
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
+        txtSDT.setText("");
+        txtHoTen_Khach.setText("");
+        rBtnNam1.setSelected(false);
+        rBtnNu1.setSelected(false);
         phanQuyenDatVe();
     }//GEN-LAST:event_formHierarchyChanged
 

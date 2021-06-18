@@ -8,7 +8,6 @@ package Form.NhanVien;
 import Code.BanVeXe;
 import Code.GhiFileExcel;
 import Code.HamXuLyBang;
-import Form.ChiTietVe;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -33,23 +33,28 @@ import javax.swing.table.DefaultTableModel;
 public class PnQlyVe extends javax.swing.JPanel {
 
     HamXuLyBang xLBang=new HamXuLyBang();
+    int cheDo;
     public PnQlyVe() {
         initComponents();
-        //LOAD DỮ LIỆU VÉ VÀO BẢNG TẠM
-        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
-        //tb.getValueAt(numRow, numCol).toString();
-        loadComboNgayDi();
-        loadComboGio();
-        loadComboChuyenXe();
-        locDuLieuVeXe(true);
+        phanQuyen();
+        cheDo=cbbCheDoXem.getSelectedIndex();
     }
-    
+    private void phanQuyen(){
+        if(BanVeXe.quyen.equals("Nhân viên")){
+            cbbCheDoXem.removeItemAt(0);
+        }
+    }
     //lấy dữ liệu từ combobox 
     private String stringCbb(JComboBox cbb){
         return cbb.getSelectedIndex()!=-1?cbb.getSelectedItem().toString():"";
     }
     private int numCbb(JComboBox cbb){
-        return cbb.getSelectedIndex()!=-1?Integer.parseInt(cbb.getSelectedItem().toString()):-1;
+        try {
+            return cbb.getSelectedIndex()!=-1?Integer.parseInt(cbb.getSelectedItem().toString()):-1;
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+        
     }
     private Date StringToDate(String str){
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -67,7 +72,7 @@ public class PnQlyVe extends javax.swing.JPanel {
     //LOAD CÁC COMBOBOX TỪ BẢNG TẠM
     public void loadComboNgayDi(){
         cbbNgayDi.removeAllItems();
-        //cbbNgayDi.addItem("Tất Cả");
+        cbbNgayDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String cheDo=cbbCheDoXem.getSelectedItem().toString();
         
@@ -79,90 +84,71 @@ public class PnQlyVe extends javax.swing.JPanel {
         for(int i=0;i<tbTam.getRowCount() ;i++)//Đk = với trạm đang được chọn
         {
             ngayTam=StringToDate(tbTam.getValueAt(i, 6).toString());
-            if((tram.equals(tbTam.getValueAt(i, 8).toString())&&(cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) ) /*|| cheDo.equals("Tất cả vé")*/)//nếu chế độ là vé đặt trc thì load vé >tg hiện tại, ngược lại load tất cả
+            if((tram.equals("Tất Cả") || tram.equals(tbTam.getValueAt(i, 8).toString())) && ((cheDo.equals("Vé đặt trước") && htai.compareTo(ngayTam)<=0) || cheDo.equals("Tất cả vé") ||(cheDo.equals("Vé đã duyệt") && BanVeXe.primaryKey.equals(xLBang.getRow(tbTam,i, 10)))) )
             {
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
-                    boolean ktTrung=false;
-                    for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
-                        if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
-                        {
-                            ktTrung=true;
-                        }
+                boolean ktTrung=false;
+                for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
+                    if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
+                    {
+                        ktTrung=true;
                     }
-                    if(!ktTrung)cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
                 }
-                
-                else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
-            }else if(tram.equals(tbTam.getValueAt(i, 8).toString())&&cheDo.equals("Tất cả vé")){
-                if(cbbNgayDi.getItemCount()>0){//kt cbb đã có item nào chưa
-                    boolean ktTrung=false;
-                    for(int j=0;ktTrung==false && j<cbbNgayDi.getItemCount();j++){
-                        if(tbTam.getValueAt(i, 6).toString().equals(cbbNgayDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
-                        {
-                            ktTrung=true;
-                        }
-                    }
-                    if(!ktTrung)cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
-                }
-                
-                else cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());
+                if(!ktTrung)cbbNgayDi.addItem(tbTam.getValueAt(i, 6).toString());//Ngày nằm ở cột thứ 5
             }
+            
         }
-
     }
     
     public void loadComboGio(){
         cbbGioDi.removeAllItems();
-        //cbbGioDi.addItem("Tất Cả");
+        cbbGioDi.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
-        //String ngay=cbbNgayDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
+        ArrayList<String> arr=new ArrayList<String>();
         for(int i=0;i<tbTam.getRowCount();i++)
         {
-            if(tram.equals(tbTam.getValueAt(i, 8).toString()) && ngay.equals(tbTam.getValueAt(i, 6).toString()) )//Trạm nằm ở cột thứ 7
+            if((tram.equals("Tất Cả")||tram.equals(tbTam.getValueAt(i, 8).toString())) && (ngay.equals("Tất Cả")|| ngay.equals(tbTam.getValueAt(i, 6).toString())))//Trạm nằm ở cột thứ 7
             {
-                if(cbbGioDi.getItemCount()>0){//kt cbb đã có item nào chưa
-                    boolean ktTrung=false;
-                    for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
-                        if(tbTam.getValueAt(i, 7).toString().equals(cbbGioDi.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
-                        {
-                            ktTrung=true;
-                        }
-                    }
-                    if(!ktTrung){cbbGioDi.addItem(tbTam.getValueAt(i, 7).toString());}//Ngày nằm ở cột thứ 5
-                }
-                else cbbGioDi.addItem(tbTam.getValueAt(i, 7).toString());
+                if(!arr.contains(tbTam.getValueAt(i, 7).toString())){arr.add(tbTam.getValueAt(i, 7).toString());}//Ngày nằm ở cột thứ 5
             }
+        }
+        //Sắp xếp
+        arr.sort((o1, o2) -> {
+            return Integer.parseInt(o1.substring(0, 2))-Integer.parseInt(o2.substring(0, 2));
+        });
+        
+        //đưa vào combobox
+        for(int i=0;i<arr.size();i++)
+        {
+            cbbGioDi.addItem(arr.get(i));
         }
 
     }
     
     public void loadComboChuyenXe(){
         cbbChuyenXe.removeAllItems();
-        //cbbChuyenXe.addItem("Tất Cả");
+        cbbChuyenXe.addItem("Tất Cả");
         String tram=cbbTramDi.getSelectedItem().toString();
         String ngay=cbbNgayDi.getSelectedIndex()!=-1?cbbNgayDi.getSelectedItem().toString():"";
         String gio=cbbGioDi.getSelectedIndex()!=-1?cbbGioDi.getSelectedItem().toString():"";
+        ArrayList<String> arr=new ArrayList<String>();
         for(int i=0;i<tbTam.getRowCount();i++)
         {
             if(tram.equals(tbTam.getValueAt(i, 8).toString()) 
                     && ngay.equals(tbTam.getValueAt(i, 6).toString())
-                    && gio.equals(tbTam.getValueAt(i, 7).toString()) )//Trạm nằm ở cột thứ 7
+                    && gio.equals(tbTam.getValueAt(i, 7).toString()) 
+                    ||  gio.equals("Tất Cả"))//Trạm nằm ở cột thứ 7
             {
-                if(cbbChuyenXe.getItemCount()>0){//kt cbb đã có item nào chưa
-                    boolean ktTrung=false;
-                    for(int j=0; ktTrung==false && j<cbbGioDi.getItemCount(); j++){
-                        //System.out.println(i+" "+cbbGioDi.getItemAt(j)+" "+j);
-                        
-                        if(tbTam.getValueAt(i, 2).toString().equals(cbbChuyenXe.getItemAt(j)))// kt ngày đã tồn tại trong combobox chưa
-                        {
-                            ktTrung=true;
-                        }
-                    }
-                    if(!ktTrung){cbbChuyenXe.addItem(tbTam.getValueAt(i, 2).toString());}//Ngày nằm ở cột thứ 5
-                }
-                else cbbChuyenXe.addItem(tbTam.getValueAt(i, 2).toString());
+                if(!arr.contains(tbTam.getValueAt(i, 2).toString())){arr.add(tbTam.getValueAt(i, 2).toString());}//Ngày nằm ở cột thứ 5
             }
+        }
+        
+        arr.sort((o1, o2) -> {
+            return Integer.parseInt(o1)-Integer.parseInt(o2);
+        });
+        for(int i=0;i<arr.size();i++)
+        {
+            cbbChuyenXe.addItem(arr.get(i));
         }
 
     }
@@ -173,41 +159,34 @@ public class PnQlyVe extends javax.swing.JPanel {
         DefaultTableModel dtm=(DefaultTableModel)tbVeXe.getModel();
         dtm.setNumRows(0);
         Vector vt;
-        
         for(int i=0;i<tbTam.getRowCount();i++)//Duyệt từng cột của bảng tạm
         {
-           if(cbbCheDoXem.getSelectedIndex()==2 && BanVeXe.primaryKey.equals(xLBang.getRow(tbTam,i, 10).toString())){// nếu đang là chế độ xem vé đã đặt thì load những vé đã đặt của nhân viên
+            // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
+            if (dk==true){
+                if((tbTam.getValueAt(i, 8).toString().equals(stringCbb(cbbTramDi))||  stringCbb(cbbTramDi).equals("Tất Cả")) 
+                        && (tbTam.getValueAt(i, 6).toString().equals(stringCbb(cbbNgayDi)) || stringCbb(cbbNgayDi).equals("Tất Cả")) 
+                        && (tbTam.getValueAt(i, 7).toString().equals(stringCbb(cbbGioDi)) || stringCbb(cbbGioDi).equals("Tất Cả")) 
+                        && (Integer.parseInt(tbTam.getValueAt(i, 2).toString())==numCbb(cbbChuyenXe)|| stringCbb(cbbChuyenXe).equals("Tất Cả"))) 
+                {
+                    if((stringCbb(cbbCheDoXem).equals("Vé đặt trước") || stringCbb(cbbCheDoXem).equals("Tất cả vé") ||(stringCbb(cbbCheDoXem).equals("Vé đã duyệt") && BanVeXe.primaryKey.equals(xLBang.getRow(tbTam,i, 10))))){
+                        
+                    }
+                        vt=new Vector();
+                        vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
+                        for(int j=1;j<tbTam.getColumnCount()-1;j++){
+                            vt.add(tbTam.getValueAt(i, j));
+                        }
+                dtm.addRow(vt);
+
+                }
+            }
+            else{
                 vt=new Vector();
                 vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
                 for(int j=1;j<tbTam.getColumnCount()-1;j++){
                     vt.add(tbTam.getValueAt(i, j));
                 }
                 dtm.addRow(vt);
-                
-
-            }else if(cbbCheDoXem.getSelectedIndex()!=2){
-                // lấy những cột thỏa trạm, ngày, giờ, chuyến đi, đưa vào bảng hiện thị
-                if (dk==true){
-                    if(tbTam.getValueAt(i, 8).toString().equals(stringCbb(cbbTramDi)) && tbTam.getValueAt(i, 6).toString().equals(stringCbb(cbbNgayDi)) 
-                        && tbTam.getValueAt(i, 7).toString().equals(stringCbb(cbbGioDi)) && Integer.parseInt(tbTam.getValueAt(i, 2).toString())==numCbb(cbbChuyenXe))
-                    {
-                        vt=new Vector();
-                        vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
-                        for(int j=1;j<tbTam.getColumnCount()-1;j++){
-                            vt.add(tbTam.getValueAt(i, j));
-                        }
-                    dtm.addRow(vt);
-
-                    }
-                }
-                else{
-                    vt=new Vector();
-                        vt.add(Integer.parseInt(tbTam.getValueAt(i, 0).toString()));
-                        for(int j=1;j<tbTam.getColumnCount()-1;j++){
-                            vt.add(tbTam.getValueAt(i, j));
-                        }
-                    dtm.addRow(vt);
-                }
             }
         }
         
@@ -220,22 +199,24 @@ public class PnQlyVe extends javax.swing.JPanel {
                 }
                 else vt.add("");
             }
+            
             dtm.addRow(vt);
             }
         
         tbVeXe.setModel(dtm);
-        if(cbbCheDoXem.getSelectedIndex()!=2){
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-            tbVeXe.setDefaultRenderer(Integer.class, centerRenderer);
-            // sắp xếp bảng tăng dần theo ghế
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        tbVeXe.setDefaultRenderer(Integer.class, centerRenderer);
+        
+        // sắp xếp bảng tăng dần theo ghế
+        if(cbbTramDi.getSelectedIndex()>0 && cbbNgayDi.getSelectedIndex()>0 && cbbGioDi.getSelectedIndex()>0 && cbbChuyenXe.getSelectedIndex()>0){
             xLBang.sapXepBang(tbVeXe ,0,0);}
         
     }
     
     //--------------Duyệt Vé-------------------------
     public void duyetVe(String maVe, String maNV){
-        String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), tbVeXe.getColumnCount()-1);
+        //String trangThai=(String) tbVeXe.getValueAt(tbVeXe.getSelectedRow(), tbVeXe.getColumnCount()-1);
         Connection connect=Code.KetNoi.layKetNoi();
         String sql="UPDATE VE_XE SET TrangThai=1, MaNV=? WHERE MaVe=?";
         try {
@@ -424,7 +405,7 @@ public class PnQlyVe extends javax.swing.JPanel {
         });
 
         cbbTramDi.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TP.HCM", "Đồng Nai" }));
+        cbbTramDi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất Cả", "TP.HCM", "Đồng Nai" }));
         cbbTramDi.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbTramDiItemStateChanged(evt);
@@ -471,11 +452,6 @@ public class PnQlyVe extends javax.swing.JPanel {
         cbbCheDoXem.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbCheDoXemItemStateChanged(evt);
-            }
-        });
-        cbbCheDoXem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbCheDoXemActionPerformed(evt);
             }
         });
 
@@ -594,7 +570,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             if(choose==JOptionPane.OK_OPTION){
                 duyetVe(maVe,BanVeXe.primaryKey);
                 JOptionPane.showMessageDialog(this, "Duyệt vé: "+maVe+" thành công");
-                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ("+cheDo+","+BanVeXe.primaryKey+")}");
                 locDuLieuVeXe(true);
                 btnDuyetVe.setEnabled(false);
                 btnHuyVe.setEnabled(false);
@@ -611,7 +587,7 @@ public class PnQlyVe extends javax.swing.JPanel {
             if(choose==JOptionPane.OK_OPTION){
                 huyVe(maVe);
                 JOptionPane.showMessageDialog(this, "Hủy vé: "+maVe+" thành công");
-                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+                xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ("+cheDo+","+BanVeXe.primaryKey+")}");
                 locDuLieuVeXe(true);
                 btnDuyetVe.setEnabled(false);
                 btnHuyVe.setEnabled(false);
@@ -645,7 +621,6 @@ public class PnQlyVe extends javax.swing.JPanel {
         // TODO add your handling code here
         loadComboGio();
         locDuLieuVeXe(true);
-        
         btnDuyetVe.setEnabled(false);
         btnHuyVe.setEnabled(false);
         tbVeXe.clearSelection();
@@ -669,17 +644,13 @@ public class PnQlyVe extends javax.swing.JPanel {
         tbVeXe.clearSelection();
     }//GEN-LAST:event_cbbChuyenXeItemStateChanged
 
-    private void cbbCheDoXemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbCheDoXemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbbCheDoXemActionPerformed
-
     private void cbbCheDoXemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbCheDoXemItemStateChanged
         // TODO add your handling code here:
-        
+        cheDo=cbbCheDoXem.getSelectedIndex();
         loadComboNgayDi();
         loadComboGio();
         loadComboChuyenXe();
-        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ("+cheDo+","+BanVeXe.primaryKey+")}");
         locDuLieuVeXe(true);
         
         
@@ -692,20 +663,18 @@ public class PnQlyVe extends javax.swing.JPanel {
     private void txtSearchVeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchVeKeyReleased
         // TODO add your handling code here:
         if(!txtSearchVe.getText().isEmpty()){
-            locDuLieuVeXe(false);
             xLBang.locTatCa(tbVeXe,txtSearchVe.getText(),-1);
         }
         else {
-            locDuLieuVeXe(true);
             xLBang.locTatCa(tbVeXe,"",-1);
-            
         }
         
     }//GEN-LAST:event_txtSearchVeKeyReleased
 
     private void formHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_formHierarchyChanged
         // TODO add your handling code here:
-        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+        //xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ()}");
+        xLBang.loadDuLieuVaoBang(tbTam, "{call SP_LOAD_VE_TO_JTABLE ("+cheDo+","+BanVeXe.primaryKey+")}");
         loadComboNgayDi();
         loadComboGio();
         loadComboChuyenXe();

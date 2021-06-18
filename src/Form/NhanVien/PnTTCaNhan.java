@@ -7,6 +7,7 @@ package Form.NhanVien;
 
 import Code.BanVeXe;
 import Form.DangKyKhach;
+import Form.DoiMatKhau;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -42,11 +43,12 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         txtTen.setEditable(trangThai);
         txtCMND.setEditable(trangThai);
         txtTK.setEditable(trangThai);
-        txtMK.setEditable(trangThai);
+//        txtMK.setEditable(trangThai);
         txtSDT.setEditable(trangThai);
         rBtnNam1.setEnabled(trangThai);
         rBtnNu1.setEnabled(trangThai);
-        btnSeePass.setEnabled(!trangThai);
+//        btnSeePass.setEnabled(!trangThai);
+        btnDoiMatKhau.setVisible(trangThai);
     }
     
 
@@ -75,14 +77,13 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     }
     
    
-    private void loadHieuChinhTT(String maNV, String ten, String CMND, String gioiTinh, String sdt, String taiKhoan, String matKhau){
+    private void loadHieuChinhTT(String maNV, String ten, String CMND, String gioiTinh, String sdt, String taiKhoan){
         Connection connect=Code.KetNoi.layKetNoi();
-        if(!taiKhoan.equals(BanVeXe.Account)||!matKhau.equals(BanVeXe.pass)){// kiểm tra thông tin tài khoản có khác hiện tại ko
-            String sql="UPDATE TAI_KHOAN SET TaiKhoan=?, MatKhau=? WHERE TaiKhoan='"+BanVeXe.Account+"'";
+        if(!taiKhoan.equals(BanVeXe.Account)){// kiểm tra thông tin tài khoản có khác hiện tại ko
+            String sql="UPDATE TAI_KHOAN SET TaiKhoan=?WHERE TaiKhoan='"+BanVeXe.Account+"'";
             try {
                 PreparedStatement ps=connect.prepareStatement(sql);
                 ps.setString(1, taiKhoan);
-                ps.setString(2, matKhau);
                 ps.executeUpdate();
                 // dong ket noi
                 ps.close();
@@ -117,11 +118,9 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         lbThongBao = new javax.swing.JLabel();
-        btnSeePass = new javax.swing.JButton();
         txtMaNV = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
         txtCMND = new javax.swing.JTextField();
@@ -130,8 +129,8 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         rBtnNam1 = new javax.swing.JRadioButton();
         rBtnNu1 = new javax.swing.JRadioButton();
         btnChinhSua = new javax.swing.JButton();
-        txtMK = new javax.swing.JTextField();
         btnHuy = new javax.swing.JButton();
+        btnDoiMatKhau = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -155,9 +154,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel20.setText("Tên Tài Khoản:");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel21.setText("Mật khẩu:");
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel23.setText("Mã NV:");
 
@@ -168,14 +164,6 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         lbThongBao.setForeground(new java.awt.Color(0, 204, 0));
         lbThongBao.setText("Nhân viên chỉ có quyền đổi mật khẩu");
         lbThongBao.setVisible(false);
-
-        btnSeePass.setForeground(new java.awt.Color(255, 255, 255));
-        btnSeePass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Eye-2-icon.png"))); // NOI18N
-        btnSeePass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSeePassActionPerformed(evt);
-            }
-        });
 
         txtMaNV.setEditable(false);
         txtMaNV.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
@@ -211,16 +199,21 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             }
         });
 
-        txtMK.setEditable(false);
-        txtMK.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        txtMK.setText("**********");
-
         btnHuy.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnHuy.setText("Hủy");
         btnHuy.setVisible(false);
         btnHuy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHuyActionPerformed(evt);
+            }
+        });
+
+        btnDoiMatKhau.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnDoiMatKhau.setText("Đổi mật khẩu");
+        btnDoiMatKhau.setVisible(false);
+        btnDoiMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDoiMatKhauActionPerformed(evt);
             }
         });
 
@@ -274,24 +267,16 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                         .addComponent(jLabel16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(79, 79, 79)
-                                        .addComponent(jLabel20)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(117, 117, 117)
-                                        .addComponent(jLabel21)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                        .addComponent(btnSeePass, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(130, 130, 130))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(170, 170, 170)
-                                .addComponent(lbThongBao)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addComponent(lbThongBao))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(jLabel20)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnDoiMatKhau)
+                                    .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(172, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(463, 463, 463)
                 .addComponent(btnHuy, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,12 +323,8 @@ public class PnTTCaNhan extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel20)
                             .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel21)
-                                .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnSeePass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnDoiMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbThongBao)))
                 .addGap(43, 43, 43)
@@ -354,24 +335,18 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSeePassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeePassActionPerformed
-        // TODO add your handling code here:
-        if(txtMK.getText().equals("**********")){
-            txtMK.setText(BanVeXe.pass);
-        }else txtMK.setText("**********");
-    }//GEN-LAST:event_btnSeePassActionPerformed
-
     private void btnChinhSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChinhSuaActionPerformed
         // TODO add your handling code here:
         if(btnChinhSua.getText().equalsIgnoreCase("Chỉnh sửa")){//chuyển qua chức năng chỉnh sửa
             btnChinhSua.setText("Lưu");
             btnHuy.setVisible(true);
-            txtMK.setText(BanVeXe.pass);
+//            txtMK.setText(BanVeXe.pass);
             
             if(BanVeXe.quyen.equals("Nhân viên")){
-                txtMK.setEditable(true);
+//                txtMK.setEditable(true);
+                btnDoiMatKhau.setVisible(true);
                 lbThongBao.setVisible(true);
-                btnSeePass.setEnabled(false);
+//                btnSeePass.setEnabled(false);
             }else
             {
                 setEdit(true);
@@ -386,10 +361,11 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             String cmnd=txtCMND.getText();
             String sdt=txtSDT.getText();
             String tk=txtTK.getText();
-            String mk=txtMK.getText();
+//            String mk=txtMK.getText();
             JPasswordField pass =new JPasswordField();
+            pass.setText("123456");
             JLabel lb=new JLabel();
-            pass.setText(mk);
+//            pass.setText(mk);
             
             //kiểm tra regex
             DangKyKhach ktLoi=new DangKyKhach();
@@ -403,14 +379,14 @@ public class PnTTCaNhan extends javax.swing.JPanel {
             }
             
             //Thực hiện chỉnh sửa
-            loadHieuChinhTT(maNV, ten, cmnd, gt, sdt, tk, mk);
+            loadHieuChinhTT(maNV, ten, cmnd, gt, sdt, tk);
             
             //Load lại thông tin
-            BanVeXe.setBanVeXe(tk, mk, ten, gt, BanVeXe.quyen);
+            BanVeXe.setBanVeXe(tk, BanVeXe.pass, ten, gt, BanVeXe.quyen);
             lbAc.setText(tk);
             lbName.setText(ten);
             JOptionPane.showMessageDialog(this, "Hiệu chỉnh thông tin thành công");
-            txtMK.setText("**********");
+//            txtMK.setText("**********");
             btnChinhSua.setText("Chỉnh sửa");
             btnHuy.setVisible(false);
             setEdit(false);
@@ -427,9 +403,9 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         // Tắt nút hủy
         btnHuy.setVisible(false);
         
-        // Tắt hiển thị mật khẩu
-        txtMK.setText("**********");
-        
+//        // Tắt hiển thị mật khẩu
+//        txtMK.setText("**********");
+//        
         // Tắt thông báo
         lbThongBao.setVisible(false);
         
@@ -440,11 +416,16 @@ public class PnTTCaNhan extends javax.swing.JPanel {
         loadThongTinNV();
     }//GEN-LAST:event_btnHuyActionPerformed
 
+    private void btnDoiMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiMatKhauActionPerformed
+        // TODO add your handling code here:
+        new DoiMatKhau(BanVeXe.Account).setVisible(true);
+    }//GEN-LAST:event_btnDoiMatKhauActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChinhSua;
+    private javax.swing.JButton btnDoiMatKhau;
     private javax.swing.JButton btnHuy;
-    private javax.swing.JButton btnSeePass;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -453,14 +434,12 @@ public class PnTTCaNhan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel lbThongBao;
     private javax.swing.JRadioButton rBtnNam1;
     private javax.swing.JRadioButton rBtnNu1;
     private javax.swing.JTextField txtCMND;
-    private javax.swing.JTextField txtMK;
     private javax.swing.JTextField txtMaNV;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTK;

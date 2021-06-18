@@ -6,6 +6,7 @@
 package Form;
 
 import Code.BanVeXe;
+import Code.MaHoa;
 import Code.XuLyNhap;
 import Form.Login;
 import java.awt.Color;
@@ -87,11 +88,6 @@ public class DangKyKhach extends javax.swing.JFrame {
             lbMK.setVisible(true);
             psMK.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        else if(psMK.getText().matches("\\w{6,}")) {
-            lbMK.setVisible(false);
-            psMK.setBorder(BorderFactory.createLineBorder(null));
-        }
-        
         else if(psMK.getText().matches("\\w{6,}")) {
             lbMK.setVisible(false);
             psMK.setBorder(BorderFactory.createLineBorder(null));
@@ -258,7 +254,7 @@ public class DangKyKhach extends javax.swing.JFrame {
         lbMK.setText("Mật khẩu không hợp lệ");
         lbMK.setVisible(false);
         pnDKY.add(lbMK);
-        lbMK.setBounds(240, 330, 129, 16);
+        lbMK.setBounds(230, 330, 129, 16);
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Từ 6 đến 50 ký tự");
@@ -375,7 +371,7 @@ public class DangKyKhach extends javax.swing.JFrame {
            XuLyNhap xlyNhap=new XuLyNhap();
            hoten=xlyNhap.chuanHoa(hoten);
            String tk= txtTK.getText();
-           String mk= psMK.getText();
+           String mk= new MaHoa(psMK.getText()).maHoa();
            String gt=(rBtnNam.isSelected())?"Nam":"Nữ";
            if(!ktTaiKhoan("SELECT * FROM TAI_KHOAN WHERE TaiKhoan = '",tk)){
                themTaiKhoan(tk, mk, hoten);
