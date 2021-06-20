@@ -5,7 +5,9 @@
  */
 package Form.QuanLy;
 
+import Code.BanVeXe;
 import Code.KetNoi;
+import Form.DoiMatKhau;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -189,6 +191,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jRadioButton_Nu = new javax.swing.JRadioButton();
         jButton_Sua = new javax.swing.JButton();
         jComboBox_ChucVu = new javax.swing.JComboBox<>();
+        jButton_doiMK = new javax.swing.JButton();
 
         jLabel_TaiKhoan.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
 
@@ -328,6 +331,14 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jComboBox_ChucVu.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jComboBox_ChucVu.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AD - Quản lý", "NV - Nhân viên" }));
 
+        jButton_doiMK.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButton_doiMK.setText("Đổi Mật Khẩu");
+        jButton_doiMK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_doiMKActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -336,7 +347,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -369,7 +380,8 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField_TaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
@@ -377,11 +389,12 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                             .addComponent(jComboBox_ChucVu, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton_ThemNV, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton_ThemNV1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jButton_SuaNV, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(144, 144, 144))))
+                            .addComponent(jButton_ThemNV, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton_ThemNV1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton_doiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,7 +408,8 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton_ThemNV1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton_doiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -425,9 +439,14 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jRadioButton_Nam)
                             .addComponent(jRadioButton_Nu))))
-                .addGap(8, 8, 8)
-                .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(80, 80, 80))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -552,6 +571,11 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton_SuaActionPerformed
 
+    private void jButton_doiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_doiMKActionPerformed
+        // TODO add your handling code here:
+        new DoiMatKhau(jTextField_TaiKhoan.getText()).setVisible(true);
+    }//GEN-LAST:event_jButton_doiMKActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -559,6 +583,7 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
     private javax.swing.JButton jButton_SuaNV;
     private javax.swing.JButton jButton_ThemNV;
     private javax.swing.JButton jButton_ThemNV1;
+    private javax.swing.JButton jButton_doiMK;
     private javax.swing.JComboBox<String> jComboBox_ChucVu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
