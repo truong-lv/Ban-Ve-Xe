@@ -28,209 +28,193 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="439" pref="439" max="-2" attributes="0"/>
+              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="369" pref="369" max="-2" attributes="0"/>
+              <Component id="jLabel_Sdt1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+              <Component id="txtTimKiem" min="-2" pref="180" max="-2" attributes="0"/>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+              <Component id="btnClearText" min="-2" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+              <Component id="jLabel33" min="-2" pref="203" max="-2" attributes="0"/>
+              <EmptySpace min="154" pref="154" max="-2" attributes="0"/>
+              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+              <Component id="cbbSortKhach" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+              <Component id="btnTypeSortKhach" min="-2" pref="26" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="1067" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
+              <Component id="jLabel_Sdt" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="txtSDT" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                      <Component id="lbLoiSDT" min="-2" pref="152" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="50" pref="50" max="-2" attributes="0"/>
+              <Component id="jLabel_HoTen" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="txtHoTen" min="-2" pref="180" max="-2" attributes="0"/>
+                  <Component id="lbLoiHoTen" min="-2" pref="173" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
+              <Component id="jLabel1_GioiTinh" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="jRadioButton_Nam" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+                      <Component id="jRadioButton_Nu" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabel33" min="-2" pref="203" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel_Sdt1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtTimKiem" min="-2" pref="180" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="cbbSortKhach" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnTypeSortKhach" min="-2" pref="26" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnClearText" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="464" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="lbLoiGioiTinh" min="-2" pref="152" max="-2" attributes="0"/>
               </Group>
           </Group>
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="439" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="52" pref="52" max="-2" attributes="0"/>
-                                      <Component id="lbLoiSDT" min="-2" pref="152" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel_Sdt" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtSDT" min="-2" pref="180" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel_TK" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lbLoiTrungTK" max="32767" attributes="0"/>
-                                  <Component id="txtTK" pref="180" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                              <Component id="jLabel_HoTen" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtHoTen" min="-2" pref="180" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1_MK" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="psMK" min="-2" pref="180" max="-2" attributes="0"/>
-                                  <Component id="lbLoiMK" min="-2" pref="145" max="-2" attributes="0"/>
-                                  <Component id="lbLoiHoTen" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="jLabel1_GioiTinh" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jRadioButton_Nam" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Component id="jRadioButton_Nu" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="lbLoiGioiTinh" min="-2" pref="152" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+              <Component id="jLabel_TK" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+              <Component id="txtTK" min="-2" pref="180" max="-2" attributes="0"/>
+              <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
+              <Component id="jLabel1_MK" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+              <Component id="psMK" min="-2" pref="180" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="95" pref="95" max="-2" attributes="0"/>
+              <Component id="lbLoiTrungTK" min="-2" pref="180" max="-2" attributes="0"/>
+              <EmptySpace min="122" pref="122" max="-2" attributes="0"/>
+              <Component id="lbLoiMK" min="-2" pref="145" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="63" pref="63" max="-2" attributes="0"/>
               <Component id="btnThemTKKhach" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
               <Component id="btnDoiMatKhau" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="370" pref="370" max="-2" attributes="0"/>
               <Component id="btnThem" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
               <Component id="btnXoa" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
               <Component id="btnSua" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <EmptySpace min="37" pref="37" max="-2" attributes="0"/>
               <Component id="btnHuy" min="-2" pref="93" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel_Sdt1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtTimKiem" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                      <Component id="jLabel_Sdt1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="btnClearText" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtTimKiem" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="btnClearText" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                          <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbbSortKhach" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="btnTypeSortKhach" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="jLabel33" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabel33" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                      <Component id="cbbSortKhach" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                      <Component id="btnTypeSortKhach" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="275" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                      <Component id="jLabel_Sdt" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="txtSDT" min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+                      <Component id="lbLoiSDT" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                      <Component id="jLabel_HoTen" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="txtHoTen" min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+                      <Component id="lbLoiHoTen" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                      <Component id="jLabel1_GioiTinh" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel1_GioiTinh" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton_Nam" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton_Nu" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbLoiGioiTinh" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel_HoTen" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtHoTen" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbLoiHoTen" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jRadioButton_Nam" min="-2" max="-2" attributes="0"/>
+                          <Component id="jRadioButton_Nu" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1_MK" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="psMK" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lbLoiMK" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_Sdt" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtSDT" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lbLoiSDT" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_TK" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtTK" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="lbLoiTrungTK" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
+                      <Component id="lbLoiGioiTinh" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="47" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnThem" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="btnXoa" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="btnSua" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="btnHuy" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="5" pref="5" max="-2" attributes="0"/>
+                      <Component id="jLabel_TK" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnThemTKKhach" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
-                          <Component id="btnDoiMatKhau" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Component id="txtTK" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                      <Component id="jLabel1_MK" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="psMK" min="-2" pref="30" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                      <Component id="lbLoiTrungTK" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="lbLoiMK" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnThemTKKhach" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Component id="btnDoiMatKhau" min="-2" pref="49" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnThem" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="btnXoa" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="btnSua" min="-2" pref="44" max="-2" attributes="0"/>
+                  <Component id="btnHuy" min="-2" pref="44" max="-2" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -563,7 +547,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="33" green="33" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u kh&#xf4;ng &#x111;c &#x111;&#x1ec3; tr&#x1ed1;ng"/>
+        <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u &#xed;t nh&#x1ea5;t 6 k&#xfd; t&#x1ef1;"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="lbLoiMK.setVisible(false);"/>
