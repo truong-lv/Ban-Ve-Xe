@@ -206,7 +206,7 @@ public class GDChinh extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnInfor, javax.swing.GroupLayout.DEFAULT_SIZE, 1159, Short.MAX_VALUE)
-            .addComponent(tbPnMenu, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(tbPnMenu)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
