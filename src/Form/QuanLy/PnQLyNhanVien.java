@@ -379,10 +379,6 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextField_TaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
                             .addComponent(jTextField_SDT)
@@ -393,7 +389,11 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                             .addComponent(jButton_ThemNV1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_doiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton_doiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(144, 144, 144))
         );
         layout.setVerticalGroup(
@@ -439,13 +439,10 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
                             .addComponent(jLabel7)
                             .addComponent(jRadioButton_Nam)
                             .addComponent(jRadioButton_Nu))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_SuaNV, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -536,6 +533,25 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
         jButton_Sua.setVisible(false);
     }//GEN-LAST:event_jTable1PropertyChange
 
+    private void suaTK(String tk, String cv){
+        Connection connect = Code.KetNoi.layKetNoi();
+        String sql = "UPDATE TAI_KHOAN SET MaLoaiTK=? where TaiKhoan=?";
+        try {
+            PreparedStatement ps = connect.prepareStatement(sql);
+            if(cv.equals("AD")){
+                ps.setString(1, "0");
+            }else{
+                ps.setString(1, "1");
+            }
+            ps.setString(2, tk);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(PnQLyNhanVien.class.getName()).log(Level.SEVERE, null, e);
+        }
+        loadNhanVien();
+    }
+    
     private void jButton_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SuaActionPerformed
         // TODO add your handling code here:
         jButton_Sua.setVisible(false);
@@ -567,6 +583,8 @@ public class PnQLyNhanVien extends javax.swing.JPanel {
             }
             dienThoai = jTextField_SDT.getText();
             chucVu = jComboBox_ChucVu.getSelectedItem().toString().substring(0, 2);
+            
+            suaTK(jTextField_TaiKhoan.getText().toString(), chucVu);
             suaNhanVien(maNV, hoTen, CMND, gioiTinh, dienThoai, chucVu);
         }
     }//GEN-LAST:event_jButton_SuaActionPerformed
